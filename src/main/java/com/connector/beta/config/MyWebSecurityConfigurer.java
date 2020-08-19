@@ -31,8 +31,9 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .and()
+                .csrf().and()//.disable()
+//                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                .and()
                 .authorizeRequests()
                 .antMatchers("/searchUser").hasAnyRole("USER")
                 .antMatchers("/").hasAnyRole("USER", "ADMIN")

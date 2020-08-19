@@ -14,7 +14,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  * @author korov
  */
-@EnableWebMvc
+
+// I Disabled EnableWebMvc because I couldnt use a simple controller to reach a jsp page
+// and it seems to work without this annotation
+//@EnableWebMvc
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 

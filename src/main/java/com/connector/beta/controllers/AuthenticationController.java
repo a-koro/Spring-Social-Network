@@ -6,8 +6,8 @@
 package com.connector.beta.controllers;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -19,9 +19,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class AuthenticationController {
     
     
+    // The next contoller doesnt do anything it just prints the return statement
+    // in the browser
     @GetMapping("/welcome")
-    @ResponseBody
+    //@ResponseBody
     public String welcomePage() {
-        return "/WEB-INF/jsp/build/index.html";
+        //return "/WEB-INF/jsp/build/index.html";
+        return "welcome";
     }
+
+//    
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @GetMapping("/koro")
+//    @ResponseBody
+//    public String koro() {
+//        System.out.println("KOROOOOOOOOOOOOOOOOOOOOO");
+//        return "Kala ta kataferes";
+//    }
 }
