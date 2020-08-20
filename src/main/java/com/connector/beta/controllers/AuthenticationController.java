@@ -18,22 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class AuthenticationController {
     
-    
-    // The next contoller doesnt do anything it just prints the return statement
-    // in the browser
     @GetMapping("/welcome")
-    //@ResponseBody
     public String welcomePage() {
-        //return "/WEB-INF/jsp/build/index.html";
         return "welcome";
     }
 
-//    
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @GetMapping("/koro")
-//    @ResponseBody
-//    public String koro() {
-//        System.out.println("KOROOOOOOOOOOOOOOOOOOOOO");
-//        return "Kala ta kataferes";
-//    }
 }

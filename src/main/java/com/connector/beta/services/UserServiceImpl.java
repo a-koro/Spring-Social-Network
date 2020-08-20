@@ -57,5 +57,10 @@ public class UserServiceImpl implements UserServiceInterface {
     public List<MyUser> searchUsersByName(String name) {
         return userRepo.findByFirstName(name);
     }
+
+    @Override
+    public List<MyUser> searchUserByFirstnameOrLastname(String input) {
+        return userRepo.getUsersByFirstnameAndLastname(input);
+    }
     
 }
