@@ -31,7 +31,7 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().and()//.disable()
+                .csrf().disable()
 //                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //                .and()
                 .authorizeRequests()
@@ -44,7 +44,11 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .permitAll()
                 .defaultSuccessUrl("/index.html",true)
-                .and().logout();
+                .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login")
+                    .permitAll();
     }
 
     @Override
