@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
  * @author korov
  */
 
@@ -67,12 +68,4 @@ public class AuthenticationController {
         return null;
     }
 
-//    
-//    @CrossOrigin(origins = "http://localhost:3000")
-//    @GetMapping("/koro")
-//    @ResponseBody
-//    public String koro() {
-//        System.out.println("KOROOOOOOOOOOOOOOOOOOOOO");
-//        return "Kala ta kataferes";
-//    }
 }

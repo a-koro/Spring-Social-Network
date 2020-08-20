@@ -37,13 +37,11 @@ public class UserRestController {
     public List<MyUser> testGetMethod() {
         return userServiceInterface.searchUsersByName("Alexandros");
     }
-
     
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/koroPage")
-    public String loginPage() {
-        System.out.println("KOROOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-        return "register";
+    @ResponseBody
+    @GetMapping("/searchUsers")
+    public List<MyUser> searchUsers(@RequestHeader String input) {
+        return userServiceInterface.searchUserByFirstnameOrLastname(input);
     }
 
 }
