@@ -43,7 +43,7 @@ public class UserRestController {
     @GetMapping("/koroPage")
     public String loginPage() {
         System.out.println("KOROOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-        return "welcome";
+        return "register";
     }
 
 }
