@@ -70,6 +70,13 @@
                 class="profile-img-card"
         />
         <form action="/login" method="post">
+            <c:if test="$">
+            <div class="form-group">
+                <div class="alert alert-success">
+                    You have successfully logged out
+                </div>
+                </c:if>
+            </div>
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" class="form-control" name="username" id="username">

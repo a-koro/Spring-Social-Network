@@ -72,6 +72,7 @@ public class AuthenticationController {
 //        System.out.println(passwordEncoder.encode(myUser.getPassword()));
         System.out.println(bindingResult);
         System.out.println(myUser.getBirthday());
+//        Test Comment
 
         if (bindingResult.hasErrors()) {
             return "register";
