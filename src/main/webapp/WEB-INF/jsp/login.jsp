@@ -1,21 +1,20 @@
 <%-- 
-    Document   : welcome
-    Created on : Aug 1, 2020, 2:13:50 PM
+    Document   : login
+    Created on : Aug 18, 2020, 11:06:37 AM
     Author     : korov
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
-<%@ taglib prefix="springform" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <%--    Can't "see" .css file due to Security/jsp --%>
-    <%--    <link rel="stylesheet" href="../../../resources/static/forms.css">--%>
+    <title>My Login Page</title>
     <style>
         label {
             display: block;
@@ -49,15 +48,20 @@
             -webkit-border-radius: 50%;
             border-radius: 50%;
         }
+
         .alert {
             margin: 2px;
         }
 
     </style>
-
-    <title>Register User</title>
 </head>
 <body>
+
+<%--<c:set var="income" scope="session" value="${4000*4}"/>--%>
+<%--<c:if test="${empty param.error}">--%>
+<%--<p>My income is: <c:out value="${param.error}"/><p>--%>
+<%--    </c:if>--%>
+
 <div class="col-md-12">
     <div class="card card-container">
         <img
@@ -65,36 +69,29 @@
                 alt="profile-img"
                 class="profile-img-card"
         />
-        <springform:form action="doregister" method="post" modelAttribute="newUser">
+        <form action="/login" method="post">
             <div class="form-group">
-                <label for="email">Email</label>
-                <springform:input type="email" path="email" cssClass="form-control"/>
-                <springform:errors path="email" cssClass="alert alert-danger" element="div"/>
+                <label for="username">Username</label>
+                <input type="text" class="form-control" name="username" id="username">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <springform:password path="password" cssClass="form-control"/>
-                <springform:errors path="password" cssClass="alert alert-danger" element="div"/>
+                <input type="password" class="form-control" name="password" id="password">
             </div>
+            <c:if test="${param.error}">
+                <div class="form-group">
+                    <div class="alert alert-danger" style="text-align: center">
+                        Invalid Credentials
+                    </div>
+                </div>
+            </c:if>
             <div class="form-group">
-                <label for="firstName">First Name</label>
-                <springform:input path="firstName" cssClass="form-control" />
-                <springform:errors path="firstName" cssClass="alert alert-danger" element="div"/>
+                <input type="submit" class="btn btn-primary btn-block" value="Submit">
             </div>
-            <div class="form-group">
-                <label for="lastName">Last Name</label>
-                <springform:input path="lastName" cssClass="form-control"/>
-                <springform:errors path="lastName" cssClass="alert alert-danger" element="div"/>
-            </div>
-            <div class="form-group">
-                <label for="birthday">Date Of Birth</label>
-                <springform:input path="birthday" type="date" cssClass="form-control"/>
-                <springform:errors path="birthday" cssClass="alert alert-danger" element="div"/>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Sign up" class="btn btn-primary btn-block"/>
-            </div>
-        </springform:form>
+        </form>
+        <form action="/register">
+            <button type="submit" class="btn btn-success btn-block">Create New Account</button>
+        </form>
     </div>
 </div>
 </body>
