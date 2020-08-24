@@ -5,6 +5,7 @@
  */
 package com.connector.beta.services;
 
+import com.connector.beta.dto.UserDto;
 import com.connector.beta.entities.MyUser;
 import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +16,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  */
 public interface UserServiceInterface extends UserDetailsService {
     
-    public List<MyUser> searchUsersByName(String name);
+     List<MyUser> searchUsersByName(String name);
     
-    public List<MyUser> searchUserByFirstnameOrLastname(String input);
+     List<MyUser> searchUserByFirstnameOrLastname(String input);
+
+     UserDto getCurrentUser();
+
+     List<UserDto> getAllUsers();
 }

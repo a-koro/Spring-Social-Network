@@ -67,4 +67,5 @@ public class AuthenticationController {
         userRepo.save(myUser);
         return null;
     }
+
 }

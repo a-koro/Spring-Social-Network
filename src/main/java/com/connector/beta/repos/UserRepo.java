@@ -7,6 +7,8 @@ package com.connector.beta.repos;
 
 import com.connector.beta.entities.MyUser;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +22,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepo extends JpaRepository<MyUser, Integer> {
 
-    MyUser findByEmail(String email);
+   Optional<MyUser> findByEmail(String email);
 
     List<MyUser> findByFirstName(String name);
 

@@ -5,14 +5,18 @@
  */
 package com.connector.beta.services;
 
+import com.connector.beta.dto.UserDto;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.Role;
+import com.connector.beta.mapper.UserMapper;
 import com.connector.beta.repos.UserRepo;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,12 +32,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserServiceImpl implements UserServiceInterface {
     
+
+    private final UserRepo userRepo;
+    private final UserMapper userMapper;
+
     @Autowired
-    UserRepo userRepo;
+    public UserServiceImpl(UserRepo userRepo, UserMapper userMapper) {
+        this.userRepo = userRepo;
+        this.userMapper = userMapper;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        MyUser myUser = userRepo.findByEmail(email);
+        MyUser myUser = userRepo.findByEmail(email)
+                .orElseThrow(
+                () ->
+                        new UsernameNotFoundException("Email not found - " + email));
         if (myUser == null) {
             throw new UsernameNotFoundException("Invalid username");
         }
@@ -62,5 +76,31 @@ public class UserServiceImpl implements UserServiceInterface {
     public List<MyUser> searchUserByFirstnameOrLastname(String input) {
         return userRepo.getUsersByFirstnameAndLastname(input);
     }
-    
+
+    @Override
+    public UserDto getCurrentUser() {
+        UserDto userDto=new UserDto();
+        try {
+            User user = (User) SecurityContextHolder.
+                    getContext().getAuthentication().getPrincipal();
+
+            MyUser myUser = userRepo.findByEmail(user.getUsername())
+                    .orElseThrow(
+                            () ->
+                                    new UsernameNotFoundException("Email not found - " + user.getUsername()));
+
+            userDto = userMapper.mapToDto(myUser);
+
+            return userDto;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return userDto;
+    }
+
+    @Override
+    public List<UserDto> getAllUsers() {
+
+        return userMapper.mapListToDto(userRepo.findAll());
+    }
 }
