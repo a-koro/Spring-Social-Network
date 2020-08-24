@@ -49,7 +49,7 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/login?loggedOut=true")
+                .logoutSuccessUrl("/login?logout=true")
                 .permitAll();
     }
 

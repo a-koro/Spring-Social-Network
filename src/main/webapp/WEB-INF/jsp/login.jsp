@@ -70,31 +70,31 @@
                 class="profile-img-card"
         />
         <form action="/login" method="post">
-            <c:if test="$">
+            <c:if test="${param.logout}">
             <div class="form-group">
-                <div class="alert alert-success">
-                    You have successfully logged out
+                <div class="alert alert-success" style="text-align: center">
+                    Logout Successful
                 </div>
                 </c:if>
-            </div>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" name="username" id="username">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password">
-            </div>
-            <c:if test="${param.error}">
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" name="username" id="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" id="password">
+                </div>
+                <c:if test="${param.error}">
                 <div class="form-group">
                     <div class="alert alert-danger" style="text-align: center">
                         Invalid Credentials
                     </div>
                 </div>
-            </c:if>
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary btn-block" value="Submit">
-            </div>
+                </c:if>
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary btn-block" value="Submit">
+                </div>
         </form>
         <form action="/register">
             <button type="submit" class="btn btn-success btn-block">Create New Account</button>

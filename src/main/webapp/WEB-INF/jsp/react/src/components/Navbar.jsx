@@ -33,19 +33,21 @@ function fetchUsers(evt) {
 
 }
 
-function logout(evt) {
-    evt.preventDefault();
+// For now using a simple href in Navbar to /logout
 
-    fetch("/logout",
-        {
-            method: 'GET',
-            credentials: "include"
-        }).then(response => {
-            window.location.href = "http://localhost:8080/";
-        });
-
-    console.log("You have been logged out.");
-}
+// function logout(evt) {
+//     evt.preventDefault();
+//
+//     fetch("/logout",
+//         {
+//             method: 'GET',
+//             credentials: "include"
+//         }).then(response => {
+//             window.location.href = "http://localhost:8080/";
+//         });
+//
+//     console.log("You have been logged out.");
+// }
 
 function Navbar() {
 
