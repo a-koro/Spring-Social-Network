@@ -1,4 +1,19 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+
+let results = ["Test DATA 001"];
+
+export const ResultsContext = React.createContext({});
+
+export const ResultsProvider = (props) => {
+    return (
+        <ResultsContext.Provider value={results}>
+            {props.children}
+            {/* this indicates that the global store is accessible to all the child tags with MyProvider as Parent */}
+        </ResultsContext.Provider>
+    );
+};
 
 const style = {
     objectFit: 'cover',
@@ -7,56 +22,86 @@ const style = {
     height: '40px'
 };
 
-function fetchUsers(evt) {
-    evt.preventDefault();
-
-    let searchBar = document.getElementById("searchBar");
-    let formData = new FormData();
-    formData.append("name", searchBar.nodeValue);
-
-    console.log(evt.target.search.value);
-
-
-    fetch("/searchUsers",
-        {
-            method: 'GET',
-            credentials: "include",
-            headers: {
-                'input': evt.target.search.value
-            },
-        })
-        .then(response => response.json())
-        .then(data => console.log(data));
-
-    this.props.history.push("/results");
-
-
-}
-
-// For now using a simple href in Navbar to /logout
-
-// function logout(evt) {
+// function fetchUsers(evt) {
 //     evt.preventDefault();
-//
-//     fetch("/logout",
+
+//     let searchBar = document.getElementById("searchBar");
+//     let formData = new FormData();
+//     formData.append("name", searchBar.nodeValue);
+
+//     console.log(evt.target.search.value);
+
+
+//     fetch("/searchUsers",
 //         {
 //             method: 'GET',
-//             credentials: "include"
-//         }).then(response => {
-//             window.location.href = "http://localhost:8080/";
-//         });
-//
-//     console.log("You have been logged out.");
+//             credentials: "include",
+//             headers: {
+//                 'input': evt.target.search.value
+//             },
+//         })
+//         .then(response => response.json())
+//         .then(data => console.log(data));
+
+//         console.log(props);
+//     //this.props.history.push("/results");
+
+
 // }
 
+function logout(evt) {
+    evt.preventDefault();
+
+    fetch("/logout",
+        {
+            method: 'GET',
+            credentials: "include"
+        }).then(response => {
+        window.location.href = "http://localhost:8080/";
+    });
+
+    console.log("You have been logged out.");
+}
+
 function Navbar() {
+
+    const history = useHistory();
+    function fetchUsers(evt) {
+
+        evt.preventDefault();
+
+        let searchBar = document.getElementById("searchBar");
+        let formData = new FormData();
+        formData.append("name", searchBar.nodeValue);
+
+        console.log(evt.target.search.value);
+
+
+        fetch("/searchUsers",
+            {
+                method: 'GET',
+                credentials: "include",
+                headers: {
+                    'input': evt.target.search.value
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                results = ["Test DATA"];
+                console.log(data);
+                console.log("Testing changes");
+            });
+
+        history.push("/results");
+
+    }
 
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <a className="navbar-brand" href="#">
                     <img src="http://placehold.it/150x50?text=Logo" width="30" height="30" className="d-inline-block align-top" alt="" loading="lazy" />
-                        Connector2020
+                    Connector
                 </a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
@@ -68,7 +113,7 @@ function Navbar() {
                     </form>
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Feed</a>
+                            <a className="nav-link" href="/">Feed</a>
                         </li>
                         <li className="nav-item active">
                             <a className="nav-link" href="#">Messages</a>
@@ -78,14 +123,13 @@ function Navbar() {
                         </li>
                         <li>
                             <img style={style} src="https://cdn.vox-cdn.com/thumbor/G8A4RF-QWQl7jItQw93r402os_0=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/10816041/rick_and_morty_s02_still.jpg"
-                                className="avatar rounded-circle ml-3"
-                                alt="Cinque Terre" />
+                                 className="avatar rounded-circle ml-3"
+                                 alt="Cinque Terre" />
                         </li>
                         <li className="nav-item">
                             <a className="nav-link" href="#">Alexandros Korovesis</a>
                         </li>
                         <li>
-                            {/*<a className="nav-link" href="#" onClick={logout}>Logout</a>*/}
                             <a className="nav-link" href="/logout">Logout</a>
                         </li>
                         {/* <li className="nav-item dropdown">
@@ -106,4 +150,4 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+export default withRouter(Navbar);
