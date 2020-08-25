@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import Navbar, { ResultsProvider } from './components/Navbar';
 import Post from './components/Post';
 import Comment from './components/Comment';
@@ -25,6 +25,7 @@ function App() {
               <Navbar />
               <Switch>
                   <ResultsProvider>
+                      <Redirect from="/index.html" to="/" exact />
                       <Route path="/results" exact component={Search}/>
                       <Route path="/" exact component={NewsFeed}/>
                   </ResultsProvider>
