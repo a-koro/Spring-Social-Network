@@ -67,6 +67,7 @@ public class AuthenticationController {
                                      @Valid @ModelAttribute("newUser") MyUser myUser,
                                      BindingResult bindingResult) {
 
+
 //        System.out.println(myUser.getBirthday());
 //        System.out.println(myUser.getPassword() + "lol");
 //        System.out.println(passwordEncoder.encode(myUser.getPassword()));
