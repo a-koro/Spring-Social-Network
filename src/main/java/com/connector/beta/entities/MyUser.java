@@ -5,10 +5,17 @@
  */
 package com.connector.beta.entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 /**
  *
@@ -22,22 +29,24 @@ public class MyUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
+    @Email(message = "Email address is invalid")
+    @Size(min = 4, max = 30, message = "Email must be between 4 and 30 characters")
     private String email;
+    @Size(max = 60, message = "Password must be between 6 and 60 characters")
     private String password;
+    @Size(min =3, max = 15, message = "First name must be between 3 and 15 characters")
     private String firstName;
+    @Size(min =3, max = 20, message = "Last name must be between 3 and 20 characters")
     private String lastName;
-    private Date birthday;
+    @NotNull(message = "Please provide a Date")
+    @DateTimeFormat( pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
+    private java.util.Date birthday;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
-
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinTable(name="user_image",
-            joinColumns = @JoinColumn(name="user_id"),
-            inverseJoinColumns = @JoinColumn(name="imageid"))
-    private Image image;
 
     public MyUser() {
     }
@@ -74,7 +83,7 @@ public class MyUser implements Serializable {
         this.lastName = lastName;
     }
 
-    public Date getBirthday() {
+    public java.util.Date getBirthday() {
         return birthday;
     }
 
