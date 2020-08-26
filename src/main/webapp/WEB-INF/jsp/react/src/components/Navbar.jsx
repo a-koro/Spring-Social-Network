@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+
 import { useHistory, Link } from "react-router-dom";
 import DataServices from '../services/DataServices';
 
@@ -66,8 +66,11 @@ function logout(evt) {
 
 function Navbar() {
 
-    const [user, setUser] = React.useState();
+    
     const [searchResults, setSearchResults] = React.useState();
+
+    const [user, setUser] = React.useState({});
+   
 
     function getCurrentUser() {
         DataServices.getCurrentUser().then(
@@ -75,10 +78,10 @@ function Navbar() {
                 console.log("users: ", response.data);
                 setUser(response.data);
             }
-        ).catch(error => { console.log(error); });
+        );
     }
 
-    React.useEffect(() => { getCurrentUser(); }, []);
+    React.useEffect(() => { getCurrentUser() }, []);
 
 
 
@@ -147,7 +150,7 @@ function Navbar() {
                                  alt="Cinque Terre" />
                         </li>
                         <li className="nav-item">
-                            <Link to="/profile" className="nav-link">Alexandros Korovesis</Link>
+    <Link to="/profile" className="nav-link">{user.firstName+" "+user.lastName}</Link>
                         </li>
                         <li>
                             <a className="nav-link" href="/logout">Logout</a>
