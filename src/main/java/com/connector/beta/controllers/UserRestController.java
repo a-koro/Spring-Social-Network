@@ -42,9 +42,7 @@ public class UserRestController {
     
     @ResponseBody
     @GetMapping("/searchUsers")
-    public List<MyUser> searchUsers(@RequestHeader String input, Principal principal) {
-        System.out.println(principal);
-        System.out.println("1234567890");
+    public List<MyUser> searchUsers(@RequestHeader String input) {
         return userServiceInterface.searchUserByFirstnameOrLastname(input);
     }
 
