@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
+import DataServices from '../services/DataServices';
 
 let results = ["Test DATA 001"];
 
@@ -65,6 +66,20 @@ function logout(evt) {
 
 function Navbar() {
 
+    const [user, setUser] = React.useState();
+
+
+    function getCurrentUser() {
+        DataServices.getCurrentUser().then(
+            response => {
+                console.log("users: ", response.data);
+                setUser(response.data);
+            }
+        ).catch(error => { console.log(error); });
+    }
+
+    React.useEffect(() => { getCurrentUser(); }, []);
+
     const history = useHistory();
     function fetchUsers(evt) {
 
@@ -127,7 +142,7 @@ function Navbar() {
                                  alt="Cinque Terre" />
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Alexandros Korovesis</a>
+                            <a className="nav-link" href="/profile">Alexandros Korovesis</a>
                         </li>
                         <li>
                             <a className="nav-link" href="/logout">Logout</a>

@@ -1,11 +1,9 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
 import Navbar, { ResultsProvider } from './components/Navbar';
-import Post from './components/Post';
-import Comment from './components/Comment';
-import Contact from './components/Contact';
 import NewsFeed from './components/NewsFeed';
 import Search from './components/Search';
+import Profile from "./pages/Profile";
 
 const SearchContext = React.createContext({});
 
@@ -28,6 +26,7 @@ function App() {
                       <Redirect from="/index.html" to="/" exact />
                       <Route path="/results" exact component={Search}/>
                       <Route path="/" exact component={NewsFeed}/>
+                      <Route path="/profile" exact component={Profile}/>
                   </ResultsProvider>
               </Switch>
           </BrowserRouter>
