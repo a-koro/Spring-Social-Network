@@ -24,9 +24,9 @@ function App() {
               <Switch>
                   <ResultsProvider>
                       <Redirect from="/index.html" to="/" exact />
-                      <Route path="/results" exact component={Search}/>
+                      <Route path="/results" component={Search}/>
                       <Route path="/" exact component={NewsFeed}/>
-                      <Route path="/profile" exact component={Profile}/>
+                      <Route path="/profile" component={Profile}/>
                   </ResultsProvider>
               </Switch>
           </BrowserRouter>

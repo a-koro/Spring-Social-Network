@@ -7,6 +7,8 @@ package com.connector.beta.controllers;
 
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.services.UserServiceInterface;
+
+import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,7 +42,9 @@ public class UserRestController {
     
     @ResponseBody
     @GetMapping("/searchUsers")
-    public List<MyUser> searchUsers(@RequestHeader String input) {
+    public List<MyUser> searchUsers(@RequestHeader String input, Principal principal) {
+        System.out.println(principal);
+        System.out.println("1234567890");
         return userServiceInterface.searchUserByFirstnameOrLastname(input);
     }
 

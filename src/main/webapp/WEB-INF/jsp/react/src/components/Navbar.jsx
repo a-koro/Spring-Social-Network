@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import DataServices from '../services/DataServices';
 
 let results = ["Test DATA 001"];
@@ -67,7 +67,7 @@ function logout(evt) {
 function Navbar() {
 
     const [user, setUser] = React.useState();
-
+    const [searchResults, setSearchResults] = React.useState();
 
     function getCurrentUser() {
         DataServices.getCurrentUser().then(
@@ -79,6 +79,8 @@ function Navbar() {
     }
 
     React.useEffect(() => { getCurrentUser(); }, []);
+
+
 
     const history = useHistory();
     function fetchUsers(evt) {
@@ -102,14 +104,17 @@ function Navbar() {
             })
             .then(response => response.json())
             .then(data => {
-                results = ["Test DATA"];
+                setSearchResults(data);
+                results = data;
                 console.log(data);
                 console.log("Testing changes");
             });
-
         history.push("/results");
-
     }
+
+    React.useEffect(() => {
+        console.log(searchResults)
+    },[searchResults]);
 
     return (
         <>
@@ -128,7 +133,7 @@ function Navbar() {
                     </form>
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
-                            <a className="nav-link" href="/">Feed</a>
+                            <Link to="/" className="nav-link">Feed</Link>
                         </li>
                         <li className="nav-item active">
                             <a className="nav-link" href="#">Messages</a>
@@ -142,7 +147,7 @@ function Navbar() {
                                  alt="Cinque Terre" />
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="/profile">Alexandros Korovesis</a>
+                            <Link to="/profile" className="nav-link">Alexandros Korovesis</Link>
                         </li>
                         <li>
                             <a className="nav-link" href="/logout">Logout</a>
@@ -165,4 +170,4 @@ function Navbar() {
     );
 }
 
-export default withRouter(Navbar);
+export default Navbar;
