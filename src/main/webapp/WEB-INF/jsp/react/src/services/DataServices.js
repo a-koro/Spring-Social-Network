@@ -24,7 +24,7 @@ function getAllUsers(){
 
 function getCurrentUser(){
 
-    return axios.get(URL_CURRENT_USER);
+    return axios.get("/userDetails");
 
 }
 

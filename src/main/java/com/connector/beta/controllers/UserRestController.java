@@ -46,4 +46,9 @@ public class UserRestController {
         return userServiceInterface.searchUserByFirstnameOrLastname(input);
     }
 
+    @ResponseBody
+    @GetMapping("/userDetails")
+    public MyUser getUserDetails(Principal principal) {
+        return userServiceInterface.getUserDetails(principal.getName());
+    }
 }

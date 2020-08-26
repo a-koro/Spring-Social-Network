@@ -66,33 +66,32 @@ function logout(evt) {
 
 function Navbar() {
 
-    const [user, setUser] = React.useState();
-    const [searchResults, setSearchResults] = React.useState();
+    const [username, setUsername] = React.useState(" ");
+    const [searchResults, setSearchResults] = React.useState([]);
 
     function getCurrentUser() {
-        DataServices.getCurrentUser().then(
-            response => {
-                console.log("users: ", response.data);
-                setUser(response.data);
-            }
-        ).catch(error => { console.log(error); });
+        // DataServices.getCurrentUser()
+        //     .then(data => {
+        //         setUser(data);
+        //     })
+        // .catch(error => { console.log(error); });
+        fetch("/userDetails",{
+            method: 'GET',
+            credentials: "include"
+        })
+        .then(response => response.json())
+        .then(data => {
+            setUsername(data.firstName+" "+data.lastName);
+        });
     }
 
     React.useEffect(() => { getCurrentUser(); }, []);
 
-
-
     const history = useHistory();
     function fetchUsers(evt) {
-
         evt.preventDefault();
 
         let searchBar = document.getElementById("searchBar");
-        let formData = new FormData();
-        formData.append("name", searchBar.nodeValue);
-
-        console.log(evt.target.search.value);
-
 
         fetch("/searchUsers",
             {
@@ -107,12 +106,12 @@ function Navbar() {
                 setSearchResults(data);
                 results = data;
                 console.log(data);
-                console.log("Testing changes");
             });
         history.push("/results");
     }
 
     React.useEffect(() => {
+        results = searchResults;
         console.log(searchResults)
     },[searchResults]);
 
@@ -147,7 +146,7 @@ function Navbar() {
                                  alt="Cinque Terre" />
                         </li>
                         <li className="nav-item">
-                            <Link to="/profile" className="nav-link">Alexandros Korovesis</Link>
+                            <Link to="/profile" className="nav-link">{username}</Link>
                         </li>
                         <li>
                             <a className="nav-link" href="/logout">Logout</a>
