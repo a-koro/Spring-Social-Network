@@ -18,13 +18,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 /**
- *
  * @author korov
  */
 
 @EnableWebSecurity
 public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
-    
+
     @Autowired
     private UserServiceInterface userServiceInterface;
 
@@ -39,16 +38,19 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/searchUsers").hasRole("USER")
                 .antMatchers("/").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/index*").hasAnyRole("USER")
-                .antMatchers("/register","/js/**", "/css/**").permitAll()
+                .antMatchers("/register", "/js/**", "/css/**").permitAll()
+//                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .permitAll()
-                .defaultSuccessUrl("/index.html",true)
+                .loginPage("/login")
+                .failureUrl("/login?error=true")
+                .permitAll()
+                .defaultSuccessUrl("/index.html", true)
                 .and()
                 .logout()
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login")
-                    .permitAll();
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout=true")
+                .permitAll();
     }
 
     @Override
@@ -59,19 +61,19 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
 //                .and()
 //                .withUser("Maria").password("{noop}1234").roles("ADMIN");
     }
-    
+
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-        
+
         auth.setUserDetailsService(userServiceInterface);
         auth.setPasswordEncoder(passwordEncoder());
-        
+
         return auth;
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
+
 }
