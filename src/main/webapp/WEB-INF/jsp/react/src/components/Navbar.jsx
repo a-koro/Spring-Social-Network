@@ -104,7 +104,7 @@ function Navbar() {
             .then(data => {
                 setSearchResults(data);
                 results = data;
-                console.log(data);
+                console.log("list search",data);
             });
         history.push("/results");
     }

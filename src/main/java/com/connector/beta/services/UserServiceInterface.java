@@ -19,8 +19,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserServiceInterface extends UserDetailsService {
     
      List<MyUser> searchUsersByName(String name);
-    
-     List<MyUser> searchUserByFirstnameOrLastname(String input);
+
+     List<Object[]> searchUserByFirstnameOrLastname(String input);
 
      UserDto getCurrentUser();
 

@@ -40,8 +40,9 @@ public class UserRestController {
     
     @ResponseBody
     @GetMapping("/searchUsers")
-    public List<MyUser> searchUsers(@RequestHeader String input) {
-        return userServiceInterface.searchUserByFirstnameOrLastname(input);
+    public List<Object[]> searchUsers(@RequestHeader String input) {
+        List<Object[]> list= userServiceInterface.searchUserByFirstnameOrLastname(input);
+        return list;
     }
 
 }

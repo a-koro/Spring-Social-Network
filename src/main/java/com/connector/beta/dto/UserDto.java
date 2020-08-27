@@ -13,7 +13,7 @@ public class UserDto {
     private String firstName;
     private String lastName;
     private Date birthday;
-    private Image image;
+
 
     public UserDto() {
     }
@@ -58,12 +58,6 @@ public class UserDto {
         this.birthday = birthday;
     }
 
-    public Image getImage() {
-        return image;
-    }
 
-    public void setImage(Image image) {
-        this.image = image;
-    }
 
 }
