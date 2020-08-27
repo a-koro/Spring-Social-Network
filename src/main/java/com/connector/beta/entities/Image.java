@@ -16,6 +16,9 @@ public class Image implements Serializable {
     @Column(name = "file")
     private byte[] file;
 
+    @Column(name = "type")
+    private String type;
+
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(name="user_image",
             joinColumns = @JoinColumn(name="imageid"),
@@ -55,5 +58,13 @@ public class Image implements Serializable {
 
     public void setUser(MyUser user) {
         this.user = user;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 
 import '../components/profileBg.css';
+import ImageProfile from "../components/ImageProfile";
 
 export default function ProfileBg() {
     return (
@@ -10,8 +11,8 @@ export default function ProfileBg() {
 
             </div>
             <div className="avatar">
-                <img alt="" src="http://lorempixel.com/100/100/people/9" />
-            </div>
+               <ImageProfile/>
+               </div>
             <div className="info">
                 <div className="title">
                     <p>Script Eden</p>

@@ -14,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/profile")
+@CrossOrigin("*")
 public class ImageRestController {
 
     private final UserServiceInterface userService;
@@ -38,14 +39,15 @@ public class ImageRestController {
     }
 
     @PostMapping(
-            path = "{userEmail}/image/upload",
+            path = "{userid}/image/upload",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public void uploadUserProfileImage(@PathVariable("userEmail") String userEmail,
+    public void uploadUserProfileImage(@PathVariable("userid") Integer userid,
                                        @RequestParam("file") MultipartFile file){
 
-            imageService.uploadUserProfileImage(userEmail,file);
+
+            imageService.uploadUserProfileImage(userid,file);
     }
 
 

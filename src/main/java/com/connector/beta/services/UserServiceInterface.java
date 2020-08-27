@@ -6,8 +6,10 @@
 package com.connector.beta.services;
 
 import com.connector.beta.dto.UserDto;
+import com.connector.beta.entities.Image;
 import com.connector.beta.entities.MyUser;
 import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
@@ -23,4 +25,7 @@ public interface UserServiceInterface extends UserDetailsService {
      UserDto getCurrentUser();
 
      List<UserDto> getAllUsers();
+
+     MyUser findById(Integer userid);
+
 }

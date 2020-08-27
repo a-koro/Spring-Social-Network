@@ -6,6 +6,7 @@
 package com.connector.beta.services;
 
 import com.connector.beta.dto.UserDto;
+import com.connector.beta.entities.Image;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.Role;
 import com.connector.beta.mapper.UserMapper;
@@ -103,4 +104,14 @@ public class UserServiceImpl implements UserServiceInterface {
 
         return userMapper.mapListToDto(userRepo.findAll());
     }
+
+    @Override
+    public MyUser findById(Integer userid) {
+       return userRepo.findById(userid)
+               .orElseThrow(
+                       ()->
+                       new IllegalArgumentException("id not found") );
+
+    }
+
 }

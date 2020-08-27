@@ -69,7 +69,8 @@ function Navbar() {
     
     const [searchResults, setSearchResults] = React.useState();
 
-    const [user, setUser] = React.useState({});
+    const [user, setUser] = React.useState({firstName:"null",
+    lastName:"null"});
    
 
     function getCurrentUser() {
@@ -78,7 +79,7 @@ function Navbar() {
                 console.log("users: ", response.data);
                 setUser(response.data);
             }
-        );
+        ).catch(error=>{console.log(error.response)});
     }
 
     React.useEffect(() => { getCurrentUser() }, []);
