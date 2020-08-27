@@ -20,7 +20,7 @@ public interface UserServiceInterface extends UserDetailsService {
     
      List<MyUser> searchUsersByName(String name);
 
-     List<Object> searchUserByFirstnameOrLastname(String input);
+     List<Object[]> searchUserByFirstnameOrLastname(String input);
 
      UserDto getCurrentUser();
 
