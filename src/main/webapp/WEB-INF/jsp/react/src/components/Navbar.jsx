@@ -70,18 +70,19 @@ function Navbar() {
     const [searchResults, setSearchResults] = React.useState([]);
 
     function getCurrentUser() {
-        // DataServices.getCurrentUser()
-        //     .then(data => {
-        //         setUser(data);
-        //     })
-        // .catch(error => { console.log(error); });
-        fetch("/userDetails",{
-            method: 'GET',
-            credentials: "include"
-        })
+    //     DataServices.getCurrentUser()
+    //         .then(data => {
+    //             setUser(data.data);
+    //             console.log(data.data);
+    //         })
+    //     .catch(error => { console.log(error); });
+    fetch("/userDetails", {
+        method: 'GET',
+        credentials: "include"
+    })
         .then(response => response.json())
         .then(data => {
-            setUsername(data.firstName+" "+data.lastName);
+            setUsername(data.firstName + " " + data.lastName);
         });
     }
 
@@ -146,7 +147,7 @@ function Navbar() {
                                  alt="Cinque Terre" />
                         </li>
                         <li className="nav-item">
-                            <Link to="/profile" className="nav-link">{username}</Link>
+                            <Link to="/profile" className="nav-link">Ale</Link>
                         </li>
                         <li>
                             <a className="nav-link" href="/logout">Logout</a>
