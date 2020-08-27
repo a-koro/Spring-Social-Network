@@ -19,10 +19,8 @@ public class Image implements Serializable {
     @Column(name = "type")
     private String type;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    @JoinTable(name="user_image",
-            joinColumns = @JoinColumn(name="imageid"),
-            inverseJoinColumns = @JoinColumn(name="user_id"))
+
+    @OneToOne(mappedBy = "image")
     private MyUser user;
 
     public Image() {
