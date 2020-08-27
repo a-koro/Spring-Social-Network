@@ -67,7 +67,7 @@ function logout(evt) {
 function Navbar() {
 
     
-    const [searchResults, setSearchResults] = React.useState();
+    const [searchResults, setSearchResults] = React.useState([]);
 
     const [user, setUser] = React.useState({firstName:"null",
     lastName:"null"});
@@ -88,15 +88,9 @@ function Navbar() {
 
     const history = useHistory();
     function fetchUsers(evt) {
-
         evt.preventDefault();
 
         let searchBar = document.getElementById("searchBar");
-        let formData = new FormData();
-        formData.append("name", searchBar.nodeValue);
-
-        console.log(evt.target.search.value);
-
 
         fetch("/searchUsers",
             {
@@ -111,12 +105,12 @@ function Navbar() {
                 setSearchResults(data);
                 results = data;
                 console.log(data);
-                console.log("Testing changes");
             });
         history.push("/results");
     }
 
     React.useEffect(() => {
+        results = searchResults;
         console.log(searchResults)
     },[searchResults]);
 
