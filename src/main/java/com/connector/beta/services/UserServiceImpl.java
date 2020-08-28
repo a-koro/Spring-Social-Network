@@ -115,4 +115,24 @@ public class UserServiceImpl implements UserServiceInterface {
 
     }
 
+    @Override
+    public Integer findUserIdByEmail(String email){
+        return userRepo.findUserIdByEmail(email)
+                .orElseThrow(()-> new IllegalArgumentException("id not found"));
+    }
+
+    @Override
+    public String findCurrentUsername(){
+            User user = (User) SecurityContextHolder.
+                    getContext().getAuthentication().getPrincipal();
+            return user.getUsername();
+
+    }
+
+    @Override
+    public void userSave(MyUser user){
+        userRepo.save(user);
+    }
+
+
 }

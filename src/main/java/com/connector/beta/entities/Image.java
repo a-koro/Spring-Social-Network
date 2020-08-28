@@ -19,8 +19,10 @@ public class Image implements Serializable {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "size")
+    private String size;
 
-    @OneToOne(mappedBy = "image")
+    @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
     private MyUser user;
 
     public Image() {
@@ -64,5 +66,13 @@ public class Image implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 }

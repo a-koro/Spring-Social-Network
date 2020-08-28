@@ -3,19 +3,17 @@ import {useDropzone} from 'react-dropzone';
 
 import axios from 'axios';
 
-function Dropzone({userid}) {
-    console.log("drop userid ",userid);
+function Dropzone({val}) {
     const onDrop = useCallback(acceptedFiles => {
       const file = acceptedFiles[0];
       console.log(file);
-      
 
 
       const formData= new FormData();
       formData.append("file",file);
 
       axios.post(
-        `http://localhost:8080/api/profile/${userid}/image/upload`,
+        `http://localhost:8080/api/profile/image/upload`,
         formData,
         {
             headers:{

@@ -33,34 +33,41 @@ public class ImageServiceImpl implements ImageServiceInterface{
     @Override
     public void uploadUserProfileImage(Integer userid, MultipartFile file) {
 
-        if(file.isEmpty()){
-            throw new IllegalStateException("empty image");
-        }
+        isEmpty(file);
 
-        if(!Arrays.asList(IMAGE_JPEG.getMimeType(),
-                IMAGE_PNG.getMimeType(),
-                IMAGE_GIF.getMimeType()).contains(file.getContentType())){
-            throw new IllegalStateException("File must be an image["+file.getContentType()+"]");
-        }
+        isImage(file);
 
-       MyUser myUser= userService.findById(userid);
+        MyUser myUser= userService.findById(userid);
 
-        Map<String,String> metadata = new HashMap<>();
-
-        metadata.put("Content-Type",file.getContentType());
-        metadata.put("Content-Length",String.valueOf(file.getSize()));
 
         Image image = new Image();
-        image.setUser(myUser);
         image.setTitle(file.getOriginalFilename());
+        image.setType(file.getContentType());
+        image.setSize(String.valueOf(file.getSize()));
         try{
                 image.setFile(file.getBytes());
         }catch (IOException ex){
             ex.printStackTrace();
         }
 
-        saveImageProfile(image);
 
+        myUser.setImage(image);
+        userService.userSave(myUser);
+
+    }
+
+    private void isImage(MultipartFile file) {
+        if(!Arrays.asList(IMAGE_JPEG.getMimeType(),
+                IMAGE_PNG.getMimeType(),
+                IMAGE_GIF.getMimeType()).contains(file.getContentType())){
+            throw new IllegalStateException("File must be an image["+file.getContentType()+"]");
+        }
+    }
+
+    private void isEmpty(MultipartFile file) {
+        if(file.isEmpty()){
+            throw new IllegalStateException("empty image");
+        }
     }
 
     @Override

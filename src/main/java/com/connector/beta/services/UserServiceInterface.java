@@ -28,4 +28,10 @@ public interface UserServiceInterface extends UserDetailsService {
 
      MyUser findById(Integer userid);
 
+     public Integer findUserIdByEmail(String email);
+
+    String findCurrentUsername();
+
+    void userSave(MyUser user);
+
 }

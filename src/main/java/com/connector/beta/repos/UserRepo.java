@@ -5,11 +5,13 @@
  */
 package com.connector.beta.repos;
 
+import com.connector.beta.entities.Image;
 import com.connector.beta.entities.MyUser;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -28,4 +30,8 @@ public interface UserRepo extends JpaRepository<MyUser, Integer> {
 
     @Query("SELECT u.firstName, u.lastName FROM MyUser u WHERE u.firstName LIKE :input% OR u.lastName LIKE :input%")
     List<Object[]> getUsersByFirstnameAndLastname(@Param("input") String input);
+
+    @Query("SELECT u.userId FROM MyUser u WHERE u.email= :email")
+    Optional<Integer> findUserIdByEmail(@Param("email") String email);
+
 }

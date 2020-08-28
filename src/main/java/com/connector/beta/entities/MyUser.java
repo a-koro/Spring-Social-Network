@@ -48,7 +48,7 @@ public class MyUser implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinTable(name = "user_image",
             joinColumns =
                      @JoinColumn(name = "user_id") ,
