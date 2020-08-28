@@ -34,4 +34,7 @@ public interface UserRepo extends JpaRepository<MyUser, Integer> {
     @Query("SELECT u.userId FROM MyUser u WHERE u.email= :email")
     Optional<Integer> findUserIdByEmail(@Param("email") String email);
 
+   @Query("SELECT i FROM MyUser u JOIN u.image i  ON u.userId= :userid")
+   Optional<Image> findImageProfileFromUserId(@Param("userid") Integer userid);
+
 }

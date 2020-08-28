@@ -83,13 +83,10 @@ public class UserServiceImpl implements UserServiceInterface {
     public UserDto getCurrentUser() {
         UserDto userDto=new UserDto();
         try {
-            User user = (User) SecurityContextHolder.
-                    getContext().getAuthentication().getPrincipal();
-
-            MyUser myUser = userRepo.findByEmail(user.getUsername())
+            MyUser myUser = userRepo.findByEmail( findCurrentUsername())
                     .orElseThrow(
                             () ->
-                                    new UsernameNotFoundException("Email not found - " + user.getUsername()));
+                                    new UsernameNotFoundException("Email not found - " + findCurrentUsername()));
 
             userDto = userMapper.mapToDto(myUser);
 
@@ -134,5 +131,9 @@ public class UserServiceImpl implements UserServiceInterface {
         userRepo.save(user);
     }
 
+    @Override
+    public Image findImageProfileFromUserId(Integer userid){
+        return userRepo.findImageProfileFromUserId(userid).orElseThrow(()->new IllegalArgumentException("not found"));
+    }
 
 }

@@ -1,9 +1,13 @@
 package com.connector.beta.controllers;
 
 import com.connector.beta.dto.UserDto;
+import com.connector.beta.entities.Image;
 import com.connector.beta.services.ImageServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +53,26 @@ public class ImageRestController {
             imageService.uploadUserProfileImage(userid,file);
     }
 
+    @GetMapping("/image/download")
+    public ResponseEntity<Resource> downloadUserProfileImage(){
 
+       Integer userId= userService
+               .findUserIdByEmail(userService.findCurrentUsername());
+
+       Image image = userService.findImageProfileFromUserId(userId);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=" + image.getTitle());
+
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(image.getFile().length)
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(new ByteArrayResource(image.getFile()));
+
+
+
+    }
 
 }

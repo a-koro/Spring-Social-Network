@@ -29,7 +29,7 @@ export default function ProfileBg() {
 
             </div>
             <div className="avatar">
-                <img alt="image-profile" src="http://lorempixel.com/100/100/people/9" />
+                <img alt="image-profile" src="http://localhost:8080/api/profile/image/download" />
                 <Dropzone/>
             </div>
             <div className="info">

@@ -1,9 +1,9 @@
 package com.connector.beta.dto;
 
-import com.connector.beta.entities.Image;
+
 
 import java.sql.Date;
-import java.util.List;
+
 
 public class UserDto {
 

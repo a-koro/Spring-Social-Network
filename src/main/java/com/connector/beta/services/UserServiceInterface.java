@@ -34,4 +34,5 @@ public interface UserServiceInterface extends UserDetailsService {
 
     void userSave(MyUser user);
 
+    Image findImageProfileFromUserId(Integer userid);
 }
