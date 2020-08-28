@@ -42,23 +42,33 @@ public class UserFriendsController {
 
         MyUser myUser = userRepo.findByEmail(user.getUsername());
 
+        List<Object[]> friendsIdList = friendsRepo.getFriendsTable();
+//        friendsIdList.forEach(o -> System.out.println(o.toString()));
+
+        for (Object[] friend : friendsIdList) {
+            System.out.println(friend[0].toString());
+//            System.out.println(friend[1]);
+//            System.out.println(friend[2]);
+//            System.out.println(friend[3]);
+        }
+
 
 
 //        System.out.println(myUser);
 //        System.out.println(myUser.getBirthday());
-        FriendsEntityPK friendsEntityPK = new FriendsEntityPK();
+//        FriendsEntityPK friendsEntityPK = new FriendsEntityPK();
 
 
-        List<FriendsEntity> friends = friendsRepo.findAll();
-        System.out.println(friends.get(0).getUserFirstId());
-        System.out.println(friends.get(1).getUserFirstId());
-        System.out.println(friends.get(2).getUserFirstId());
-        System.out.println(friends.get(3).getUserFirstId());
-
-        System.out.println(friends.get(0).getUserSecondId());
-        System.out.println(friends.get(1).getUserSecondId());
-        System.out.println(friends.get(2).getUserSecondId());
-        System.out.println(friends.get(3).getUserSecondId());
+//        List<FriendsEntity> friends = friendsRepo.findAll();
+//        System.out.println(friends.get(0).getUserFirstId());
+//        System.out.println(friends.get(1).getUserFirstId());
+//        System.out.println(friends.get(2).getUserFirstId());
+//        System.out.println(friends.get(3).getUserFirstId());
+//
+//        System.out.println(friends.get(0).getUserSecondId());
+//        System.out.println(friends.get(1).getUserSecondId());
+//        System.out.println(friends.get(2).getUserSecondId());
+//        System.out.println(friends.get(3).getUserSecondId());
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(myUser);
