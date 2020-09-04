@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
 import { faGlassCheers } from '@fortawesome/free-solid-svg-icons';
+import Comment from './Comment';
 
 const style = {
     objectFit: 'cover',
@@ -36,6 +37,8 @@ function Post(props) {
                         </div>
                     </div>
                 </div>
+                <Comment username="Alex Koro" post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family." />
+                <Comment username="Alex Koro" post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family." />
             </div>
         </>
     );
