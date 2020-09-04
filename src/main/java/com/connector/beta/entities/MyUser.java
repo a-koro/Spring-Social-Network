@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -48,13 +48,9 @@ public class MyUser implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinTable(name = "user_image",
-            joinColumns =
-                     @JoinColumn(name = "user_id") ,
-            inverseJoinColumns =
-                     @JoinColumn(name = "imageid") )
-    private Image image;
+
+    @Column(name = "user_profile_image_link")
+    private String userProfileImageLink; //S3 key
 
     public MyUser() {
     }
@@ -63,9 +59,6 @@ public class MyUser implements Serializable {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
 
     public String getEmail() {
         return email;
@@ -115,11 +108,12 @@ public class MyUser implements Serializable {
         this.password = password;
     }
 
-    public Image getImage() {
-        return image;
+    public String getUserProfileImageLink() {
+        return userProfileImageLink;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setUserProfileImageLink(String userProfileImageLink) {
+        this.userProfileImageLink = userProfileImageLink;
     }
+
 }

@@ -1,13 +1,13 @@
 package com.connector.beta.controllers;
 
 import com.connector.beta.dto.UserDto;
-import com.connector.beta.entities.Image;
-import com.connector.beta.services.ImageServiceInterface;
+
+import com.connector.beta.services.UserProfileServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
+
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +19,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/profile")
 //@CrossOrigin("*")
-public class ImageRestController {
+public class UserProfileRestController {
 
     private final UserServiceInterface userService;
-    private final ImageServiceInterface imageService;
+    private final UserProfileServiceInterface imageService;
 
     @Autowired
-    public ImageRestController(UserServiceInterface userService, ImageServiceInterface imageService) {
+    public UserProfileRestController(UserServiceInterface userService, UserProfileServiceInterface imageService) {
         this.userService = userService;
         this.imageService = imageService;
     }
@@ -54,25 +54,10 @@ public class ImageRestController {
     }
 
     @GetMapping("/image/download")
-    public ResponseEntity<Resource> downloadUserProfileImage(){
+    public byte[] downloadUserProfileImage(){
+        Integer userid= userService.findUserIdByEmail(userService.findCurrentUsername());
 
-       Integer userId= userService
-               .findUserIdByEmail(userService.findCurrentUsername());
-
-       Image image = userService.findImageProfileFromUserId(userId);
-
-        HttpHeaders header = new HttpHeaders();
-        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=" + image.getTitle());
-
-
-        return ResponseEntity.ok()
-                .headers(header)
-                .contentLength(image.getFile().length)
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .body(new ByteArrayResource(image.getFile()));
-
-
-
+      return imageService.downloadUserProfileImage(userid);
     }
 
 }

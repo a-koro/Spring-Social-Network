@@ -5,13 +5,14 @@
  */
 package com.connector.beta.repos;
 
-import com.connector.beta.entities.Image;
+
+import com.connector.beta.dto.UserProfileImageDto;
 import com.connector.beta.entities.MyUser;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,8 @@ public interface UserRepo extends JpaRepository<MyUser, Integer> {
     @Query("SELECT u.userId FROM MyUser u WHERE u.email= :email")
     Optional<Integer> findUserIdByEmail(@Param("email") String email);
 
-   @Query("SELECT i FROM MyUser u JOIN u.image i  ON u.userId= :userid")
-   Optional<Image> findImageProfileFromUserId(@Param("userid") Integer userid);
+   @Query("SELECT new com.connector.beta.dto.UserProfileImageDto( u.userId, u.userProfileImageLink) FROM MyUser u WHERE u.userId= :userid")
+   Optional<UserProfileImageDto> findImageProfileFromUserId(@Param("userid") Integer userid);
+
 
 }

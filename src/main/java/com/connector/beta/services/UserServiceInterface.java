@@ -6,9 +6,11 @@
 package com.connector.beta.services;
 
 import com.connector.beta.dto.UserDto;
-import com.connector.beta.entities.Image;
+
+import com.connector.beta.dto.UserProfileImageDto;
 import com.connector.beta.entities.MyUser;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -34,5 +36,5 @@ public interface UserServiceInterface extends UserDetailsService {
 
     void userSave(MyUser user);
 
-    Image findImageProfileFromUserId(Integer userid);
+
 }

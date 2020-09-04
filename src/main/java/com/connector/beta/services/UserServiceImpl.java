@@ -6,7 +6,7 @@
 package com.connector.beta.services;
 
 import com.connector.beta.dto.UserDto;
-import com.connector.beta.entities.Image;
+
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.Role;
 import com.connector.beta.mapper.UserMapper;
@@ -131,9 +131,6 @@ public class UserServiceImpl implements UserServiceInterface {
         userRepo.save(user);
     }
 
-    @Override
-    public Image findImageProfileFromUserId(Integer userid){
-        return userRepo.findImageProfileFromUserId(userid).orElseThrow(()->new IllegalArgumentException("not found"));
-    }
+
 
 }
