@@ -1,9 +1,12 @@
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone';
+import { useHistory, Link } from "react-router-dom";
 
 import axios from 'axios';
 
 function Dropzone() {
+
+    const history = useHistory();
 
     const style = {
         objectFit: 'cover',
@@ -30,6 +33,8 @@ function Dropzone() {
         }
       ).then(()=>{
           console.log("file upload success");
+          history.push('/');
+          history.push('/profile');
       }).catch(err=>{
           console.log(err);
       });
