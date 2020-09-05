@@ -7,6 +7,8 @@ package com.connector.beta.controllers;
 
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.services.UserServiceInterface;
+
+import java.security.Principal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,4 +46,9 @@ public class UserRestController {
         return userServiceInterface.searchUserByFirstnameOrLastname(input);
     }
 
+    @ResponseBody
+    @GetMapping("/userDetails")
+    public MyUser getUserDetails(Principal principal) {
+        return userServiceInterface.getUserDetails(principal.getName());
+    }
 }

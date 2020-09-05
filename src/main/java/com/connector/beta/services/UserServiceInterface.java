@@ -18,4 +18,6 @@ public interface UserServiceInterface extends UserDetailsService {
     public List<MyUser> searchUsersByName(String name);
     
     public List<MyUser> searchUserByFirstnameOrLastname(String input);
+
+    public MyUser getUserDetails(String email);
 }

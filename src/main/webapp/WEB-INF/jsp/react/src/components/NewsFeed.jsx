@@ -14,8 +14,6 @@ const styleBar = {
     overflowY: "scroll"
 };
 
-let alekos = "alekos";
-
 function NewsFeed(props) {
 
     const [items, setItems] = React.useState([]);
