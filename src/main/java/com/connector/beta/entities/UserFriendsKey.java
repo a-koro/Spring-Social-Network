@@ -1,15 +1,28 @@
 package com.connector.beta.entities;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
+import java.util.Objects;
 
-public class FriendsEntityPK implements Serializable {
-    private int userFirstId;
-    private int userSecondId;
+@Embeddable
+public class UserFriendsKey implements Serializable {
 
-    @Column(name = "user_first_id", nullable = false)
-    @Id
+    @Column(name = "user_first_id")
+    int userFirstId;
+
+    @Column(name = "user_second_id")
+    int userSecondId;
+
+    public UserFriendsKey() {
+
+    }
+
+//    public UserFriendsKey(int userFirstId, int userSecondId) {
+//        this.userFirstId = userFirstId;
+//        this.userSecondId = userSecondId;
+//    }
+
     public int getUserFirstId() {
         return userFirstId;
     }
@@ -18,8 +31,6 @@ public class FriendsEntityPK implements Serializable {
         this.userFirstId = userFirstId;
     }
 
-    @Column(name = "user_second_id", nullable = false)
-    @Id
     public int getUserSecondId() {
         return userSecondId;
     }
@@ -32,19 +43,13 @@ public class FriendsEntityPK implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        FriendsEntityPK that = (FriendsEntityPK) o;
-
-        if (userFirstId != that.userFirstId) return false;
-        if (userSecondId != that.userSecondId) return false;
-
-        return true;
+        UserFriendsKey that = (UserFriendsKey) o;
+        return userFirstId == that.userFirstId &&
+                userSecondId == that.userSecondId;
     }
 
     @Override
     public int hashCode() {
-        int result = userFirstId;
-        result = 31 * result + userSecondId;
-        return result;
+        return Objects.hash(userFirstId, userSecondId);
     }
 }

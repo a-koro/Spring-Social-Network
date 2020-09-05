@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -47,9 +48,31 @@ public class MyUser implements Serializable {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
-    
+
+    @OneToMany(mappedBy = "myUser2")
+    Set<UserFriends> status;
+
+//    public Set<UserFriends> getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(Set<UserFriends> status) {
+//        this.status = status;
+//    }
+
     public MyUser() {
     }
+
+
+//    public Set<UserFriends> getStatus() {
+//        return status;
+//    }
+//
+//    public void setStatus(Set<UserFriends> status) {
+//        this.status = status;
+//    }
+
+
 
     public Integer getUserId() {
         return userId;

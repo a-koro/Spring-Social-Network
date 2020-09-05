@@ -1,14 +1,13 @@
 package com.connector.beta.controllers;
 
-import com.connector.beta.entities.FriendsEntity;
-import com.connector.beta.entities.FriendsEntityPK;
+import com.connector.beta.Pojos.UserFriendsDto;
 import com.connector.beta.entities.MyUser;
-import com.connector.beta.repos.FriendsRepo;
+import com.connector.beta.entities.UserFriends;
+import com.connector.beta.repos.UserFriendsRepo;
 import com.connector.beta.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +23,12 @@ public class UserFriendsController {
     @Autowired
     UserRepo userRepo;
     @Autowired
-    FriendsRepo friendsRepo;
+    UserFriendsRepo userFriendsRepo;
+
 
 
     @GetMapping("/user")
-    public ResponseEntity<MyUser> CurrentUserInfo() {
+    public ResponseEntity<List<UserFriendsDto>> CurrentUserInfo() {
 
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        String currentPrincipalName = authentication.getName();
@@ -42,36 +42,37 @@ public class UserFriendsController {
 
         MyUser myUser = userRepo.findByEmail(user.getUsername());
 
-        List<Object[]> friendsIdList = friendsRepo.getFriendsTable();
-//        friendsIdList.forEach(o -> System.out.println(o.toString()));
-
-        for (Object[] friend : friendsIdList) {
-            System.out.println(friend[0].toString());
-//            System.out.println(friend[1]);
-//            System.out.println(friend[2]);
-//            System.out.println(friend[3]);
-        }
+        int userSecondId = 1;
 
 
+        List<UserFriendsDto> friendsDto = userFriendsRepo.getAllFriendsWithNames(userSecondId);
+//        System.out.println(friendsDto.get(0).getFirstName());
+//        System.out.println(friendsDto.get(0).getLastName());
 
-//        System.out.println(myUser);
-//        System.out.println(myUser.getBirthday());
-//        FriendsEntityPK friendsEntityPK = new FriendsEntityPK();
-
-
-//        List<FriendsEntity> friends = friendsRepo.findAll();
-//        System.out.println(friends.get(0).getUserFirstId());
-//        System.out.println(friends.get(1).getUserFirstId());
-//        System.out.println(friends.get(2).getUserFirstId());
-//        System.out.println(friends.get(3).getUserFirstId());
+//        List<UserFriends> userFriendsListTrue = userFriendsRepo.getAllFriends(userSecondId);
+//        System.out.println(userFriendsListTrue.get(0).getId().getUserFirstId());
+//        System.out.println(userFriendsListTrue.get(0).getId().getUserSecondId());
+//        System.out.println(userFriendsListTrue.get(0).getStatus());
+//        userFriendsListTrue.get(0).getMyUser1().
 //
-//        System.out.println(friends.get(0).getUserSecondId());
-//        System.out.println(friends.get(1).getUserSecondId());
-//        System.out.println(friends.get(2).getUserSecondId());
-//        System.out.println(friends.get(3).getUserSecondId());
+//        System.out.println(userFriendsListTrue.get(1).getId().getUserFirstId());
+//        System.out.println(userFriendsListTrue.get(1).getId().getUserSecondId());
+//        System.out.println(userFriendsListTrue.get(1).getStatus());
+//
+//        System.out.println(userFriendsListTrue.get(2).getId().getUserFirstId());
+//        System.out.println(userFriendsListTrue.get(2).getId().getUserSecondId());
+//        System.out.println(userFriendsListTrue.get(2).getStatus());
+
+//        List<Object[]> userFriendsList1 = userFriendsRepo.getAllFriendsWithNames(userSecondId);
+//        System.out.println(userFriendsList1.get(0).toString());
+
+
+//        List<UserFriends> userFriendsList = userFriendsRepo.findAll();
+//        System.out.println(userFriendsList.get(0).toString());
+//        System.out.println(userFriendsList.get(1).toString());
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(myUser);
+                .body(friendsDto);
     }
 
 
