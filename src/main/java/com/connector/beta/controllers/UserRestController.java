@@ -5,6 +5,7 @@
  */
 package com.connector.beta.controllers;
 
+import com.connector.beta.dto.UserDto;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.services.UserServiceInterface;
 
@@ -38,13 +39,13 @@ public class UserRestController {
     
     @ResponseBody
     @GetMapping("/searchUsers")
-    public List<Object[]> searchUsers(@RequestHeader String input) {
+    public List<MyUser> searchUsers(@RequestHeader String input) {
         return userServiceInterface.searchUserByFirstnameOrLastname(input);
     }
 
     @ResponseBody
     @GetMapping("/userDetails")
-    public MyUser getUserDetails(Principal principal) {
-        return userServiceInterface.getUserDetails(principal.getName());
+    public UserDto getUserDetails(Principal principal) {
+        return userServiceInterface.getCurrentUser();
     }
 }

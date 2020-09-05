@@ -40,7 +40,7 @@ public class UserFriendsController {
 
         System.out.println(user.getUsername());
 
-        MyUser myUser = userRepo.findByEmail(user.getUsername());
+//        MyUser myUser = userRepo.findByEmailNotOptional(user.getUsername());
 
         int userSecondId = 1;
 

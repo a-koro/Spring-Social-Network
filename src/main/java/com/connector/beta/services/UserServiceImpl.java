@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public MyUser getUserDetails(String email) {
-        return userRepo.findByEmail(email);
+        return userRepo.findByEmailNotOptional(email);
     }
 
 
