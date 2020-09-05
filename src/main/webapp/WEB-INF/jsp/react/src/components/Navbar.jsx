@@ -8,6 +8,9 @@ let results = ["Test DATA 001"];
 export const ResultsContext = React.createContext({});
 
 export const ResultsProvider = (props) => {
+
+    const [stateResults, setStateResults] = React.useState([]);
+
     return (
         <ResultsContext.Provider value={results}>
             {props.children}
@@ -66,25 +69,27 @@ function logout(evt) {
 
 function Navbar() {
 
-    
+    const [username, setUsername] = React.useState(" ");
     const [searchResults, setSearchResults] = React.useState([]);
 
-    const [user, setUser] = React.useState({firstName:"",
-    lastName:""});
-   
-
     function getCurrentUser() {
-        DataServices.getCurrentUser().then(
-            response => {
-                console.log("users: ", response.data);
-                setUser(response.data);
-            }
-        ).catch(error=>{console.log(error.response)});
+    // DataServices.getCurrentUser().then(
+    //     response => {
+    //         console.log("users: ", response.data);
+    //         setUser(response.data);
+    //     }
+    // );
+    fetch("/userDetails", {
+        method: 'GET',
+        credentials: "include"
+    })
+        .then(response => response.json())
+        .then(data => {
+            setUsername(data.firstName + " " + data.lastName);
+        });
     }
 
-    React.useEffect(() => { getCurrentUser() }, []);
-
-
+    React.useEffect(() => { getCurrentUser(); }, []);
 
     const history = useHistory();
     function fetchUsers(evt) {
@@ -104,21 +109,24 @@ function Navbar() {
             .then(data => {
                 setSearchResults(data);
                 results = data;
-                console.log("list search",data);
+                console.log(results[0].email);
             });
-        history.push("/results");
     }
 
+    const isInitialMount = React.useRef(true);
     React.useEffect(() => {
-        results = searchResults;
-        console.log(searchResults)
+        if (isInitialMount.current) {
+            isInitialMount.current = false;
+        } else {
+            history.push("/results");
+        }
     },[searchResults]);
 
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <a className="navbar-brand" href="#">
-                    <img src="http://placehold.it/150x50?text=Logo" width="30" height="30" className="d-inline-block align-top" alt="" loading="lazy" />
+                    {/*<img src="http://placehold.it/150x50?text=Logo" width="30" height="30" className="d-inline-block align-top" alt="" loading="lazy" />*/}
                     Connector
                 </a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -127,7 +135,7 @@ function Navbar() {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <form className="form-inline my-2 my-lg-0" onSubmit={fetchUsers}>
-                        <input id="searchBar" className="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search" />
+                        <input id="searchBar" className="form-control autocomplete mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search" />
                     </form>
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
@@ -145,7 +153,7 @@ function Navbar() {
                                  alt="Cinque Terre" />
                         </li>
                         <li className="nav-item">
-    <Link to="/profile" className="nav-link">{user.firstName+" "+user.lastName}</Link>
+                            <Link to="/profile" className="nav-link">{username}</Link>
                         </li>
                         <li>
                             <a className="nav-link" href="/logout">Logout</a>

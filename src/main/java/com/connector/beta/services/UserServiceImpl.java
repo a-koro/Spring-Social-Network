@@ -74,8 +74,7 @@ public class UserServiceImpl implements UserServiceInterface {
     }
 
     @Override
-    public List<Object[]> searchUserByFirstnameOrLastname(String input) {
-
+    public List<MyUser> searchUserByFirstnameOrLastname(String input) {
         return userRepo.getUsersByFirstnameAndLastname(input);
     }
 
@@ -135,5 +134,12 @@ public class UserServiceImpl implements UserServiceInterface {
     public Image findImageProfileFromUserId(Integer userid){
         return userRepo.findImageProfileFromUserId(userid).orElseThrow(()->new IllegalArgumentException("not found"));
     }
+
+
+    @Override
+    public MyUser getUserDetails(String email) {
+        return userRepo.findByEmail(email);
+    }
+
 
 }

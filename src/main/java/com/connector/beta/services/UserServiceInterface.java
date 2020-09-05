@@ -19,8 +19,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public interface UserServiceInterface extends UserDetailsService {
     
      List<MyUser> searchUsersByName(String name);
-
-     List<Object[]> searchUserByFirstnameOrLastname(String input);
+//
+//     List<Object[]> searchUserByFirstnameOrLastname(String input);
 
      UserDto getCurrentUser();
 
@@ -35,4 +35,8 @@ public interface UserServiceInterface extends UserDetailsService {
     void userSave(MyUser user);
 
     Image findImageProfileFromUserId(Integer userid);
+
+    public List<MyUser> searchUserByFirstnameOrLastname(String input);
+
+    public MyUser getUserDetails(String email);
 }
