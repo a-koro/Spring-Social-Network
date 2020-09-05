@@ -45,9 +45,8 @@ export default function ProfileBg() {
             </div>
             <div className="info">
                 <div className="title">
-                    <p>Script Eden</p>
+                    <h3>{user.firstName} {user.lastName}</h3>
                 </div>
-                <div className="desc">{user.userId}</div>
                 <div className="desc">Curious developer</div>
                 <div className="desc">Tech geek</div>
             </div>
