@@ -5,6 +5,7 @@ import com.connector.beta.entities.MyUser;
 import com.connector.beta.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -34,7 +35,7 @@ public class UserValidator implements Validator {
         MyUser userForm = (MyUser) target;
 
 //      Check duplicate Email address
-        Optional<MyUser> userWithSameEmailFound = userRepo.findByEmail(userForm.getEmail());
+        MyUser userWithSameEmailFound = userRepo.findByEmailNotOptional(userForm.getEmail());
         if (userWithSameEmailFound != null) {
             errors.rejectValue("email", "email.exists");
         }

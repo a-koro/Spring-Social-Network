@@ -37,4 +37,7 @@ public interface UserRepo extends JpaRepository<MyUser, Integer> {
    @Query("SELECT i FROM MyUser u JOIN u.image i  ON u.userId= :userid")
    Optional<Image> findImageProfileFromUserId(@Param("userid") Integer userid);
 
+   @Query("SELECT u FROM MyUser u WHERE u.email = :input")
+   MyUser findByEmailNotOptional(@Param("input") String email);
+
 }
