@@ -110,7 +110,9 @@ function Navbar() {
                 setSearchResults(data);
                 results = data;
                 console.log(results[0].email);
+                console.log(results[0].image);
             });
+        evt.target.search.value = "";
     }
 
     const isInitialMount = React.useRef(true);

@@ -28,7 +28,7 @@ public interface UserRepo extends JpaRepository<MyUser, Integer> {
 
     List<MyUser> findByFirstName(String name);
 
-    @Query("SELECT u.firstName, u.lastName FROM MyUser u WHERE u.firstName LIKE :input% OR u.lastName LIKE :input%")
+    @Query("SELECT u FROM MyUser u WHERE u.firstName LIKE :input% OR u.lastName LIKE :input%")
     List<MyUser> getUsersByFirstnameAndLastname(@Param("input") String input);
 
     @Query("SELECT u.userId FROM MyUser u WHERE u.email= :email")

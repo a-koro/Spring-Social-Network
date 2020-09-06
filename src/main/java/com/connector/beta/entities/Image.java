@@ -1,6 +1,9 @@
 package com.connector.beta.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -22,7 +25,9 @@ public class Image implements Serializable {
     @Column(name = "size")
     private String size;
 
-    @OneToOne(mappedBy = "image", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "image")
+    @JsonManagedReference
+    //@JsonIgnore
     private MyUser user;
 
     public Image() {
