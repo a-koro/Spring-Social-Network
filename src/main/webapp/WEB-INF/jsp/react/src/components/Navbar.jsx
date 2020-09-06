@@ -136,10 +136,11 @@ function Navbar() {
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <form className="form-inline my-2 my-lg-0" onSubmit={fetchUsers}>
+                    <form className="form-inline my-2 my-lg-0 mr-auto" onSubmit={fetchUsers}>
                         <input id="searchBar" className="form-control autocomplete mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search" />
                     </form>
-                    <ul className="navbar-nav mr-auto">
+                    {/*<div style={{width: "400px"}}></div>*/}
+                    <ul className="navbar-nav">
                         <li className="nav-item active">
                             <Link to="/" className="nav-link">Feed</Link>
                         </li>
