@@ -1,6 +1,7 @@
 package com.connector.beta.services;
 
 import com.connector.beta.entities.Image;
+import com.connector.beta.entities.ImageBackground;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.repos.ImageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,31 @@ public class ImageServiceImpl implements ImageServiceInterface{
         myUser.setImage(image);
         userService.userSave(myUser);
 
+    }
+
+    @Override
+    public void uploadUserBackgroundImage(Integer userid, MultipartFile file) {
+
+        isEmpty(file);
+
+        isImage(file);
+
+        MyUser myUser= userService.findById(userid);
+
+
+        ImageBackground image = new ImageBackground();
+        image.setTitle(file.getOriginalFilename());
+        image.setType(file.getContentType());
+        image.setSize(String.valueOf(file.getSize()));
+        try{
+            image.setFile(file.getBytes());
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+
+
+        myUser.setImageBackground(image);
+        userService.userSave(myUser);
     }
 
     private void isImage(MultipartFile file) {

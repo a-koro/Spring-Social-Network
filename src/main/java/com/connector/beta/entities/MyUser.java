@@ -5,8 +5,6 @@
  */
 package com.connector.beta.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -15,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -54,12 +52,19 @@ public class MyUser implements Serializable {
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinTable(name = "user_image",
             joinColumns =
-                     @JoinColumn(name = "user_id") ,
+            @JoinColumn(name = "user_id") ,
             inverseJoinColumns =
-                     @JoinColumn(name = "imageid") )
-    @JsonBackReference
+            @JoinColumn(name = "imageid") )
     private Image image;
 
+
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinTable(name = "users_image_background",
+            joinColumns =
+            @JoinColumn(name = "user_id") ,
+            inverseJoinColumns =
+            @JoinColumn(name = "image_background_id") )
+    private ImageBackground imageBackground;
 
     @OneToMany(mappedBy = "myUser2")
     Set<UserFriends> status;
@@ -148,5 +153,13 @@ public class MyUser implements Serializable {
 
     public void setImage(Image image) {
         this.image = image;
+    }
+
+    public ImageBackground getImageBackground() {
+        return imageBackground;
+    }
+
+    public void setImageBackground(ImageBackground imageBackground) {
+        this.imageBackground = imageBackground;
     }
 }

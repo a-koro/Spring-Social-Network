@@ -6,7 +6,9 @@
 package com.connector.beta.services;
 
 import com.connector.beta.dto.UserDto;
+import com.connector.beta.dto.UserNameWithImageDto;
 import com.connector.beta.entities.Image;
+import com.connector.beta.entities.ImageBackground;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.Role;
 import com.connector.beta.mapper.UserMapper;
@@ -74,8 +76,8 @@ public class UserServiceImpl implements UserServiceInterface {
     }
 
     @Override
-    public List<MyUser> searchUserByFirstnameOrLastname(String input) {
-        return userRepo.getUsersByFirstnameAndLastname(input);
+    public List<UserNameWithImageDto> searchUserByFirstnameOrLastname(String input) {
+        return userRepo.findUsersForSearch(input);
     }
 
     @Override
@@ -141,5 +143,9 @@ public class UserServiceImpl implements UserServiceInterface {
         return userRepo.findByEmailNotOptional(email);
     }
 
+    @Override
+    public ImageBackground findImageBackgroundFromUserId(Integer userid) {
+        return userRepo.findImageBackgroundFromUserId(userid).orElseThrow(()->new IllegalArgumentException("Image background not found"));
 
+    }
 }
