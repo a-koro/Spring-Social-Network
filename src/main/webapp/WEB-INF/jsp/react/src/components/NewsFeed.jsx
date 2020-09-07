@@ -6,8 +6,8 @@ import PostForm from './PostForm';
 
 const style = {
     height: "100vh",
-    position: "relative",
-    overflowY: "scroll"
+    position: "fixed",
+    overflow: "scroll"
 };
 
 const styleBar = {
@@ -35,7 +35,26 @@ function NewsFeed(props) {
                 </div>
             </div>
             <div className="col-md-6 col-12">
-                <PostForm/>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    New Post
+                </button>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <PostForm/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <Post username="Rick Sanchez"
                       post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family. Although Beth welcomes Rick into her home, her husband, Jerry, isn't as happy about the family reunion."/>
                 <Comment username="Alex Koro"
