@@ -7,7 +7,7 @@ import Contact from "./Contact";
 function Search(props) {
 
     return (
-        <div>
+        <>
             <div className="col-sm-6 offset-sm-3 col-xs-12 mt-3">
                 <h4>
                     Search results
@@ -20,7 +20,7 @@ function Search(props) {
                     )}
                 </ResultsContext.Consumer>
             </div>
-        </div>
+        </>
     );
 }
 
