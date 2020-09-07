@@ -109,6 +109,7 @@ function Navbar() {
             .then(data => {
                 setSearchResults(data);
                 results = data;
+                console.log("data from search",data);
                 console.log(results[0].email);
                 console.log(results[0].image);
             });

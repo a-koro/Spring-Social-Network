@@ -7,6 +7,7 @@ import com.connector.beta.entities.Image;
 public class UserNameWithImageDto {
 
 
+    private Integer userId;
     private String firstName;
     private String lastName;
     private Image image;
@@ -14,10 +15,19 @@ public class UserNameWithImageDto {
     public UserNameWithImageDto() {
     }
 
-    public UserNameWithImageDto(String firstName, String lastName, Image image) {
+    public UserNameWithImageDto(Integer userId, String firstName, String lastName, Image image) {
+        this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.image = image;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {

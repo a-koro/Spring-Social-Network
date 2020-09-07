@@ -46,6 +46,6 @@ public interface UserRepo extends JpaRepository<MyUser, Integer> {
    @Query("SELECT u FROM MyUser u WHERE u.email = :input")
    MyUser findByEmailNotOptional(@Param("input") String email);
 
-    @Query("SELECT new com.connector.beta.dto.UserNameWithImageDto (u.firstName, u.lastName, i) FROM MyUser u JOIN u.image i ON (u.firstName LIKE :input% OR u.lastName LIKE :input%)")
+    @Query("SELECT new com.connector.beta.dto.UserNameWithImageDto (u.userId,u.firstName, u.lastName, i) FROM MyUser u JOIN u.image i ON (u.firstName LIKE :input% OR u.lastName LIKE :input%)")
     List<UserNameWithImageDto> findUsersForSearch(@Param("input") String input);
 }

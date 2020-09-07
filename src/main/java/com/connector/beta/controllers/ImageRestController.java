@@ -110,4 +110,21 @@ public class ImageRestController {
 
 
 
+    @GetMapping("/searchUsers/{id}")
+    public ResponseEntity<Resource> getFile(@PathVariable Integer id) {
+        Image image = userService.findImageProfileFromUserId(id);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=" + image.getTitle());
+
+        return  ResponseEntity.ok()
+                .headers(header)
+                .contentLength(image.getFile().length)
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(new ByteArrayResource(image.getFile()));
+    }
+
+
+
+
 }
