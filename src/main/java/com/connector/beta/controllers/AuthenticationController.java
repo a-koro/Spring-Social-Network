@@ -97,7 +97,12 @@ public class AuthenticationController {
         myUser.setRoles(roles);
 
         Image image = imageRepo.findById(82).orElseThrow(()->new IllegalArgumentException("image not found"));
-        myUser.setImage(image);
+        Image newImage= new Image();
+        newImage.setFile(image.getFile());
+        newImage.setTitle(image.getTitle());
+        newImage.setSize(image.getSize());
+        newImage.setType(image.getType());
+        myUser.setImage(newImage);
         userRepo.save(myUser);
         return "redirect:successPage";
     }
