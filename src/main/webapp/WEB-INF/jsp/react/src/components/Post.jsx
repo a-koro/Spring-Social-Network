@@ -14,7 +14,7 @@ const style = {
 function Post(props) {
     return (
         <>
-            <div className="card col-md-6 col-xs-12 col-sm-8 p-0 my-2">
+            <div className="card p-0 my-2"> {/*col-md-6 col-xs-12 col-sm-8*/}
                 <div className="card-body d-flex flex-row p-3">
                     <img style={style} src="https://cdn.vox-cdn.com/thumbor/G8A4RF-QWQl7jItQw93r402os_0=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/10816041/rick_and_morty_s02_still.jpg" 
                         className="avatar rounded-circle mx-3" 

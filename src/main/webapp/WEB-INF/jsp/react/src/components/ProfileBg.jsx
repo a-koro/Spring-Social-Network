@@ -55,8 +55,7 @@ return (
                 <div className="title">
                     <h3>{user.firstName} {user.lastName}</h3>
                 </div>
-                <div className="desc">Curious developer</div>
-                <div className="desc">Tech geek</div>
+                <div className="desc">Birthday {new Date(user.birthday).toLocaleDateString("en-GB")}</div>
             </div>
 
             {/*// <div className="card text-white">*/}

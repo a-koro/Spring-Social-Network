@@ -21,6 +21,7 @@ function App() {
           {/* <NewsFeed/> */}
           <BrowserRouter>
               <Navbar />
+              <div className="row m-0">
               <Switch>
                   <ResultsProvider>
                       <Redirect from="/index.html" to="/" exact />
@@ -29,6 +30,7 @@ function App() {
                       <Route path="/profile" component={Profile}/>
                   </ResultsProvider>
               </Switch>
+              </div>
           </BrowserRouter>
       </div>
   );
