@@ -191,11 +191,11 @@
     background-color: rgba(214, 224, 226, 0.2);
 }
 
-#cssSelector .card.hovercard .cardheader {
+/* #cssSelector .card.hovercard .cardheader {
     background: url("https://scontent.fath4-2.fna.fbcdn.net/v/t1.0-9/110182717_102990614832624_7303548008920258688_n.jpg?_nc_cat=110&_nc_sid=dd9801&_nc_ohc=4uN-mIsaNjUAX8gyEFk&_nc_ht=scontent.fath4-2.fna&oh=b510cce8ab6d058f76f6585a68be56f1&oe=5F661D65");
     background-size: cover;
     height: 300px;
-}
+} */
 
 #cssSelector .card.hovercard .avatar {
     position: relative;

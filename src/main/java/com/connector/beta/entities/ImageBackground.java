@@ -2,19 +2,20 @@ package com.connector.beta.entities;
 
 
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.io.Serializable;
 
 @Entity
-@Table(name = "images")
+@Table(name = "image_background")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","user"})
-public class Image implements Serializable {
+public class ImageBackground {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer imageid;
+    @Column(name="image_background_id")
+    private Integer imagebackgroundid;
     private String title;
     @Lob
     @Column(name = "file")
@@ -26,18 +27,19 @@ public class Image implements Serializable {
     @Column(name = "size")
     private String size;
 
-    @OneToOne(mappedBy = "image")
+    @OneToOne(mappedBy = "imageBackground")
     private MyUser user;
 
-    public Image() {
+    public ImageBackground() {
     }
 
-    public Integer getImageid() {
-        return imageid;
+
+    public Integer getImagebackgroundid() {
+        return imagebackgroundid;
     }
 
-    public void setImageid(Integer imageid) {
-        this.imageid = imageid;
+    public void setImagebackgroundid(Integer imagebackgroundid) {
+        this.imagebackgroundid = imagebackgroundid;
     }
 
     public String getTitle() {
@@ -56,14 +58,6 @@ public class Image implements Serializable {
         this.file = file;
     }
 
-    public MyUser getUser() {
-        return user;
-    }
-
-    public void setUser(MyUser user) {
-        this.user = user;
-    }
-
     public String getType() {
         return type;
     }
@@ -78,5 +72,13 @@ public class Image implements Serializable {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public MyUser getUser() {
+        return user;
+    }
+
+    public void setUser(MyUser user) {
+        this.user = user;
     }
 }

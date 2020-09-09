@@ -5,8 +5,10 @@
  */
 package com.connector.beta.controllers;
 
+import com.connector.beta.entities.Image;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.Role;
+import com.connector.beta.repos.ImageRepo;
 import com.connector.beta.repos.RoleRepo;
 import com.connector.beta.repos.UserRepo;
 import com.connector.beta.services.UserServiceImpl;
@@ -26,6 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -45,6 +48,8 @@ public class AuthenticationController {
     UserRepo userRepo;
     @Autowired
     UserValidator userValidator;
+    @Autowired
+    ImageRepo imageRepo;
 
     @InitBinder
     private void InitBinder(WebDataBinder binder) {
@@ -90,6 +95,14 @@ public class AuthenticationController {
 
         //        System.out.println(userRole.getClass());
         myUser.setRoles(roles);
+
+        Image image = imageRepo.findById(82).orElseThrow(()->new IllegalArgumentException("image not found"));
+        Image newImage= new Image();
+        newImage.setFile(image.getFile());
+        newImage.setTitle(image.getTitle());
+        newImage.setSize(image.getSize());
+        newImage.setType(image.getType());
+        myUser.setImage(newImage);
         userRepo.save(myUser);
         return "redirect:successPage";
     }

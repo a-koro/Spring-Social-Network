@@ -5,6 +5,7 @@ import './profileBg.css';
 
 import DataServices from '../services/DataServices';
 import Dropzone from "./Dropzone";
+import DropzoneBg from './DropzoneBg'
 
 
 export default function ProfileBg() {
@@ -16,32 +17,39 @@ export default function ProfileBg() {
         height: '250px'
     };
 
-    const bgImageStyle = {
-        height: '340px'
-    };
+    
+    const background = {
+        background: `url("http://localhost:8080/api/profile/image-background/download")`,
+        backgroundSize: "cover",
+        height: "300px"
+};
 
-    const [user, setUser] = React.useState({});
+const bgImageStyle = {
+    height: '340px'
+};
 
-    function getCurrentUser() {
-        DataServices.getCurrentUser().then(
-            response => {
-                console.log("user in profile : ", response.data);
-                setUser(response.data);
-            }
-        ).catch(error => { console.log(error.response) });
-    }
+const [user, setUser] = React.useState({});
 
-    React.useEffect(() => { getCurrentUser() }, []);
+function getCurrentUser() {
+    DataServices.getCurrentUser().then(
+        response => {
+            console.log("user in profile : ", response.data);
+            setUser(response.data);
+        }
+    ).catch(error => { console.log(error.response) });
+}
 
-    return (
+React.useEffect(() => { getCurrentUser() }, []);
+
+return (
     <div id="cssSelector">
         <div className="card hovercard">
-            <div className="cardheader">
-
+            <div style={background}>
+                <DropzoneBg/>
             </div>
             <div className="avatar">
                 <img style={style} alt="image-profile" src="http://localhost:8080/api/profile/image/download" />
-                <Dropzone/>
+                <Dropzone />
             </div>
             <div className="info">
                 <div className="title">
@@ -62,5 +70,5 @@ export default function ProfileBg() {
             {/*// </div>*/}
         </div>
     </div>
-    )
+)
 }

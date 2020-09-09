@@ -5,7 +5,10 @@
  */
 package com.connector.beta.repos;
 
+import com.connector.beta.Pojos.UserFriendsDto;
+import com.connector.beta.dto.UserNameWithImageDto;
 import com.connector.beta.entities.Image;
+import com.connector.beta.entities.ImageBackground;
 import com.connector.beta.entities.MyUser;
 import java.util.List;
 import java.util.Optional;
@@ -37,7 +40,12 @@ public interface UserRepo extends JpaRepository<MyUser, Integer> {
    @Query("SELECT i FROM MyUser u JOIN u.image i  ON u.userId= :userid")
    Optional<Image> findImageProfileFromUserId(@Param("userid") Integer userid);
 
+    @Query("SELECT i FROM MyUser u JOIN u.imageBackground i  ON u.userId= :userid")
+    Optional<ImageBackground> findImageBackgroundFromUserId(@Param("userid") Integer userid);
+
    @Query("SELECT u FROM MyUser u WHERE u.email = :input")
    MyUser findByEmailNotOptional(@Param("input") String email);
 
+    @Query("SELECT new com.connector.beta.dto.UserNameWithImageDto (u.userId,u.firstName, u.lastName, i) FROM MyUser u JOIN u.image i ON (u.firstName LIKE :input% OR u.lastName LIKE :input%)")
+    List<UserNameWithImageDto> findUsersForSearch(@Param("input") String input);
 }

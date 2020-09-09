@@ -2,6 +2,7 @@ package com.connector.beta.controllers;
 
 import com.connector.beta.dto.UserDto;
 import com.connector.beta.entities.Image;
+import com.connector.beta.entities.ImageBackground;
 import com.connector.beta.services.ImageServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,8 +72,59 @@ public class ImageRestController {
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(new ByteArrayResource(image.getFile()));
 
+    }
 
+    @PostMapping(
+            path = "/image-background/upload",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public void uploadUserBackgroundImage(@RequestParam("file") MultipartFile file){
+
+        Integer userid= userService.findUserIdByEmail(userService.findCurrentUsername());
+        imageService.uploadUserBackgroundImage(userid,file);
+    }
+
+
+
+
+    @GetMapping("/image-background/download")
+    public ResponseEntity<Resource> downloadUserBackgroundImage(){
+
+        Integer userId= userService
+                .findUserIdByEmail(userService.findCurrentUsername());
+
+        ImageBackground image = userService.findImageBackgroundFromUserId(userId);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=" + image.getTitle());
+
+
+        return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(image.getFile().length)
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(new ByteArrayResource(image.getFile()));
 
     }
+
+
+
+    @GetMapping("/searchUsers/{id}")
+    public ResponseEntity<Resource> getFile(@PathVariable Integer id) {
+        Image image = userService.findImageProfileFromUserId(id);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=" + image.getTitle());
+
+        return  ResponseEntity.ok()
+                .headers(header)
+                .contentLength(image.getFile().length)
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(new ByteArrayResource(image.getFile()));
+    }
+
+
+
 
 }

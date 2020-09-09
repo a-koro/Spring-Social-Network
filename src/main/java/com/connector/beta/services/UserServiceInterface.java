@@ -6,7 +6,9 @@
 package com.connector.beta.services;
 
 import com.connector.beta.dto.UserDto;
+import com.connector.beta.dto.UserNameWithImageDto;
 import com.connector.beta.entities.Image;
+import com.connector.beta.entities.ImageBackground;
 import com.connector.beta.entities.MyUser;
 import java.util.List;
 
@@ -28,7 +30,7 @@ public interface UserServiceInterface extends UserDetailsService {
 
      MyUser findById(Integer userid);
 
-     public Integer findUserIdByEmail(String email);
+      Integer findUserIdByEmail(String email);
 
     String findCurrentUsername();
 
@@ -36,7 +38,9 @@ public interface UserServiceInterface extends UserDetailsService {
 
     Image findImageProfileFromUserId(Integer userid);
 
-    public List<MyUser> searchUserByFirstnameOrLastname(String input);
+     List<UserNameWithImageDto> searchUserByFirstnameOrLastname(String input);
 
-    public MyUser getUserDetails(String email);
+     MyUser getUserDetails(String email);
+
+     ImageBackground findImageBackgroundFromUserId(Integer userid);
 }
