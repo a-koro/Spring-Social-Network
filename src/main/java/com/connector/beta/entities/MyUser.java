@@ -5,6 +5,7 @@
  */
 package com.connector.beta.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -55,6 +56,7 @@ public class MyUser implements Serializable {
             @JoinColumn(name = "user_id") ,
             inverseJoinColumns =
             @JoinColumn(name = "imageid") )
+    @JsonIgnore
     private Image image;
 
 
@@ -64,6 +66,7 @@ public class MyUser implements Serializable {
             @JoinColumn(name = "user_id") ,
             inverseJoinColumns =
             @JoinColumn(name = "image_background_id") )
+    @JsonIgnore
     private ImageBackground imageBackground;
 
     @OneToMany(mappedBy = "myUser2")
