@@ -25,19 +25,19 @@ const style = {
     height: '40px'
 };
 
-function logout(evt) {
-    evt.preventDefault();
-
-    fetch("/logout",
-        {
-            method: 'GET',
-            credentials: "include"
-        }).then(response => {
-        window.location.href = "http://localhost:8080/";
-    });
-
-    console.log("You have been logged out.");
-}
+// function logout(evt) {
+//     evt.preventDefault();
+//
+//     fetch("/logout",
+//         {
+//             method: 'GET',
+//             credentials: "include"
+//         }).then(response => {
+//         window.location.href = "http://localhost:8080/";
+//     });
+//
+//     console.log("You have been logged out.");
+// }
 
 function Navbar() {
 
@@ -56,7 +56,8 @@ function Navbar() {
         });
     }
 
-    React.useEffect(() => { getCurrentUser(); }, []);
+    React.useEffect(() => { getCurrentUser();
+    }, []);
 
     const history = useHistory();
     function fetchUsers(evt) {

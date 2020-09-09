@@ -69,8 +69,7 @@ public class MyUser implements Serializable {
     @JsonIgnore
     private ImageBackground imageBackground;
 
-    @OneToMany(mappedBy = "myUser2")
-    Set<UserFriends> status;
+
 
 //    public Set<UserFriends> getStatus() {
 //        return status;

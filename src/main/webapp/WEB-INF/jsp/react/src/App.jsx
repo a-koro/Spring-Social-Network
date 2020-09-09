@@ -4,13 +4,35 @@ import Navbar, { ResultsProvider } from './components/Navbar';
 import NewsFeed from './components/NewsFeed';
 import Search from './components/Search';
 import Profile from "./pages/Profile";
+import ProfileAll from "./pages/ProfileAll";
 
 const SearchContext = React.createContext({});
 
 function App() {
 
+    // We need dynamic URLs for Profile Components
+
+    // const [userId, setUserId] = React.useState(0);
+    //
+    // function getUserId() {
+    //
+    //     fetch("/userDetails", {
+    //         method: 'GET',
+    //         credentials: "include"
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setUserId(data.userId);
+    //         });
+    // }
+    //
+    // React.useEffect(() => { getUserId();
+    // }, []);
+
   return (
+
       <div className="container-fluid p-0">
+
           {/* <Navbar /> */}
 
           {/* <div>{items.map((item) => (
@@ -28,6 +50,7 @@ function App() {
                       <Route path="/results" component={Search}/>
                       <Route path="/" exact component={NewsFeed}/>
                       <Route path="/profile" component={Profile}/>
+                      <Route path="/profileAll" component={ProfileAll}/>
                   </ResultsProvider>
               </Switch>
               </div>

@@ -73,7 +73,7 @@ public class AuthenticationController {
                                      BindingResult bindingResult) {
 
 //        System.out.println(myUser.getBirthday());
-//        System.out.println(myUser.getPassword() + "lol");
+//          Creating a conflict to test
 //        System.out.println(passwordEncoder.encode(myUser.getPassword()));
         System.out.println(bindingResult);
         System.out.println(myUser.getBirthday());

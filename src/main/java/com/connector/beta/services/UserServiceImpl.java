@@ -13,6 +13,7 @@ import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.Role;
 import com.connector.beta.mapper.UserMapper;
 import com.connector.beta.repos.UserRepo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,14 +28,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- *
  * @author korov
  */
 
 @Transactional
 @Service
 public class UserServiceImpl implements UserServiceInterface {
-    
+
 
     private final UserRepo userRepo;
     private final UserMapper userMapper;
@@ -49,18 +49,18 @@ public class UserServiceImpl implements UserServiceInterface {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         MyUser myUser = userRepo.findByEmail(email)
                 .orElseThrow(
-                () ->
-                        new UsernameNotFoundException("Email not found - " + email));
+                        () ->
+                                new UsernameNotFoundException("Email not found - " + email));
         if (myUser == null) {
             throw new UsernameNotFoundException("Invalid username");
         }
-        User springSecurityUser = 
-                new User(myUser.getEmail(), 
-                myUser.getPassword(), 
-                mapRolesToAuthorities(myUser.getRoles()));
+        User springSecurityUser =
+                new User(myUser.getEmail(),
+                        myUser.getPassword(),
+                        mapRolesToAuthorities(myUser.getRoles()));
         return springSecurityUser;
     }
-    
+
     private List<? extends GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         for (Role role : roles) {
@@ -82,9 +82,9 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public UserDto getCurrentUser() {
-        UserDto userDto=new UserDto();
+        UserDto userDto = new UserDto();
         try {
-            MyUser myUser = userRepo.findByEmail( findCurrentUsername())
+            MyUser myUser = userRepo.findByEmail(findCurrentUsername())
                     .orElseThrow(
                             () ->
                                     new UsernameNotFoundException("Email not found - " + findCurrentUsername()));
@@ -92,7 +92,24 @@ public class UserServiceImpl implements UserServiceInterface {
             userDto = userMapper.mapToDto(myUser);
 
             return userDto;
-        }catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userDto;
+    }
+
+    @Override
+    public UserDto getCurrentUser(int id) {
+        UserDto userDto = new UserDto();
+        try {
+            MyUser myUser = userRepo.findById(id)
+                    .orElseThrow(
+                            () -> new UsernameNotFoundException("Email not found - " + findCurrentUsername()));
+
+            userDto = userMapper.mapToDto(myUser);
+
+            return userDto;
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return userDto;
@@ -106,35 +123,35 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public MyUser findById(Integer userid) {
-       return userRepo.findById(userid)
-               .orElseThrow(
-                       ()->
-                       new IllegalArgumentException("id not found") );
+        return userRepo.findById(userid)
+                .orElseThrow(
+                        () ->
+                                new IllegalArgumentException("id not found"));
 
     }
 
     @Override
-    public Integer findUserIdByEmail(String email){
+    public Integer findUserIdByEmail(String email) {
         return userRepo.findUserIdByEmail(email)
-                .orElseThrow(()-> new IllegalArgumentException("id not found"));
+                .orElseThrow(() -> new IllegalArgumentException("id not found"));
     }
 
     @Override
-    public String findCurrentUsername(){
-            User user = (User) SecurityContextHolder.
-                    getContext().getAuthentication().getPrincipal();
-            return user.getUsername();
+    public String findCurrentUsername() {
+        User user = (User) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return user.getUsername();
 
     }
 
     @Override
-    public void userSave(MyUser user){
+    public void userSave(MyUser user) {
         userRepo.save(user);
     }
 
     @Override
-    public Image findImageProfileFromUserId(Integer userid){
-        return userRepo.findImageProfileFromUserId(userid).orElseThrow(()->new IllegalArgumentException("not found"));
+    public Image findImageProfileFromUserId(Integer userid) {
+        return userRepo.findImageProfileFromUserId(userid).orElseThrow(() -> new IllegalArgumentException("not found"));
     }
 
 
@@ -145,7 +162,7 @@ public class UserServiceImpl implements UserServiceInterface {
 
     @Override
     public ImageBackground findImageBackgroundFromUserId(Integer userid) {
-        return userRepo.findImageBackgroundFromUserId(userid).orElseThrow(()->new IllegalArgumentException("Image background not found"));
+        return userRepo.findImageBackgroundFromUserId(userid).orElseThrow(() -> new IllegalArgumentException("Image background not found"));
 
     }
 }
