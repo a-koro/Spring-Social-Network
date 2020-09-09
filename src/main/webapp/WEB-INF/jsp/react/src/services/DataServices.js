@@ -12,6 +12,7 @@ function TrainerDataService(){
     this.getAllUsers = getAllUsers;
     this.getCurrentUser=getCurrentUser;
     this.imageUpload=imageUpload;
+    this.getCurrentProfile = getCurrentProfile
 
 }
 
@@ -28,6 +29,10 @@ function getCurrentUser(){
 
     return axios.get(URL_CURRENT_USER);
 
+}
+
+function getCurrentProfile(userId) {
+    return axios.get(URL_CURRENT_USER + "/" + userId )
 }
 
 function imageUpload(userid){

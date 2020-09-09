@@ -26,6 +26,8 @@ public interface UserServiceInterface extends UserDetailsService {
 
      UserDto getCurrentUser();
 
+     UserDto getCurrentUser(int id);
+
      List<UserDto> getAllUsers();
 
      MyUser findById(Integer userid);
