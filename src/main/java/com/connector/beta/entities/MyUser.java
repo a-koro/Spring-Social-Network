@@ -66,8 +66,7 @@ public class MyUser implements Serializable {
             @JoinColumn(name = "image_background_id") )
     private ImageBackground imageBackground;
 
-    @OneToMany(mappedBy = "myUser2")
-    Set<UserFriends> status;
+
 
 //    public Set<UserFriends> getStatus() {
 //        return status;
