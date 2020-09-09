@@ -30,7 +30,7 @@ function NewsFeed(props) {
         <>
             <div className="col-md-3 col-12 d-none d-md-block">
                 <div>{items.map((item) => (
-                    <Contact username={item.userSecondId + " " + item.firstName + " " + item.lastName}/>
+                    <Contact username={item.firstName + " " + item.lastName} userId={item.userSecondId}/>
                 ))}
                 </div>
             </div>
