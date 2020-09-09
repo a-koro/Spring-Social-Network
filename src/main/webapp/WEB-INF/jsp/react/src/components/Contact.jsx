@@ -44,11 +44,16 @@ function Contact(props) {
                     <img style={style} src={url}
                          className="avatar rounded-circle mx-2"
                          alt="Cinque Terre"/>
+                <div className="card-body d-flex flex-row pt-2 pb-0 px-1">
+                    <img style={style} src={url}
+                        className="avatar rounded-circle mx-2"
+                        alt="Cinque Terre" />
                     <h6 className="card-text align-bottom mt-2">{props.username}</h6>
                 </div>
             </div>
         </>
     );
 }
+
 
 export default Contact;

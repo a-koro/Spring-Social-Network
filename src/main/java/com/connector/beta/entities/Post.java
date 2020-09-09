@@ -1,8 +1,11 @@
 package com.connector.beta.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "posts")
@@ -17,6 +20,36 @@ public class Post implements Serializable {
     @ManyToOne
     @JoinColumn(name="user_id")
     private MyUser user;
+    @OneToMany(mappedBy = "post")
+    List<Comment> comments;
+    @OneToMany(mappedBy = "post")
+    List<Cheer> cheers;
+    @OneToOne(mappedBy = "post")
+    PostImage postImage;
+
+    public PostImage getPostImage() {
+        return postImage;
+    }
+
+    public void setPostImage(PostImage postImage) {
+        this.postImage = postImage;
+    }
+
+    public List<Cheer> getCheers() {
+        return cheers;
+    }
+
+    public void setCheers(List<Cheer> cheers) {
+        this.cheers = cheers;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public Post() {
     }
