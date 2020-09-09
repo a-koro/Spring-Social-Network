@@ -1,5 +1,7 @@
 package com.connector.beta.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,6 +17,7 @@ public class Cheer implements Serializable {
     private MyUser user;
     @ManyToOne
     @JoinColumn(name="post_id")
+    @JsonIgnore
     private Post post;
     private Boolean active;
 
