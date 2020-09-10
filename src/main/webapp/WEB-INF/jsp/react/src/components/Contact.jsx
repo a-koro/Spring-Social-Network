@@ -20,8 +20,6 @@ const style = {
 // }
 
 
-
-
 function Contact(props) {
 
     let url = "http://localhost:8080/api/profile/searchUsers/" + props.userFriendId;
@@ -29,6 +27,7 @@ function Contact(props) {
 
 
     const onClick = e => {
+        e.preventDefault();
         console.log(props.userFriendId)
         history.push({
             pathname: '/ProfileAll',
@@ -40,13 +39,15 @@ function Contact(props) {
         <>
             <div className="card my-2 border-0">
                 {/*<button onClick={onClick}>Click</button>*/}
-                <div onClick={onClick} className="card-body d-flex flex-row pt-2 pb-0 px-1">
+                <div className="card-body d-flex flex-row pt-2 pb-0 px-1">
                     <img style={style} src={url}
                          className="avatar rounded-circle mx-2"
-                         alt="Cinque Terre"/>
-                        <h6 className="card-text align-bottom mt-2">{props.username}</h6>
+                         alt="Profile Picture"/>
+                    <h6 className="card-text align-bottom mt-2">{props.username}</h6>
+                    <a href="/ProfileAll" className="stretched-link" onClick={onClick}></a>
                 </div>
             </div>
+
         </>
     )
 

@@ -30,7 +30,6 @@ public class UserRelationshipController {
 
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 //        String currentPrincipalName = authentication.getName();
-//
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userFirstId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow( () -> new RuntimeException("Error: User Id not found"));
         List<UserFriendsDto> friendsDto = userRelationshipRepo.getAllFriendsWithNames(userFirstId);

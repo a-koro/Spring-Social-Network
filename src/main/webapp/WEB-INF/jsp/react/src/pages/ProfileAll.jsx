@@ -55,11 +55,11 @@ function ProfileAll(props) {
                 <div id="cssSelector">
                     <div className="card hovercard">
                         <div style={background}>
-                            <DropzoneBg/>
+                            {/*<DropzoneBg/>*/}
                         </div>
                         <div className="avatar">
                             <img style={style} alt="image-profile" src={url} />
-                            <Dropzone />
+                            {/*<Dropzone />*/}
                         </div>
                         <div className="info">
                             <div className="title">
