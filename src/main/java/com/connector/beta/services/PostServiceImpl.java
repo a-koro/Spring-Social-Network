@@ -1,5 +1,6 @@
 package com.connector.beta.services;
 
+import com.connector.beta.entities.Comment;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.Post;
 import com.connector.beta.repos.PostRepo;
@@ -41,5 +42,17 @@ public class PostServiceImpl implements PostServiceInterface {
             });
         });
         return list;
+    }
+
+    @Override
+    public Post findPostByPostId(int postId) {
+        Post post = postRepo.findById(postId).orElseThrow(() -> new RuntimeException("No data!"));
+        return post;
+    }
+
+    @Transactional
+    @Override
+    public void updatePost(Post post) {
+        postRepo.save(post);
     }
 }

@@ -1,16 +1,16 @@
 package com.connector.beta.controllers;
 
+import com.connector.beta.entities.Comment;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.Post;
+import com.connector.beta.services.CommentServiceInterface;
 import com.connector.beta.services.PostServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +21,12 @@ public class PostController {
     @Autowired
     PostServiceInterface postServiceInterface;
 
+    @Autowired
+    CommentServiceInterface commentServiceInterface;
+
+    @Autowired
+    UserServiceInterface userServiceInterface;
+
     @GetMapping("/testUrl")
     public List<Post> testRetrievePots(Principal principal) {
 //        System.out.println(principal.toString());
@@ -29,5 +35,16 @@ public class PostController {
         list.add(1);
         list.add(2);
         return postServiceInterface.findByUserIds(list);
+    }
+
+    @PostMapping("/insertComment")
+    public Comment insertComment(@RequestHeader String input, @RequestHeader int postId, Principal principal) {
+        Comment comment = new Comment();
+        comment.setText(input);
+        comment.setPost(postServiceInterface.findPostByPostId(postId));
+        comment.setUser(userServiceInterface.getUserDetails(principal.getName()));
+        comment.setCreated(new Timestamp(System.currentTimeMillis()));
+        commentServiceInterface.insertComment(comment);
+        return comment;
     }
 }

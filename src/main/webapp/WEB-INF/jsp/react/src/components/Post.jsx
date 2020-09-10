@@ -16,9 +16,26 @@ function Post(props) {
     const [postImageUrl, setPostImageUrl] = React.useState("");
     const [dateTime, setDateTime] = React.useState(new Date());
 
+    function insertComment(evt) {
+        evt.preventDefault();
+
+        fetch("/post/insertComment",{
+            method: 'POST',
+            credentials: "include",
+            headers: {
+                'input': evt.target.input.value,
+                'postId': props.post.postId
+            }
+        })
+            .then(response => response.json())
+            .then(data => props.value.setValue(!props.value.value));
+
+        evt.target.input.value = "";
+    }
+
     React.useEffect(() => {
         let tempDate = new Date(props.post.created);
-        tempDate.setHours(tempDate.getHours()+2,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
+        tempDate.setHours(tempDate.getHours()+3,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
         setDateTime(tempDate);
 
         if (props.post.imageUrl != null) {
@@ -55,15 +72,21 @@ function Post(props) {
                         </div>
                     </div>
                 </div>
-                <form className="mx-2">
+                <form className="mx-2" onSubmit={insertComment}>
                     <div className="form-group">
-                        <input type="email" className="form-control" id="commentInput"
-                               placeholder="Enter a comment..."/>
+                        <input type="text" className="form-control" id="commentInput"
+                               placeholder="Enter a comment..." name="input"/>
                     </div>
                 </form>
-                {props.post.comments.map((comment) => (
-                    <Comment comment={comment}/>
-                ))}
+                <small className="ml-2 mt-0 mb-1" data-toggle="collapse" data-target={"#collapseExample" + props.post.postId}
+                        aria-expanded="false" aria-controls="collapseExample" style={{cursor: "pointer"}}>
+                    Show/Hide Comments
+                </small>
+                <div className="collapse" id={"collapseExample" + props.post.postId}>
+                    {props.post.comments.map((comment) => (
+                        <Comment comment={comment}/>
+                    ))}
+                </div>
             </div>
         </>
     );
