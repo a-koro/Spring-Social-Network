@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "antd": "^4.6.3",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.0",
     "react": "^16.13.1",
@@ -18,7 +19,12 @@
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3"
+    "react-scripts": "^3.4.3",
+    "react-scroll": "^1.8.1",
+    "react-scroll-to-bottom": "^4.0.0",
+    "recoil": "0.0.10",
+    "recoil-persist": "^0.6.0",
+    "stompjs": "^2.3.3"
   },
   "scripts": {
     "start": "react-scripts start",

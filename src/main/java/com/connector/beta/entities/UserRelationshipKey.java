@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class UserFriendsKey implements Serializable {
+public class UserRelationshipKey implements Serializable {
 
     @Column(name = "user_first_id")
     int userFirstId;
@@ -14,14 +14,8 @@ public class UserFriendsKey implements Serializable {
     @Column(name = "user_second_id")
     int userSecondId;
 
-    public UserFriendsKey() {
-
+    public UserRelationshipKey() {
     }
-
-//    public UserFriendsKey(int userFirstId, int userSecondId) {
-//        this.userFirstId = userFirstId;
-//        this.userSecondId = userSecondId;
-//    }
 
     public int getUserFirstId() {
         return userFirstId;
@@ -43,7 +37,7 @@ public class UserFriendsKey implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        UserFriendsKey that = (UserFriendsKey) o;
+        UserRelationshipKey that = (UserRelationshipKey) o;
         return userFirstId == that.userFirstId &&
                 userSecondId == that.userSecondId;
     }

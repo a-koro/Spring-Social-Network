@@ -4,10 +4,11 @@ import Navbar, { ResultsProvider } from './components/Navbar';
 import NewsFeed from './components/NewsFeed';
 import Search from './components/Search';
 import Profile from "./pages/Profile";
+import Chat from "./pages/Chat";
 
 const SearchContext = React.createContext({});
 
-function App() {
+function App(props) {
 
   return (
       <div className="container-fluid p-0">
@@ -26,8 +27,9 @@ function App() {
                   <ResultsProvider>
                       <Redirect from="/index.html" to="/" exact />
                       <Route path="/results" component={Search}/>
-                      <Route path="/" exact component={NewsFeed}/>
+                      <Route exact path="/" render={(props)=><NewsFeed {...props}/>} />
                       <Route path="/profile" component={Profile}/>
+                      <Route exact path="/chat" render={(props) => <Chat {...props} />} />
                   </ResultsProvider>
               </Switch>
               </div>

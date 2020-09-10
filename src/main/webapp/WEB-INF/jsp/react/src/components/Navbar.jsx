@@ -113,7 +113,7 @@ function Navbar() {
                             <Link to="/" className="nav-link">Feed</Link>
                         </li>
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Messages</a>
+                        <Link to="/chat" className="nav-link">Messages</Link>                           
                         </li>
                         <li className="nav-item active">
                             <a className="nav-link" href="#">Conections</a>

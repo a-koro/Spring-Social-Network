@@ -3,6 +3,9 @@ import Post from './Post';
 import Comment from './Comment';
 import Contact from './Contact';
 import PostForm from './PostForm';
+import { loggedInUser } from "../atom/globalState";
+import DataServices from '../services/DataServices';
+import { useRecoilState } from "recoil";
 
 const style = {
     height: "100vh",
@@ -18,6 +21,21 @@ const styleBar = {
 function NewsFeed(props) {
 
     const [items, setItems] = React.useState([]);
+
+    const [user, setUser] = useRecoilState(loggedInUser);
+    React.useEffect(() => {
+
+        loadCurrentUser();
+      }, []);
+
+      function loadCurrentUser() {
+        DataServices.getCurrentUser().then(
+            response => {
+                console.log("userr recoil: ", response.data);
+                setUser(response.data);
+            }
+        ).catch(error => { console.log(error.response) });
+    }
 
     React.useEffect(() => {
             fetch('http://localhost:8080/api/user')
