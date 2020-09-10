@@ -18,11 +18,15 @@ const styleBar = {
 function NewsFeed(props) {
 
     const [items, setItems] = React.useState([]);
+    const [posts, setPosts] = React.useState([]);
 
     React.useEffect(() => {
-            fetch('http://localhost:8080/api/user')
+            fetch('http://localhost:8080/api/newsFeed')
                 .then(response => response.json())
-                .then(data => setItems(data));
+                .then(data => {
+                    setItems(data.friends);
+                    setPosts(data.posts);
+                });
         }, []
     );
 
@@ -59,10 +63,13 @@ function NewsFeed(props) {
                         </div>
                     </div>
                 </div>
-                <Post username="Rick Sanchez"
-                      post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family. Although Beth welcomes Rick into her home, her husband, Jerry, isn't as happy about the family reunion."/>
-                <Comment username="Alex Koro"
-                         post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family."/>
+                {posts.map((post) => (
+                    <Post post={post}/>
+                ))}
+            {/*    <Post username="Rick Sanchez"*/}
+            {/*          post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family. Although Beth welcomes Rick into her home, her husband, Jerry, isn't as happy about the family reunion."/>*/}
+            {/*    <Comment username="Alex Koro"*/}
+            {/*             post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family."/>*/}
             </div>
         </>
     );

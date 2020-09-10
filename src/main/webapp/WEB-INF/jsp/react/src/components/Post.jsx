@@ -12,33 +12,58 @@ const style = {
 };
 
 function Post(props) {
+
+    const [postImageUrl, setPostImageUrl] = React.useState("");
+    const [dateTime, setDateTime] = React.useState(new Date());
+
+    React.useEffect(() => {
+        let tempDate = new Date(props.post.created);
+        tempDate.setHours(tempDate.getHours()+2,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
+        setDateTime(tempDate);
+
+        if (props.post.imageUrl != null) {
+            document.getElementById("postImage").style.display = "block";
+            setPostImageUrl(props.post.imageUrl);
+        }
+        else if (props.post.postImage != null) {
+            document.getElementById("postImage").style.display = "block";
+            setPostImageUrl("");
+        }
+    },[]);
     return (
         <>
-            <div className="card p-0 my-2"> {/*col-md-6 col-xs-12 col-sm-8*/}
+            <div className="card p-0 my-3"> {/*col-md-6 col-xs-12 col-sm-8*/}
                 <div className="card-body d-flex flex-row p-3">
-                    <img style={style} src="https://cdn.vox-cdn.com/thumbor/G8A4RF-QWQl7jItQw93r402os_0=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/10816041/rick_and_morty_s02_still.jpg" 
+                    <img style={style} src={"http://localhost:8080/api/profile/searchUsers/" + props.post.user.userId}
                         className="avatar rounded-circle mx-3" 
-                        alt="Cinque Terre"/>
+                        alt="Profile picture"/>
                     <div>
-                    <h5 className="card-title mb-0">{props.username}</h5>
-                    <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>September 14, 2016</small></p>
+                    <h5 className="card-title mb-0">{props.post.user.firstName + " " + props.post.user.lastName}</h5>
+                    <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>{dateTime.toLocaleString("en-GB",{timeZone: "UTC"})}</small></p>
 
                 </div>
                 </div>
                 <div className="card-body p-1">
-                    <img src="https://www.neolaia.gr/wp-content/uploads/2019/10/Rick-and-Morty.jpg" alt="rick" className="img-fluid rounded"/>
+                    <img src={postImageUrl} alt="rick" className="img-fluid rounded" id="postImage" style={{display: "none"}}/>
                     <blockquote className="card-text p-3 m-0">
-                        <p className="mb-0">{props.post}</p>
+                        <p className="mb-0">{props.post.text}</p>
                     </blockquote>
                     <div className="row">
                         <div className="col-xs-12 col-sm-4 col-md-4 m-2">
-                            <FontAwesomeIcon className="mx-2" icon={faGlassCheers} />{8}
-                            <FontAwesomeIcon className="mx-2" icon={faComments} />{10}
+                            <FontAwesomeIcon className="mx-2" icon={faGlassCheers} />{props.post.cheers.length}
+                            <FontAwesomeIcon className="mx-2" icon={faComments} />{props.post.comments.length}
                         </div>
                     </div>
                 </div>
-                <Comment username="Alex Koro" post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family." />
-                <Comment username="Alex Koro" post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family." />
+                <form className="mx-2">
+                    <div className="form-group">
+                        <input type="email" className="form-control" id="commentInput"
+                               placeholder="Enter a comment..."/>
+                    </div>
+                </form>
+                {props.post.comments.map((comment) => (
+                    <Comment comment={comment}/>
+                ))}
             </div>
         </>
     );
