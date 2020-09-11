@@ -3,6 +3,7 @@ import Post from './Post';
 import Comment from './Comment';
 import Contact from './Contact';
 import PostForm from './PostForm';
+import $ from 'jquery';
 
 const style = {
     height: "100vh",
@@ -19,6 +20,7 @@ function NewsFeed(props) {
 
     const [items, setItems] = React.useState([]);
     const [posts, setPosts] = React.useState([]);
+    const [value, setValue] = React.useState(true);
 
     React.useEffect(() => {
             fetch('http://localhost:8080/api/newsFeed')
@@ -27,12 +29,12 @@ function NewsFeed(props) {
                     setItems(data.friends);
                     setPosts(data.posts);
                 });
-        }, []
+        }, [value]
     );
 
-
-
-
+    function closeModal() {
+        document.getElementById("closeButton").click();
+    }
 
     return (
         <>
@@ -53,18 +55,18 @@ function NewsFeed(props) {
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <PostForm/>
+                                <PostForm closeModal={closeModal}/>
                             </div>
                         </div>
                     </div>
                 </div>
                 {posts.map((post) => (
-                    <Post post={post}/>
+                    <Post post={post} value={{value:value,setValue:setValue}}/>
                 ))}
             {/*    <Post username="Rick Sanchez"*/}
             {/*          post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family. Although Beth welcomes Rick into her home, her husband, Jerry, isn't as happy about the family reunion."/>*/}

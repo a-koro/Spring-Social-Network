@@ -70,21 +70,34 @@ public class UserRelationshipController {
 
     }
 
+    // This controller is an updated version of the above to send the posts and the connections at the same time
     @GetMapping("/newsFeed")
     public ResponseEntity<NewsFeedDTO> getFriendsAndPosts() {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userFirstId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow( () -> new RuntimeException("Error: User Id not found"));
 
-        NewsFeedDTO newsFeedDto = new NewsFeedDTO();
         List<UserFriendsDto> friendsDto = userRelationshipRepo.getAllFriendsWithNames(userFirstId);
-        List<Integer> userIds = new ArrayList<>();
-        friendsDto.forEach(friend -> {
-            userIds.add(friend.getUserSecondId());
-        });
-        newsFeedDto.setPosts(postServiceInterface.findByUserIds(userIds));
+        List<UserFriendsDto> friendsDtoSecond = userRelationshipRepo.getAllFriendsWithNamesSecond(userFirstId);
 
-        newsFeedDto.setFriends(friendsDto);
+        List<UserFriendsDto> friendsDtoFiltered = Stream.concat(friendsDto.stream(), friendsDtoSecond.stream())
+                .filter( friend -> !friend.getEmail().equals(user.getUsername()))
+                .sorted(Comparator.comparingInt(UserFriendsDto::getUserFirstId))
+                .collect(Collectors.toList());
+
+//        Getting all Friends' Ids of the Current Logged-in User and adding them to List: friendsIds
+        List<Integer> friendsIds = new ArrayList<>();
+        friendsDtoFiltered.forEach( friend -> {
+            if (friend.getUserFirstId() != userFirstId) {
+                friendsIds.add(friend.getUserFirstId());
+            } else {
+                friendsIds.add(friend.getUserSecondId());
+            }
+        });
+
+        NewsFeedDTO newsFeedDto = new NewsFeedDTO();
+        newsFeedDto.setPosts(postServiceInterface.findByUserIds(friendsIds));
+        newsFeedDto.setFriends(friendsDtoFiltered);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(newsFeedDto);

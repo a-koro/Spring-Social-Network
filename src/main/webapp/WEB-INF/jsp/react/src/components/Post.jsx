@@ -16,20 +16,39 @@ function Post(props) {
     const [postImageUrl, setPostImageUrl] = React.useState("");
     const [dateTime, setDateTime] = React.useState(new Date());
 
+    function insertComment(evt) {
+        evt.preventDefault();
+
+        fetch("/post/insertComment",{
+            method: 'POST',
+            credentials: "include",
+            headers: {
+                'input': evt.target.input.value,
+                'postId': props.post.postId
+            }
+        })
+            .then(response => response.json())
+            .then(data => props.value.setValue(!props.value.value));
+
+        evt.target.input.value = "";
+    }
+
     React.useEffect(() => {
         let tempDate = new Date(props.post.created);
-        tempDate.setHours(tempDate.getHours()+2,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
+        tempDate.setHours(tempDate.getHours()+3,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
         setDateTime(tempDate);
 
-        if (props.post.imageUrl != null) {
-            document.getElementById("postImage").style.display = "block";
+        if (props.post.imageUrl !== "") {
+            console.log("This is from imageUrl");
+            document.getElementById("postImage"+props.post.postId).style.display = "block";
             setPostImageUrl(props.post.imageUrl);
         }
-        else if (props.post.postImage != null) {
-            document.getElementById("postImage").style.display = "block";
+        else if (props.post.postImage !== null) {
+            document.getElementById("postImage"+props.post.postId).style.display = "block";
             setPostImageUrl("");
         }
     },[]);
+
     return (
         <>
             <div className="card p-0 my-3"> {/*col-md-6 col-xs-12 col-sm-8*/}
@@ -44,7 +63,7 @@ function Post(props) {
                 </div>
                 </div>
                 <div className="card-body p-1">
-                    <img src={postImageUrl} alt="rick" className="img-fluid rounded" id="postImage" style={{display: "none"}}/>
+                    <img src={postImageUrl} alt="Couldn't load image from URL" className="img-fluid rounded" id={"postImage" + props.post.postId} style={{display: "none", width: "100%"}}/>
                     <blockquote className="card-text p-3 m-0">
                         <p className="mb-0">{props.post.text}</p>
                     </blockquote>
@@ -55,15 +74,21 @@ function Post(props) {
                         </div>
                     </div>
                 </div>
-                <form className="mx-2">
+                <form className="mx-2" onSubmit={insertComment}>
                     <div className="form-group">
-                        <input type="email" className="form-control" id="commentInput"
-                               placeholder="Enter a comment..."/>
+                        <input type="text" className="form-control" id="commentInput"
+                               placeholder="Enter a comment..." name="input"/>
                     </div>
                 </form>
-                {props.post.comments.map((comment) => (
-                    <Comment comment={comment}/>
-                ))}
+                <small className="ml-2 mt-0 mb-1" data-toggle="collapse" data-target={"#collapseExample" + props.post.postId}
+                        aria-expanded="false" aria-controls="collapseExample" style={{cursor: "pointer"}}>
+                    Show/Hide Comments
+                </small>
+                <div className="collapse" id={"collapseExample" + props.post.postId}>
+                    {props.post.comments.map((comment) => (
+                        <Comment comment={comment}/>
+                    ))}
+                </div>
             </div>
         </>
     );

@@ -21,7 +21,7 @@ function Comment(props){
 
     React.useEffect(() => {
         let tempDate = new Date(props.comment.created);
-        tempDate.setHours(tempDate.getHours()+2,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
+        tempDate.setHours(tempDate.getHours()+3,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
         setDateTime(tempDate);
     },[]);
 
@@ -39,6 +39,7 @@ function Comment(props){
                         <p className="mb-0">{props.comment.text}</p>
                     </blockquote>
                 </div>
+
             </div>
             <div className="card-body p-1">
                 <div className="row">
