@@ -57,7 +57,10 @@ public class ChatController {
         messagingTemplate.convertAndSendToUser(
                 chatMessage.getRecipient().getUserId().toString(),
                 "/queue/messages",
-                new ChatNotificationDto(saved.getChatMessageId(),saved.getSender().getEmail())
+                new ChatNotificationDto(saved.getChatMessageId(),
+                        saved.getSender().getUserId().toString(),
+                        saved.getSender().getFirstName(),
+                        saved.getSender().getLastName())
 
         );
 

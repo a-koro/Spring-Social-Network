@@ -3,7 +3,7 @@ package com.connector.beta.mapper;
 import com.connector.beta.dto.ChatNotificationDto;
 import com.connector.beta.dto.UserDto;
 import com.connector.beta.entities.MyUser;
-import com.connector.beta.services.UserServiceImpl;
+
 import com.connector.beta.websocketEntities.ChatMessage;
 import com.connector.beta.websocketEntities.ChatNotification;
 
@@ -22,7 +22,9 @@ public interface UserMapper {
 
     List<UserDto> mapListToDto(List<MyUser> users);
 
-    @Mapping(source ="senderNotification.email",target = "email")
+    @Mapping(source ="senderNotification.userId",target = "userId")
+    @Mapping(source ="senderNotification.firstName",target = "firstName")
+    @Mapping(source ="senderNotification.lastName",target = "lastName")
     ChatNotificationDto mapToChatNotificationDto(ChatNotification chatNotification);
 
     @Mapping(source = "chatMessageId",target = "chatMessageId")

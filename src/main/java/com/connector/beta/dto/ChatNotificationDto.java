@@ -5,14 +5,18 @@ package com.connector.beta.dto;
 public class ChatNotificationDto {
 
     private Integer chatNotificationId;
-    private String email;
+    private String userId;
+    private String firstName;
+    private String lastName;
 
     public ChatNotificationDto() {
     }
 
-    public ChatNotificationDto(Integer chatNotificationId, String email) {
+    public ChatNotificationDto(Integer chatNotificationId, String userId, String firstName, String lastName) {
         this.chatNotificationId = chatNotificationId;
-        this.email = email;
+        this.userId = userId;
+        this.firstName = firstName;
+        this.lastName = lastName;
     }
 
     public Integer getChatNotificationId() {
@@ -23,11 +27,27 @@ public class ChatNotificationDto {
         this.chatNotificationId = chatNotificationId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
