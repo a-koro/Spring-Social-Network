@@ -2,25 +2,45 @@ package com.connector.beta.Pojos;
 
 public class UserFriendsDto {
 
-    private int UserSecondId;
+    private int userFirstId;
+    private int userSecondId;
+    private String email;
     private String firstName;
     private String lastName;
 
     public UserFriendsDto() {
     }
 
-    public UserFriendsDto(int userSecondId, String firstName, String lastName) {
-        UserSecondId = userSecondId;
+    public UserFriendsDto(int userFirstId, int userSecondId, String email, String firstName, String lastName) {
+        this.userFirstId = userFirstId;
+        this.userSecondId = userSecondId;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
+    public int getUserFirstId() {
+        return userFirstId;
+    }
+
+    public void setUserFirstId(int userFirstId) {
+        this.userFirstId = userFirstId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public int getUserSecondId() {
-        return UserSecondId;
+        return userSecondId;
     }
 
     public void setUserSecondId(int userSecondId) {
-        UserSecondId = userSecondId;
+        this.userSecondId = userSecondId;
     }
 
     public String getFirstName() {

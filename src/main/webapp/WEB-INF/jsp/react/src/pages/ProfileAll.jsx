@@ -4,8 +4,10 @@ import ProfileBg from "../components/ProfileBg";
 import DropzoneBg from "../components/DropzoneBg";
 import Dropzone from "../components/Dropzone";
 import DataServices from "../services/DataServices";
+import { ResultsContext } from "../components/Navbar"
 
 function ProfileAll(props) {
+
 
     const style = {
         objectFit: 'cover',
@@ -31,12 +33,15 @@ function ProfileAll(props) {
 
 
     const [user, setUser] = React.useState({});
+    const [userRel, setUserRel] = React.useState({})
+
 
 
     useEffect(() => {
         getCurrentUser()
         console.log(location.pathname); // result: '/secondpage'
         console.log(location.state.detail); // result: 'some_value'
+        // console.log(location.currentUserId.id)
     }, [location]);
 
     function getCurrentUser() {
@@ -48,18 +53,23 @@ function ProfileAll(props) {
         ).catch(error => { console.log(error.response) });
     }
 
+    function getCurrentRelationship () {
+
+    }
+
 
     return (
         <>
+            {console.log(props.myUserId)}
             <div className="col-md-6 col-12 offset-md-3 offset-0">
                 <div id="cssSelector">
                     <div className="card hovercard">
                         <div style={background}>
-                            <DropzoneBg/>
+                            {/*<DropzoneBg/>*/}
                         </div>
                         <div className="avatar">
                             <img style={style} alt="image-profile" src={url} />
-                            <Dropzone />
+                            {/*<Dropzone />*/}
                         </div>
                         <div className="info">
                             <div className="title">

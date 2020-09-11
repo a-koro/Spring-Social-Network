@@ -1,8 +1,9 @@
 import React from 'react';
 
-import { useHistory, Link } from "react-router-dom";
+import {useHistory, Link} from "react-router-dom";
 
 let results = ["Test DATA 001"];
+let userId = 0;
 
 export const ResultsContext = React.createContext({});
 
@@ -17,6 +18,20 @@ export const ResultsProvider = (props) => {
         </ResultsContext.Provider>
     );
 };
+
+
+
+// export const UserIdContext = React.createContext(0);
+//
+// export const UserIdProvider = (props) => {
+//
+//     return (
+//         <UserIdContext.Provider value={0}>
+//             {props.children}
+//             {/* this indicates that the global store is accessible to all the child tags with MyProvider as Parent */}
+//         </UserIdContext.Provider>
+//     );
+// };
 
 const style = {
     objectFit: 'cover',
@@ -43,23 +58,41 @@ function Navbar() {
 
     const [username, setUsername] = React.useState(" ");
     const [searchResults, setSearchResults] = React.useState([]);
+    const history = useHistory();
 
     function getCurrentUser() {
 
-    fetch("/userDetails", {
-        method: 'GET',
-        credentials: "include"
-    })
-        .then(response => response.json())
-        .then(data => {
-            setUsername(data.firstName + " " + data.lastName);
-        });
+        fetch("/userDetails", {
+            method: 'GET',
+            credentials: "include"
+        })
+            .then(response => response.json())
+            .then(data => {
+                setUsername(data.firstName + " " + data.lastName);
+                userId = data.userId
+                // setUserId(data.userId)
+                console.log("Inside promise" + data.userId);
+                // history.push({
+                //     path: "/profileAll",
+                //     currentUserId: {id: data.userId}
+                // });
+            });
     }
 
-    React.useEffect(() => { getCurrentUser();
+    React.useEffect(() => {
+        getCurrentUser();
+        // saveCurrentUserId()
     }, []);
 
-    const history = useHistory();
+
+    // const saveCurrentUserId = () => {
+    //     console.log(userId)
+    //     history.push({
+    //         path: "/profileAll",
+    //         currentUserId: {id: 3}
+    //     });
+    // }
+
     function fetchUsers(evt) {
         evt.preventDefault();
 
@@ -77,7 +110,7 @@ function Navbar() {
             .then(data => {
                 setSearchResults(data);
                 results = data;
-                console.log("data from search",data);
+                console.log("data from search", data);
                 console.log(results[0].email);
                 console.log(results[0].image);
             });
@@ -91,22 +124,26 @@ function Navbar() {
         } else {
             history.push("/results");
         }
-    },[searchResults]);
+    }, [searchResults]);
 
     return (
         <>
+            {/*{saveCurrentUserId()}*/}
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <a className="navbar-brand" href="/">
                     {/*<img src="http://placehold.it/150x50?text=Logo" width="30" height="30" className="d-inline-block align-top" alt="" loading="lazy" />*/}
                     Connector
                 </a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <form className="form-inline my-2 my-lg-0 mr-auto" onSubmit={fetchUsers}>
-                        <input id="searchBar" className="form-control autocomplete mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search" />
+                        <input id="searchBar" className="form-control autocomplete mr-sm-2" name="search" type="search"
+                               placeholder="Search" aria-label="Search"/>
                     </form>
                     {/*<div style={{width: "400px"}}></div>*/}
                     <ul className="navbar-nav">
@@ -122,7 +159,7 @@ function Navbar() {
                         <li>
                             <img style={style} src="http://localhost:8080/api/profile/image/download"
                                  className="avatar rounded-circle ml-3"
-                                 alt="Cinque Terre" />
+                                 alt="Cinque Terre"/>
                         </li>
                         <li className="nav-item">
                             <Link to="/profile" className="nav-link">{username}</Link>

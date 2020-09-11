@@ -35,6 +35,8 @@ function getCurrentProfile(userId) {
     return axios.get(URL_CURRENT_USER + "/" + userId )
 }
 
+// function getCurrentRelationship()
+
 function imageUpload(userid){
     console.log("userid",userid);
     return axios.post(URL_UPLOAD_IMAGE_PROFILE+userid+"image/upload");

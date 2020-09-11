@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api")
@@ -31,17 +34,32 @@ public class UserRelationshipController {
 
 
     @GetMapping("/user")
-    public ResponseEntity<List<UserFriendsDto>> CurrentUserInfo() {
-
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String currentPrincipalName = authentication.getName();
-//
+    public ResponseEntity<List<UserFriendsDto>> CurrentUserInfoTest() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userFirstId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow( () -> new RuntimeException("Error: User Id not found"));
+
         List<UserFriendsDto> friendsDto = userRelationshipRepo.getAllFriendsWithNames(userFirstId);
+        List<UserFriendsDto> friendsDtoSecond = userRelationshipRepo.getAllFriendsWithNamesSecond(userFirstId);
+
+        List<UserFriendsDto> friendsDtoFiltered = Stream.concat(friendsDto.stream(), friendsDtoSecond.stream())
+                .filter( friend -> !friend.getEmail().equals(user.getUsername()))
+                .sorted(Comparator.comparingInt(UserFriendsDto::getUserFirstId))
+                .collect(Collectors.toList());
+
+//        Getting all Friends' Ids of the Current Logged-in User and adding them to List: friendsIds
+        List<Integer> friendsIds = new ArrayList<>();
+        friendsDtoFiltered.forEach( friend -> {
+            if (friend.getUserFirstId() != userFirstId) {
+                friendsIds.add(friend.getUserFirstId());
+            } else {
+                friendsIds.add(friend.getUserSecondId());
+            }
+        });
+        friendsIds.forEach(System.out::println);
+//        Done
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(friendsDto);
+                .body(friendsDtoFiltered);
     }
 
     // This controller is an updated version of the above to send the posts and the connections at the same time
