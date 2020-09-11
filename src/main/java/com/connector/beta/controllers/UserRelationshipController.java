@@ -46,6 +46,18 @@ public class UserRelationshipController {
                 .sorted(Comparator.comparingInt(UserFriendsDto::getUserFirstId))
                 .collect(Collectors.toList());
 
+//        Getting all Friends' Ids of the Current Logged-in User and adding them to List: friendsIds
+        List<Integer> friendsIds = new ArrayList<>();
+        friendsDtoFiltered.forEach( friend -> {
+            if (friend.getUserFirstId() != userFirstId) {
+                friendsIds.add(friend.getUserFirstId());
+            } else {
+                friendsIds.add(friend.getUserSecondId());
+            }
+        });
+        friendsIds.forEach(System.out::println);
+//        Done
+
         return ResponseEntity.status(HttpStatus.OK)
                 .body(friendsDtoFiltered);
     }
