@@ -16,4 +16,6 @@ public interface PostServiceInterface {
     public Post findPostByPostId(int postId);
 
     public void updatePost(Post post);
+
+    public void insertPost(Post post);
 }

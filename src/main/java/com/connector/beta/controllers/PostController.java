@@ -47,4 +47,21 @@ public class PostController {
         commentServiceInterface.insertComment(comment);
         return comment;
     }
+
+    @PostMapping("/insertPost")
+    public Post insertPost(@RequestHeader String text, @RequestHeader String imageUrl, Principal principal) {
+        Post post = new Post();
+        post.setUser(userServiceInterface.getUserDetails(principal.getName()));
+        post.setText(text);
+        post.setImageUrl(imageUrl);
+        System.out.println(imageUrl);
+        post.setCreated(new Timestamp(System.currentTimeMillis()));
+        postServiceInterface.insertPost(post);
+        return new Post();
+    }
+
+    @PostMapping("/insertPostWithFile")
+    public Post insertPostWithFile() {
+        return new Post();
+    }
 }

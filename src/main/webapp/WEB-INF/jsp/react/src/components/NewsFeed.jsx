@@ -3,6 +3,7 @@ import Post from './Post';
 import Comment from './Comment';
 import Contact from './Contact';
 import PostForm from './PostForm';
+import $ from 'jquery';
 
 const style = {
     height: "100vh",
@@ -31,6 +32,10 @@ function NewsFeed(props) {
         }, [value]
     );
 
+    function closeModal() {
+        document.getElementById("closeButton").click();
+    }
+
     return (
         <>
             <div className="col-md-3 col-12 d-none d-md-block">
@@ -50,12 +55,12 @@ function NewsFeed(props) {
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <PostForm/>
+                                <PostForm closeModal={closeModal}/>
                             </div>
                         </div>
                     </div>

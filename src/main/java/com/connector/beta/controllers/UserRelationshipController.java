@@ -44,6 +44,7 @@ public class UserRelationshipController {
                 .body(friendsDto);
     }
 
+    // This controller is an updated version of the above to send the posts and the connections at the same time
     @GetMapping("/newsFeed")
     public ResponseEntity<NewsFeedDTO> getFriendsAndPosts() {
 

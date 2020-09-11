@@ -38,15 +38,17 @@ function Post(props) {
         tempDate.setHours(tempDate.getHours()+3,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
         setDateTime(tempDate);
 
-        if (props.post.imageUrl != null) {
-            document.getElementById("postImage").style.display = "block";
+        if (props.post.imageUrl !== "") {
+            console.log("This is from imageUrl");
+            document.getElementById("postImage"+props.post.postId).style.display = "block";
             setPostImageUrl(props.post.imageUrl);
         }
-        else if (props.post.postImage != null) {
-            document.getElementById("postImage").style.display = "block";
+        else if (props.post.postImage !== null) {
+            document.getElementById("postImage"+props.post.postId).style.display = "block";
             setPostImageUrl("");
         }
     },[]);
+
     return (
         <>
             <div className="card p-0 my-3"> {/*col-md-6 col-xs-12 col-sm-8*/}
@@ -61,7 +63,7 @@ function Post(props) {
                 </div>
                 </div>
                 <div className="card-body p-1">
-                    <img src={postImageUrl} alt="rick" className="img-fluid rounded" id="postImage" style={{display: "none"}}/>
+                    <img src={postImageUrl} alt="Couldn't load image from URL" className="img-fluid rounded" id={"postImage" + props.post.postId} style={{display: "none", width: "100%"}}/>
                     <blockquote className="card-text p-3 m-0">
                         <p className="mb-0">{props.post.text}</p>
                     </blockquote>

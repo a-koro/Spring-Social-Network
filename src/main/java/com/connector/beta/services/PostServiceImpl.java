@@ -24,23 +24,23 @@ public class PostServiceImpl implements PostServiceInterface {
     @Override
     public List<Post> findByUserIds(List<Integer> userIds) {
         List<Post> list = postRepo.findByUserUserIdInOrderByCreatedDesc(userIds);
-        list.forEach(post -> {
-            MyUser user = post.getUser();
-            user.setPassword("");
-            post.setUser(user);
-
-            post.getComments().forEach(comment -> {
-                MyUser user1 = comment.getUser();
-                user1.setPassword("");
-                post.setUser(user1);
-            });
-
-            post.getCheers().forEach(cheer -> {
-                MyUser user2 = cheer.getUser();
-                user2.setPassword("");
-                cheer.setUser(user2);
-            });
-        });
+//        list.forEach(post -> {
+//            MyUser user = post.getUser();
+//            user.setPassword("");
+//            post.setUser(user);
+//
+//            post.getComments().forEach(comment -> {
+//                MyUser user1 = comment.getUser();
+//                user1.setPassword("");
+//                post.setUser(user1);
+//            });
+//
+//            post.getCheers().forEach(cheer -> {
+//                MyUser user2 = cheer.getUser();
+//                user2.setPassword("");
+//                cheer.setUser(user2);
+//            });
+//        });
         return list;
     }
 
@@ -53,6 +53,12 @@ public class PostServiceImpl implements PostServiceInterface {
     @Transactional
     @Override
     public void updatePost(Post post) {
+        postRepo.save(post);
+    }
+
+    @Transactional
+    @Override
+    public void insertPost(Post post) {
         postRepo.save(post);
     }
 }

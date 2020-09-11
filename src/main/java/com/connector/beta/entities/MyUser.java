@@ -141,6 +141,7 @@ public class MyUser implements Serializable {
         this.roles = roles;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
