@@ -4,6 +4,7 @@ import axios from 'axios';
 const URL_ALL_USERS='http://localhost:8080/api/profile/users';
 const URL_CURRENT_USER='http://localhost:8080/api/profile/user';
 const URL_UPLOAD_IMAGE_PROFILE='http://localhost:8080/api/profile/';
+const URL_CHECK_RELATIONSHIP = 'http://localhost:8080/api/relationship'
 
 
 function TrainerDataService(){
@@ -13,6 +14,7 @@ function TrainerDataService(){
     this.getCurrentUser=getCurrentUser;
     this.imageUpload=imageUpload;
     this.getCurrentProfile = getCurrentProfile
+    this.getCurrentRelationship = getCurrentRelationship
 
 }
 
@@ -35,7 +37,12 @@ function getCurrentProfile(userId) {
     return axios.get(URL_CURRENT_USER + "/" + userId )
 }
 
-// function getCurrentRelationship()
+ function getCurrentRelationship(currentUserId, profilePageId) {
+    return axios.post(URL_CHECK_RELATIONSHIP, {
+        currentUserId,
+        profilePageId
+    })
+ }
 
 function imageUpload(userid){
     console.log("userid",userid);

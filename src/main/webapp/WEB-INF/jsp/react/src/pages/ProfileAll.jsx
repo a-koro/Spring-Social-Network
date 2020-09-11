@@ -38,11 +38,15 @@ function ProfileAll(props) {
 
 
     useEffect(() => {
+        getCurrentRelationship()
         getCurrentUser()
-        console.log(location.pathname); // result: '/secondpage'
+        // getCurrentRelationship()
+        // console.log(location.pathname); // result: '/secondpage'
+        console.log(props.myUserId)
         console.log(location.state.detail); // result: 'some_value'
+
         // console.log(location.currentUserId.id)
-    }, [location]);
+    }, []);
 
     function getCurrentUser() {
         DataServices.getCurrentProfile(location.state.detail).then(
@@ -54,13 +58,16 @@ function ProfileAll(props) {
     }
 
     function getCurrentRelationship () {
-
+        DataServices.getCurrentRelationship(props.myUserId, location.state.detail).then(
+            response => {
+                console.log("friendship status : ", response.data)
+            }
+        ).catch(error => { console.log(error.response) });
     }
 
 
     return (
         <>
-            {console.log(props.myUserId)}
             <div className="col-md-6 col-12 offset-md-3 offset-0">
                 <div id="cssSelector">
                     <div className="card hovercard">

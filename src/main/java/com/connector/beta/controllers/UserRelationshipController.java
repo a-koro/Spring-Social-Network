@@ -1,7 +1,9 @@
 package com.connector.beta.controllers;
 
 import com.connector.beta.Pojos.UserFriendsDto;
+import com.connector.beta.Pojos.UserRelationshipParams;
 import com.connector.beta.dto.NewsFeedDTO;
+import com.connector.beta.entities.UserRelationship;
 import com.connector.beta.repos.UserRelationshipRepo;
 import com.connector.beta.repos.UserRepo;
 import com.connector.beta.services.PostServiceInterface;
@@ -10,10 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -34,7 +35,7 @@ public class UserRelationshipController {
 
 
     @GetMapping("/user")
-    public ResponseEntity<List<UserFriendsDto>> CurrentUserInfoTest() {
+    public ResponseEntity<List<UserFriendsDto>> CurrentUserInfo() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userFirstId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow( () -> new RuntimeException("Error: User Id not found"));
 
@@ -60,6 +61,13 @@ public class UserRelationshipController {
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(friendsDtoFiltered);
+    }
+
+    @PostMapping("/relationship")
+    @ResponseStatus(value = HttpStatus.OK)
+    public void getUsersRelationship(@Valid @RequestBody UserRelationshipParams userParams) {
+        System.out.println("current User Id + " + userParams.getCurrentUserId() + " profile Page Id + " + userParams.getProfilePageId());
+
     }
 
     @GetMapping("/newsFeed")
