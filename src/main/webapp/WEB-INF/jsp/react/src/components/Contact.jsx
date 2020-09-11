@@ -31,7 +31,8 @@ function Contact(props) {
         console.log(props.userFriendId)
         history.push({
             pathname: '/ProfileAll',
-            state: {detail: props.userFriendId}
+            state: {detail: props.userFriendId},
+            // fuckingSendThem: {data: "data"}
         });
     }
 

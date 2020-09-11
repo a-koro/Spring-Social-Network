@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api")
@@ -31,16 +34,20 @@ public class UserRelationshipController {
 
 
     @GetMapping("/user")
-    public ResponseEntity<List<UserFriendsDto>> CurrentUserInfo() {
-
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String currentPrincipalName = authentication.getName();
+    public ResponseEntity<List<UserFriendsDto>> CurrentUserInfoTest() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int userFirstId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow( () -> new RuntimeException("Error: User Id not found"));
+
         List<UserFriendsDto> friendsDto = userRelationshipRepo.getAllFriendsWithNames(userFirstId);
+        List<UserFriendsDto> friendsDtoSecond = userRelationshipRepo.getAllFriendsWithNamesSecond(userFirstId);
+
+        List<UserFriendsDto> friendsDtoFiltered = Stream.concat(friendsDto.stream(), friendsDtoSecond.stream())
+                .filter( friend -> !friend.getEmail().equals(user.getUsername()))
+                .sorted(Comparator.comparingInt(UserFriendsDto::getUserFirstId))
+                .collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(friendsDto);
+                .body(friendsDtoFiltered);
     }
 
     @GetMapping("/newsFeed")

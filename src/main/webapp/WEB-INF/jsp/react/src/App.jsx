@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter, Redirect } from 'react-router-dom';
-import Navbar, { ResultsProvider } from './components/Navbar';
+import Navbar, {ResultsProvider, UserIdProvider} from './components/Navbar';
 import NewsFeed from './components/NewsFeed';
 import Search from './components/Search';
 import Profile from "./pages/Profile";
@@ -12,22 +12,22 @@ function App() {
 
     // We need dynamic URLs for Profile Components
 
-    // const [userId, setUserId] = React.useState(0);
-    //
-    // function getUserId() {
-    //
-    //     fetch("/userDetails", {
-    //         method: 'GET',
-    //         credentials: "include"
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             setUserId(data.userId);
-    //         });
-    // }
-    //
-    // React.useEffect(() => { getUserId();
-    // }, []);
+    const [userId, setUserId] = React.useState(0);
+
+    function getUserId() {
+
+        fetch("/userDetails", {
+            method: 'GET',
+            credentials: "include"
+        })
+            .then(response => response.json())
+            .then(data => {
+                setUserId(data.userId);
+            });
+    }
+
+    React.useEffect(() => { getUserId();
+    }, []);
 
   return (
 
@@ -50,7 +50,7 @@ function App() {
                       <Route path="/results" component={Search}/>
                       <Route path="/" exact component={NewsFeed}/>
                       <Route path="/profile" component={Profile}/>
-                      <Route path="/profileAll" component={ProfileAll}/>
+                      <Route path="/profileAll" component={ () => <ProfileAll myUserId = {userId} />}/>
                   </ResultsProvider>
               </Switch>
               </div>
