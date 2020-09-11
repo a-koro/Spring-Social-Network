@@ -33,24 +33,32 @@ public class UserRelationshipController {
     PostServiceInterface postServiceInterface;
 
 
-
     @GetMapping("/user")
     public ResponseEntity<List<UserFriendsDto>> CurrentUserInfo() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userFirstId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow( () -> new RuntimeException("Error: User Id not found"));
+        int currentUserId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow(() -> new RuntimeException("Error: User Id not found"));
 
-        List<UserFriendsDto> friendsDto = userRelationshipRepo.getAllFriendsWithNames(userFirstId);
-        List<UserFriendsDto> friendsDtoSecond = userRelationshipRepo.getAllFriendsWithNamesSecond(userFirstId);
+        List<UserFriendsDto> friendsDto = userRelationshipRepo.getAllFriendsWithNames(currentUserId);
+        List<UserFriendsDto> friendsDtoSecond = userRelationshipRepo.getAllFriendsWithNamesSecond(currentUserId);
 
         List<UserFriendsDto> friendsDtoFiltered = Stream.concat(friendsDto.stream(), friendsDtoSecond.stream())
-                .filter( friend -> !friend.getEmail().equals(user.getUsername()))
+                .filter(friend -> !friend.getEmail().equals(user.getUsername()))
                 .sorted(Comparator.comparingInt(UserFriendsDto::getUserFirstId))
                 .collect(Collectors.toList());
 
+         friendsDtoFiltered.forEach(f -> {
+            if (f.getUserFirstId() != currentUserId) {
+                f.setUserSecondId(f.getUserFirstId());
+                f.setUserFirstId(currentUserId);
+            }
+        });
+//         friendsDtoFiltered.forEach( f-> System.out.println(f.getUserFirstId() + " " + f.getUserSecondId()));
+
+
 //        Getting all Friends' Ids of the Current Logged-in User and adding them to List: friendsIds
         List<Integer> friendsIds = new ArrayList<>();
-        friendsDtoFiltered.forEach( friend -> {
-            if (friend.getUserFirstId() != userFirstId) {
+        friendsDtoFiltered.forEach(friend -> {
+            if (friend.getUserFirstId() != currentUserId) {
                 friendsIds.add(friend.getUserFirstId());
             } else {
                 friendsIds.add(friend.getUserSecondId());
@@ -75,24 +83,29 @@ public class UserRelationshipController {
     public ResponseEntity<NewsFeedDTO> getFriendsAndPosts() {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        int userFirstId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow( () -> new RuntimeException("Error: User Id not found"));
+        int currentUserId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow(() -> new RuntimeException("Error: User Id not found"));
 
-        List<UserFriendsDto> friendsDto = userRelationshipRepo.getAllFriendsWithNames(userFirstId);
-        List<UserFriendsDto> friendsDtoSecond = userRelationshipRepo.getAllFriendsWithNamesSecond(userFirstId);
+        List<UserFriendsDto> friendsDto = userRelationshipRepo.getAllFriendsWithNames(currentUserId);
+        List<UserFriendsDto> friendsDtoSecond = userRelationshipRepo.getAllFriendsWithNamesSecond(currentUserId);
 
         List<UserFriendsDto> friendsDtoFiltered = Stream.concat(friendsDto.stream(), friendsDtoSecond.stream())
-                .filter( friend -> !friend.getEmail().equals(user.getUsername()))
+                .filter(friend -> !friend.getEmail().equals(user.getUsername()))
                 .sorted(Comparator.comparingInt(UserFriendsDto::getUserFirstId))
                 .collect(Collectors.toList());
 
-//        Getting all Friends' Ids of the Current Logged-in User and adding them to List: friendsIds
-        List<Integer> friendsIds = new ArrayList<>();
-        friendsDtoFiltered.forEach( friend -> {
-            if (friend.getUserFirstId() != userFirstId) {
-                friendsIds.add(friend.getUserFirstId());
-            } else {
-                friendsIds.add(friend.getUserSecondId());
+
+//        All friends placed at userSecondId
+
+        friendsDtoFiltered.forEach(f -> {
+            if (f.getUserFirstId() != currentUserId) {
+                f.setUserSecondId(f.getUserFirstId());
+                f.setUserFirstId(currentUserId);
             }
+        });
+
+        List<Integer> friendsIds = new ArrayList<>();
+        friendsDtoFiltered.forEach( f -> {
+            friendsIds.add(f.getUserSecondId());
         });
 
         NewsFeedDTO newsFeedDto = new NewsFeedDTO();
