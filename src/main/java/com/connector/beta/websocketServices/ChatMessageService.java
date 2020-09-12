@@ -49,9 +49,9 @@ public class ChatMessageService {
          List<ChatMessage> messages = chatMessageRepo
                  .findChatMessageByChatRoom(room)
                  .orElse(new ArrayList<>());
-//        if(messages.size() > 0) {
-//            updateStatuses(senderId, recipientId, MessageStatus.DELIVERED);
-//        }
+        if(messages.size() > 0) {
+            updateStatuses(senderId, recipientId, MessageStatus.DELIVERED);
+        }
 
         return messages;
 
@@ -60,4 +60,9 @@ public class ChatMessageService {
     public long countNewMessages(Integer senderId, Integer recipientId) {
         return chatMessageRepo.countBySender_UserIdAndRecipient_UserId(senderId,recipientId);
     }
+
+    private void updateStatuses(Integer senderId,Integer recipientId,MessageStatus status){
+                chatMessageRepo.updateStatuses(senderId,recipientId,status.toString());
+    }
+
 }
