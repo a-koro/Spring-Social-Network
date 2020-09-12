@@ -25,6 +25,7 @@ public class Post implements Serializable {
     @OneToMany(mappedBy = "post")
     List<Cheer> cheers;
     @OneToOne(mappedBy = "post")
+//    @JsonIgnore
     PostImage postImage;
 
     public PostImage getPostImage() {

@@ -3,11 +3,19 @@ package com.connector.beta.controllers;
 import com.connector.beta.entities.Comment;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.Post;
+import com.connector.beta.entities.PostImage;
 import com.connector.beta.services.CommentServiceInterface;
 import com.connector.beta.services.PostServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.security.Principal;
 import java.sql.Timestamp;
@@ -60,8 +68,29 @@ public class PostController {
         return new Post();
     }
 
-    @PostMapping("/insertPostWithFile")
-    public Post insertPostWithFile() {
-        return new Post();
+    @PostMapping(
+            path = "/insertPostWithFile",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ResponseStatus(value = HttpStatus.OK)
+    public void insertPostWithFile(
+            @RequestParam("file") MultipartFile file,
+            @RequestHeader String text,
+            Principal principal) {
+        postServiceInterface.insertPostWithImage(text, file, userServiceInterface.getUserDetails(principal.getName()));
+    }
+
+    @GetMapping("/downloadPostImage/{postId}")
+    public ResponseEntity<Resource> downloadPostImage(@PathVariable Integer postId) {
+        PostImage postImage = postServiceInterface.findPostImageByPostId(postId);
+
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=" + postImage.getTitle());
+        return ResponseEntity.ok()
+                .headers(header)
+                .contentLength(postImage.getFile().length)
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(new ByteArrayResource(postImage.getFile()));
     }
 }

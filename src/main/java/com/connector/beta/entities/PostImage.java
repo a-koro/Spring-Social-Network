@@ -1,5 +1,6 @@
 package com.connector.beta.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class PostImage implements Serializable {
     private String title;
     @Lob
     @Column(name = "file")
+    @JsonIgnore
     private byte[] file;
 
     @Column(name = "type")
@@ -23,8 +25,9 @@ public class PostImage implements Serializable {
     @Column(name = "size")
     private String size;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
+    @JsonIgnore
     private Post post;
 
     public PostImage() {

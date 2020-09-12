@@ -38,14 +38,15 @@ function Post(props) {
         tempDate.setHours(tempDate.getHours()+3,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
         setDateTime(tempDate);
 
-        if (props.post.imageUrl !== "") {
+        if (props.post.imageUrl !== "" && props.post.imageUrl !== null) {
             console.log("This is from imageUrl");
             document.getElementById("postImage"+props.post.postId).style.display = "block";
             setPostImageUrl(props.post.imageUrl);
         }
-        else if (props.post.postImage !== null) {
+        else if (!(props.post.postImage === null || props.post.postImage === undefined)) {
+            console.log(props.post);
             document.getElementById("postImage"+props.post.postId).style.display = "block";
-            setPostImageUrl("");
+            setPostImageUrl("http://localhost:8080/post/downloadPostImage/" + props.post.postId);
         }
     },[]);
 
