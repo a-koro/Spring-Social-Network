@@ -1,5 +1,7 @@
 package com.connector.beta.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,12 +15,14 @@ public class UserRelationship implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userFirstId")
     @JoinColumn(name = "user_first_id")
+    @JsonIgnore
     MyUser myUser1;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userSecondId")
     @JoinColumn(name = "user_second_id")
+    @JsonIgnore
     MyUser myUser2;
 
     Boolean pendingFirstSecond;

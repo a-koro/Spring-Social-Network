@@ -5,6 +5,7 @@ const URL_ALL_USERS='http://localhost:8080/api/profile/users';
 const URL_CURRENT_USER='http://localhost:8080/api/profile/user';
 const URL_UPLOAD_IMAGE_PROFILE='http://localhost:8080/api/profile/';
 const URL_CHECK_RELATIONSHIP = 'http://localhost:8080/api/relationship'
+const URL_DELETE_RELATIONSHIP = 'http://localhost:8080/api/deleteRelationship'
 
 
 function TrainerDataService(){
@@ -15,7 +16,7 @@ function TrainerDataService(){
     this.imageUpload=imageUpload;
     this.getCurrentProfile = getCurrentProfile
     this.getCurrentRelationship = getCurrentRelationship
-
+    this.deleteRelationship = deleteRelationship
 }
 
 
@@ -39,6 +40,13 @@ function getCurrentProfile(userId) {
 
  function getCurrentRelationship(currentUserId, profilePageId) {
     return axios.post(URL_CHECK_RELATIONSHIP, {
+        currentUserId,
+        profilePageId
+    })
+ }
+
+ function deleteRelationship(currentUserId, profilePageId) {
+    return axios.post(URL_DELETE_RELATIONSHIP, {
         currentUserId,
         profilePageId
     })
