@@ -75,13 +75,25 @@ function ProfileAll(props) {
         )
     }
 
-    function ifStatements() {
+    const acceptRel = () => {
+        DataServices.acceptRelationship(props.myUserId, location.state.detail).then (
+            () => {
+                console.log("Friend request Accepted")
+                setUpdate(3);
+            }
+        )
+    }
 
-        // if (props.myUserId > location.state.detail) {
-        //     const temp = props.myUserId;
-        //     props.myUserId = location.state.detail;
-        //     location.state.detail = temp;
-        // }
+    const createRel = () => {
+        DataServices.createRelationship(props.myUserId, location.state.detail).then(
+            () => {
+                console.log("Friend request sent")
+                setUpdate(2);
+            }
+        )
+    }
+
+    function ifStatements() {
 
         if (userRel) {
             if (userRel.id.userFirstId === -1) {
@@ -91,9 +103,13 @@ function ProfileAll(props) {
             } else if (props.myUserId < location.state.detail) {
                 if (userRel.pendingFirstSecond) {
                     return "pendingFriendRequest";
+                } else {
+                    return "respondFriendRequest"
                 }
             } else if (userRel.pendingSecondFirst) {
                 return "pendingFriendRequest"
+            } else {
+                return "respondFriendRequest"
             }
         }
         return false;
@@ -115,7 +131,7 @@ function ProfileAll(props) {
                             <div className="title">
                                 {ifStatements() === "noRelationship" &&
                                 <div className="StartingDiv">
-                                    <button>
+                                    <button onClick={createRel}>
                                         <FontAwesomeIcon id="AddFriendIcon" icon={faUserPlus}/>
                                         <span className="InnerSpan">Add Friend</span>
                                     </button>
@@ -130,13 +146,22 @@ function ProfileAll(props) {
                                 </div>}
                                 {ifStatements() === "pendingFriendRequest" &&
                                 <div className="StartingDiv">
-                                    <button>
+                                    <button title="Click to cancel Friend Request">
                                         <FontAwesomeIcon id="AddFriendIcon" icon={faUserFriends}/>
-                                        <span className="InnerSpan">&#10004; Request Pending</span>
+                                        <span className="InnerSpan" onClick={deleteRel}>Request Pending</span>
                                     </button>
                                 </div>}
-
-
+                                {ifStatements() === "respondFriendRequest" &&
+                                <div className="StartingDiv">
+                                    <button>
+                                        <FontAwesomeIcon id="AddFriendIcon" icon={faUserFriends}/>
+                                        <span className="InnerSpan">Respond to Request</span>
+                                    </button>
+                                    <div>
+                                        <button id="acceptB" onClick={acceptRel}>Accept</button>
+                                        <button id="declineB" onClick={deleteRel}>Decline</button>
+                                    </div>
+                                </div>}
                                 <h3>{user.firstName} {user.lastName}</h3>
                             </div>
                             <div className="desc">Birthday {new Date(user.birthday).toLocaleDateString("en-GB")}</div>

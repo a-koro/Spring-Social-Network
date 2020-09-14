@@ -37,10 +37,17 @@ public interface UserRelationshipRepo extends JpaRepository<UserRelationship, Us
             @Param("myUserId1") Integer myUserId1,
             @Param("myUserId2") Integer myUserId2);
 
+    @Query("SELECT u FROM UserRelationship u WHERE (u.id.userFirstId = :myUserId OR u.id.userSecondId = :myUserId) " +
+            "AND u.friends = false")
+    List<UserRelationship> getAllPendingRelationships(
+            @Param("myUserId") Integer myUserId);
+
     @Modifying
     @Query("delete from UserRelationship u where (u.id.userFirstId = :myUserId1 AND u.id.userSecondId = :myUserId2)")
     void deleteRelationship(
             @Param("myUserId1") Integer myUserId1,
             @Param("myUserId2") Integer myUserId2);
+
+
 
 }

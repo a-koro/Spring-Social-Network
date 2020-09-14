@@ -25,11 +25,11 @@ public class UserRelationship implements Serializable {
     @JsonIgnore
     MyUser myUser2;
 
-    Boolean pendingFirstSecond;
+    Boolean pendingFirstSecond = false;
 
-    Boolean pendingSecondFirst;
+    Boolean pendingSecondFirst =false;
 
-    Boolean friends;
+    Boolean friends =false;
 
     public UserRelationship() {
     }
@@ -80,5 +80,17 @@ public class UserRelationship implements Serializable {
 
     public void setFriends(Boolean friends) {
         this.friends = friends;
+    }
+
+    @Override
+    public String toString() {
+        return "UserRelationship{" +
+                "id=" + id +
+                ", myUser1=" + myUser1 +
+                ", myUser2=" + myUser2 +
+                ", pendingFirstSecond=" + pendingFirstSecond +
+                ", pendingSecondFirst=" + pendingSecondFirst +
+                ", friends=" + friends +
+                '}';
     }
 }

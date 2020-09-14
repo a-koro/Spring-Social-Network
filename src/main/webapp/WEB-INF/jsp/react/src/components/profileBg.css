@@ -259,6 +259,24 @@
     font-size: 14px;
 }
 
+#cssSelector .card.hovercard .info .title .StartingDiv div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv div button {
+    font-size: 8px;
+    margin-top: 4px;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv div #acceptB{
+    background-color: #28a745;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv div #declineB {
+    background-color: #dc3545;
+}
+
 
 #cssSelector .card.hovercard .info .desc {
     overflow: hidden;
