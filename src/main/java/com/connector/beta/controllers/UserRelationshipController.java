@@ -151,6 +151,11 @@ public class UserRelationshipController {
     @GetMapping("/relationshipPending/{id}")
     public ResponseEntity<List<UserIdAndNamesDto>> getAllPendingRequests(@PathVariable Integer id) {
         List<UserRelationship> relationships = userRelationshipRepo.getAllPendingRelationships(id);
+
+        if (relationships.size() == 0) {
+            return null;
+        }
+
         relationships.forEach(r -> System.out.println(r.getId().getUserFirstId() + " " + r.getId().getUserSecondId()));
 
         System.out.println(relationships.get(0).getMyUser1().getFirstName());
@@ -178,9 +183,6 @@ public class UserRelationshipController {
 
             userInfoList.forEach(System.out::println);
         });
-
-
-
         return ResponseEntity.ok(userInfoList);
     }
 

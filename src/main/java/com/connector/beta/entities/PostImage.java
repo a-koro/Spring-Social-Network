@@ -23,7 +23,7 @@ public class PostImage implements Serializable {
     @Column(name = "size")
     private String size;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;
 

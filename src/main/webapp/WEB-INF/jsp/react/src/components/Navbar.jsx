@@ -1,11 +1,13 @@
 import React from 'react';
+import Requests from './Requests'
 
 import {useHistory, Link} from "react-router-dom";
+import DataServices from "../services/DataServices";
 
 let results = ["Test DATA 001"];
 let userId = 0;
 
-export const ResultsContext = React.createContext({});
+export const ResultsContext = React.createContext([]);
 
 export const ResultsProvider = (props) => {
 
@@ -18,7 +20,6 @@ export const ResultsProvider = (props) => {
         </ResultsContext.Provider>
     );
 };
-
 
 
 // export const UserIdContext = React.createContext(0);
@@ -57,6 +58,9 @@ const style = {
 function Navbar() {
 
     const [username, setUsername] = React.useState(" ");
+    const [userId, setUserId] = React.useState(0);
+    const [friendReq, setFriendReq] = React.useState([]);
+    const [updateValue, setUpdateValue] = React.useState(0);
     const [searchResults, setSearchResults] = React.useState([]);
     const history = useHistory();
 
@@ -69,20 +73,15 @@ function Navbar() {
             .then(response => response.json())
             .then(data => {
                 setUsername(data.firstName + " " + data.lastName);
-                userId = data.userId
-                // setUserId(data.userId)
-                console.log("Inside promise" + data.userId);
-                // history.push({
-                //     path: "/profileAll",
-                //     currentUserId: {id: data.userId}
-                // });
+                setUserId(data.userId);
             });
     }
 
     React.useEffect(() => {
         getCurrentUser();
+        getAllRequests();
         // saveCurrentUserId()
-    }, []);
+    }, [userId, updateValue]);
 
 
     // const saveCurrentUserId = () => {
@@ -117,6 +116,20 @@ function Navbar() {
         evt.target.search.value = "";
     }
 
+    function getAllRequests() {
+        console.log(userId)
+        if (userId) {
+            DataServices.getPendingRequests(userId).then(
+                response => {
+                    console.log("All friend requests", response.data);
+                    setFriendReq(response.data);
+                }
+            ).catch(error => {
+                console.log("No friend requests" + error.response)
+            });
+        }
+    }
+
     const isInitialMount = React.useRef(true);
     React.useEffect(() => {
         if (isInitialMount.current) {
@@ -125,6 +138,11 @@ function Navbar() {
             history.push("/results");
         }
     }, [searchResults]);
+
+    const stopDefault = e => {
+        e.preventDefault();
+        e.stopPropagation();
+    }
 
     return (
         <>
@@ -150,6 +168,30 @@ function Navbar() {
                         <li className="nav-item active">
                             <Link to="/" className="nav-link">Feed</Link>
                         </li>
+                        <li className="nav-item dropdown">
+                            <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Notifications
+                            </a>
+                            <div className="dropdown-menu" onClick={stopDefault} aria-labelledby="navbarDropdown">
+                                {friendReq ?
+                                    friendReq.map((item) => (
+                                        <div onClick={stopDefault} className="dropdown-item">
+                                            <Requests requesterInfo={{
+                                                myId: userId,
+                                                id: item.userId,
+                                                username: item.firstName + " " + item.lastName
+                                            }} handleUpdate={setUpdateValue}/>
+                                        </div>
+                                    )) :
+                                    <div className="card my-2 border-0">
+                                        <div className="card-body d-flex flex-row pt-2 pb-0 px-1">
+                                            <h6 className="card-text align-bottom mt-2">Everything's up to date</h6>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </li>
                         <li className="nav-item active">
                             <a className="nav-link" href="#">Messages</a>
                         </li>
@@ -164,6 +206,7 @@ function Navbar() {
                         <li className="nav-item">
                             <Link to="/profile" className="nav-link">{username}</Link>
                         </li>
+
                         <li>
                             <a className="nav-link" href="/logout">Logout</a>
                         </li>

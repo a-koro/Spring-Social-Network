@@ -292,3 +292,8 @@
 }
 
 #cssSelector .btn{ border-radius: 50%; width:32px; height:32px; line-height:18px;  }
+
+#wannaConnect {
+    text-decoration: none;
+    font-family: initial;
+}

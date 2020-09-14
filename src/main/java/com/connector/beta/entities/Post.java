@@ -18,13 +18,14 @@ public class Post implements Serializable {
     private Timestamp created;
     private String imageUrl;
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private MyUser user;
     @OneToMany(mappedBy = "post")
     List<Comment> comments;
     @OneToMany(mappedBy = "post")
     List<Cheer> cheers;
-    @OneToOne(mappedBy = "post")
+    @OneToOne(mappedBy = "post", fetch = FetchType.LAZY)
+    @JsonIgnore
     PostImage postImage;
 
     public PostImage getPostImage() {
