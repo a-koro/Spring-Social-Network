@@ -6,9 +6,11 @@ import com.connector.beta.entities.UserRelationshipKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserRelationshipRepo extends JpaRepository<UserRelationship, UserRelationshipKey> {
 
     @Query(" SELECT new com.connector.beta.Pojos.UserFriendsDto (ur.id.userFirstId, ur.id.userSecondId, ur.myUser2.email, ur.myUser2.firstName, ur.myUser2.lastName) FROM UserRelationship ur " +

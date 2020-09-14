@@ -7,6 +7,7 @@ import com.connector.beta.entities.PostImage;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 public class PostDto {
 
@@ -15,22 +16,49 @@ public class PostDto {
     private Timestamp created;
     private String imageUrl;
     private MyUser user;
-//    private PostImage postImage;
     private List<Comment> comments;
-//    private List<Cheer> cheers;
+    private List<Cheer> cheers;
 
     public PostDto() {
     }
 
-    public PostDto(Integer postId, String text, Timestamp created, String imageUrl, MyUser user, List<Comment> comments) {
+    public PostDto(Integer postId) {
+        this.postId = postId;
+    }
+
+    public PostDto(Integer postId, String text, Timestamp created) {
+        this.postId = postId;
+        this.text = text;
+        this.created = created;
+    }
+
+    public PostDto(Integer postId, String text, Timestamp created, String imageUrl, MyUser user, List<Comment> comments, List<Cheer> cheers) {
         this.postId = postId;
         this.text = text;
         this.created = created;
         this.imageUrl = imageUrl;
         this.user = user;
-//        this.postImage = postImage;
         this.comments = comments;
-//        this.cheers = cheers;
+        this.cheers = cheers;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PostDto postDto = (PostDto) o;
+        return postId.equals(postDto.postId) &&
+                Objects.equals(text, postDto.text) &&
+                Objects.equals(created, postDto.created) &&
+                Objects.equals(imageUrl, postDto.imageUrl) &&
+                Objects.equals(user, postDto.user) &&
+                Objects.equals(comments, postDto.comments) &&
+                Objects.equals(cheers, postDto.cheers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(postId, text, created, imageUrl, user, comments, cheers);
     }
 
     public Integer getPostId() {
@@ -73,14 +101,6 @@ public class PostDto {
         this.user = user;
     }
 
-//    public PostImage getPostImage() {
-//        return postImage;
-//    }
-//
-//    public void setPostImage(PostImage postImage) {
-//        this.postImage = postImage;
-//    }
-
     public List<Comment> getComments() {
         return comments;
     }
@@ -89,11 +109,11 @@ public class PostDto {
         this.comments = comments;
     }
 
-//    public List<Cheer> getCheers() {
-//        return cheers;
-//    }
-//
-//    public void setCheers(List<Cheer> cheers) {
-//        this.cheers = cheers;
-//    }
+    public List<Cheer> getCheers() {
+        return cheers;
+    }
+
+    public void setCheers(List<Cheer> cheers) {
+        this.cheers = cheers;
+    }
 }

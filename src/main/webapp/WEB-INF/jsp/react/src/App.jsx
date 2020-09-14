@@ -12,22 +12,22 @@ function App() {
 
     // We need dynamic URLs for Profile Components
 
-    const [userId, setUserId] = React.useState(0);
+    // const [userId, setUserId] = React.useState(0);
+    //
+    // function getUserId() {
+    //
+    //     fetch("/userDetails", {
+    //         method: 'GET',
+    //         credentials: "include"
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             setUserId(data.userId);
+    //         });
+    // }
 
-    function getUserId() {
-
-        fetch("/userDetails", {
-            method: 'GET',
-            credentials: "include"
-        })
-            .then(response => response.json())
-            .then(data => {
-                setUserId(data.userId);
-            });
-    }
-
-    React.useEffect(() => { getUserId();
-    }, []);
+    // React.useEffect(() => { getUserId();
+    // }, []);
 
   return (
 
@@ -50,7 +50,7 @@ function App() {
                       <Route path="/results" component={Search}/>
                       <Route path="/" exact component={NewsFeed}/>
                       <Route path="/profile" component={Profile}/>
-                      <Route path="/profileAll" component={ () => <ProfileAll myUserId = {userId} />}/>
+                      <Route path="/profileAll" component={ () => <ProfileAll/>}/>
                   </ResultsProvider>
               </Switch>
               </div>

@@ -1,10 +1,8 @@
 package com.connector.beta.services;
 
-import com.connector.beta.entities.Comment;
-import com.connector.beta.entities.MyUser;
-import com.connector.beta.entities.Post;
-import com.connector.beta.entities.PostImage;
-import org.springframework.transaction.annotation.Transactional;
+import com.connector.beta.dto.PostDto;
+import com.connector.beta.projections.PostProjection;
+import com.connector.beta.entities.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -24,4 +22,10 @@ public interface PostServiceInterface {
     public void insertPostWithImage(String text, MultipartFile file, MyUser user);
 
     public PostImage findPostImageByPostId(int postId);
+
+    public List<Cheer> cheers(Post post, MyUser user);
+
+    public List<PostProjection> findByUserIdsTEST();
+
+    public void removePost(Post post);
 }

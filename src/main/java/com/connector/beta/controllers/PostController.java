@@ -1,12 +1,11 @@
 package com.connector.beta.controllers;
 
-import com.connector.beta.entities.Comment;
-import com.connector.beta.entities.MyUser;
-import com.connector.beta.entities.Post;
-import com.connector.beta.entities.PostImage;
+import com.connector.beta.projections.PostProjection;
+import com.connector.beta.entities.*;
 import com.connector.beta.services.CommentServiceInterface;
 import com.connector.beta.services.PostServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
@@ -36,13 +35,13 @@ public class PostController {
     UserServiceInterface userServiceInterface;
 
     @GetMapping("/testUrl")
-    public List<Post> testRetrievePots(Principal principal) {
+    public List<PostProjection> testRetrievePots(Principal principal) {
 //        System.out.println(principal.toString());
 //        return postServiceInterface.findByUser(1);
         List<Integer> list = new ArrayList<>();
         list.add(1);
         list.add(2);
-        return postServiceInterface.findByUserIds(list);
+        return postServiceInterface.findByUserIdsTEST();
     }
 
     @PostMapping("/insertComment")
@@ -92,5 +91,34 @@ public class PostController {
                 .contentLength(postImage.getFile().length)
                 .contentType(MediaType.parseMediaType("application/octet-stream"))
                 .body(new ByteArrayResource(postImage.getFile()));
+    }
+
+    @PostMapping("/cheers")
+    public List<Cheer> cheers(@RequestHeader int postId, Principal principal) {
+        Post post = postServiceInterface.findPostByPostId(postId);
+        MyUser user = userServiceInterface.getUserDetails(principal.getName());
+        return postServiceInterface.cheers(post, user);
+    }
+
+    @PostMapping("/removePost")
+    @ResponseStatus(HttpStatus.OK)
+    public String removePost(@RequestHeader int postId, Principal principal) {
+        Post post = postServiceInterface.findPostByPostId(postId);
+        MyUser user = userServiceInterface.getUserDetails(principal.getName());
+        if (post.getUser().getUserId() == user.getUserId()) {
+            postServiceInterface.removePost(post);
+        }
+        return "Post Deleted";
+    }
+
+    @PostMapping("/removeComment")
+    @ResponseStatus(HttpStatus.OK)
+    public String removeComment(@RequestHeader int commentId, Principal principal) {
+        Comment comment = commentServiceInterface.findCommentByCommentId(commentId);
+        MyUser user = userServiceInterface.getUserDetails(principal.getName());
+        if (comment.getUser().getUserId() == user.getUserId()) {
+            commentServiceInterface.removeComment(comment);
+        }
+        return "Comment Deleted";
     }
 }

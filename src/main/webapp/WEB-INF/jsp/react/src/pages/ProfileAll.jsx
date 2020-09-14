@@ -8,7 +8,6 @@ import { ResultsContext } from "../components/Navbar"
 
 function ProfileAll(props) {
 
-
     const style = {
         objectFit: 'cover',
         borderRadius: '50%',
@@ -30,19 +29,17 @@ function ProfileAll(props) {
         height: '340px'
     };
 
-
-
     const [user, setUser] = React.useState({});
-    const [userRel, setUserRel] = React.useState({})
-
-
+    const [userRel, setUserRel] = React.useState({});
+    const [loggedInUser, setLoggedInUser] = React.useState([]);
 
     useEffect(() => {
+        getLoggedInUser()
         getCurrentRelationship()
         getCurrentUser()
         // getCurrentRelationship()
         // console.log(location.pathname); // result: '/secondpage'
-        console.log(props.myUserId)
+        // console.log(props.myUserId)
         console.log(location.state.detail); // result: 'some_value'
 
         // console.log(location.currentUserId.id)
@@ -58,13 +55,23 @@ function ProfileAll(props) {
     }
 
     function getCurrentRelationship () {
-        DataServices.getCurrentRelationship(props.myUserId, location.state.detail).then(
+        DataServices.getCurrentRelationship(loggedInUser.userId, location.state.detail).then(
             response => {
                 console.log("friendship status : ", response.data)
             }
         ).catch(error => { console.log(error.response) });
     }
 
+    function getLoggedInUser() {
+        fetch("/userDetails", {
+            method: 'GET',
+            credentials: "include"
+        })
+            .then(response => response.json())
+            .then(data => {
+                setLoggedInUser(data);
+            });
+    }
 
     return (
         <>

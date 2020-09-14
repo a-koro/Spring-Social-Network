@@ -3,6 +3,7 @@ import Post from './Post';
 import Comment from './Comment';
 import Contact from './Contact';
 import PostForm from './PostForm';
+import {CurrentUserProvider} from "./Navbar";
 import $ from 'jquery';
 
 const style = {
@@ -60,14 +61,16 @@ function NewsFeed(props) {
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <PostForm closeModal={closeModal}/>
+                                <PostForm closeModal={closeModal} value={value} setValue={setValue}/>
                             </div>
                         </div>
                     </div>
                 </div>
+                <CurrentUserProvider>
                 {posts.map((post) => (
-                    <Post post={post} value={{value:value,setValue:setValue}}/>
+                    <Post post={post} value={{value:value,setValue:setValue}} myUserId={props.myUserId}/>
                 ))}
+                </CurrentUserProvider>
             {/*    <Post username="Rick Sanchez"*/}
             {/*          post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family. Although Beth welcomes Rick into her home, her husband, Jerry, isn't as happy about the family reunion."/>*/}
             {/*    <Comment username="Alex Koro"*/}

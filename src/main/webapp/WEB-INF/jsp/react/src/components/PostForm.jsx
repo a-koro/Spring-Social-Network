@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 function PostForm(props) {
@@ -8,7 +9,8 @@ function PostForm(props) {
     const [buttonDisplay, setButtonDisplay] = React.useState("none");
     const regex = new RegExp("(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)");
     const [fileName, setFileName] = React.useState("Drag 'n' drop image, or click to browse ");
-    const [imageFile, setImageFile] = React.useState(new FormData());
+    const [imageFile, setImageFile] = React.useState(null);
+    const history = useHistory();
 
     const onDrop = useCallback(acceptedFiles => {
         const file = acceptedFiles[0];
@@ -22,7 +24,6 @@ function PostForm(props) {
     function onSubmit(evt) {
         evt.preventDefault();
 
-        console.log(imageFile);
         if (imageFile === null && (evt.target.text.value !== "" || evt.target.url.value !== "")) {
             fetch("http://localhost:8080/post/insertPost",{
                 method: 'POST',
@@ -34,7 +35,12 @@ function PostForm(props) {
             })
                 .then(response => response.json())
                 .then((data) => {
-
+                    document.getElementById("resetButton").click();
+                    props.closeModal();
+                    history.push("/profile");
+                })
+                .then(() => {
+                    history.push("/");
                 })
                 .catch((error) => {
                     console.error('Error:', error);
@@ -47,8 +53,7 @@ function PostForm(props) {
                 {
                     headers:{
                         "Content-Type":"multipart/form-data",
-                        'text': evt.target.text.value,
-                        'imageUrl': ""
+                        'text': evt.target.text.value
                     }
                 }
             ).catch(err=>{
@@ -59,8 +64,8 @@ function PostForm(props) {
             alert("Post cannot be empty");
         }
 
-        document.getElementById("resetButton").click();
-        props.closeModal();
+        // document.getElementById("resetButton").click();
+        // props.closeModal();
     }
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});

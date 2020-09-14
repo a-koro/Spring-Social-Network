@@ -3,9 +3,11 @@ import React from 'react';
 import {useHistory, Link} from "react-router-dom";
 
 let results = ["Test DATA 001"];
+let currentUser = {};
 let userId = 0;
 
 export const ResultsContext = React.createContext({});
+export const CurrentUserContext = React.createContext({});
 
 export const ResultsProvider = (props) => {
 
@@ -16,6 +18,14 @@ export const ResultsProvider = (props) => {
             {props.children}
             {/* this indicates that the global store is accessible to all the child tags with MyProvider as Parent */}
         </ResultsContext.Provider>
+    );
+};
+
+export const CurrentUserProvider = (props) => {
+    return (
+        <CurrentUserContext.Provider value={currentUser}>
+            {props.children}
+        </CurrentUserContext.Provider>
     );
 };
 
@@ -69,9 +79,10 @@ function Navbar() {
             .then(response => response.json())
             .then(data => {
                 setUsername(data.firstName + " " + data.lastName);
-                userId = data.userId
+                currentUser = data;
+                // userId = data.userId
                 // setUserId(data.userId)
-                console.log("Inside promise" + data.userId);
+                // console.log("Inside promise" + data.userId);
                 // history.push({
                 //     path: "/profileAll",
                 //     currentUserId: {id: data.userId}

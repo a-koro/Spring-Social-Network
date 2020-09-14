@@ -2,7 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
 import { faGlassCheers } from '@fortawesome/free-solid-svg-icons';
+import { CurrentUserContext } from "./Navbar";
 import Comment from './Comment';
+import {useHistory} from "react-router-dom";
 
 const style = {
     objectFit: 'cover',
@@ -15,6 +17,10 @@ function Post(props) {
 
     const [postImageUrl, setPostImageUrl] = React.useState("");
     const [dateTime, setDateTime] = React.useState(new Date());
+    const [cheers, setCheers] = React.useState(0);
+    const history = useHistory();
+
+    const currentUser = React.useContext(CurrentUserContext);
 
     function insertComment(evt) {
         evt.preventDefault();
@@ -33,21 +39,61 @@ function Post(props) {
         evt.target.input.value = "";
     }
 
+    function cheer() {
+        fetch("/post/cheers",{
+            method: "POST",
+            credentials: "include",
+            headers: {
+                postId: props.post.postId
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                setCheers(data.filter(cheer => cheer.active === true).length);
+            })
+    }
+
+    function deletePost() {
+        fetch("/post/removePost",{
+            method: "POST",
+            credentials: "include",
+            headers: {
+                postId: props.post.postId
+            }
+        })
+            .then((data) => {
+                history.push("/profile");
+                history.push("/");
+            });
+    }
+
     React.useEffect(() => {
+        // Date render
         let tempDate = new Date(props.post.created);
         tempDate.setHours(tempDate.getHours()+3,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
         setDateTime(tempDate);
 
-        if (props.post.imageUrl !== "" && props.post.imageUrl !== null) {
-            console.log("This is from imageUrl");
-            document.getElementById("postImage"+props.post.postId).style.display = "block";
-            setPostImageUrl(props.post.imageUrl);
+        // Cheers render
+        setCheers(props.post.cheers.filter(cheer => cheer.active === true).length);
+
+        // Delete post render
+        if (props.post.user.userId === currentUser.userId) {
+            document.getElementById("deleteButton" + props.post.postId).style.display = "block";
         }
-        else if (!(props.post.postImage === null || props.post.postImage === undefined)) {
-            console.log(props.post);
+
+        // Image render
+        if (props.post.imageUrl === "BLOB") {
             document.getElementById("postImage"+props.post.postId).style.display = "block";
             setPostImageUrl("http://localhost:8080/post/downloadPostImage/" + props.post.postId);
         }
+        else if (props.post.imageUrl !== "" && props.post.imageUrl !== null) {
+            document.getElementById("postImage"+props.post.postId).style.display = "block";
+            setPostImageUrl(props.post.imageUrl);
+        }
+        // else if (!(props.post.postImage === null || props.post.postImage === undefined)) {
+        //     document.getElementById("postImage"+props.post.postId).style.display = "block";
+        //     setPostImageUrl("http://localhost:8080/post/downloadPostImage/" + props.post.postId);
+        // }
     },[]);
 
     return (
@@ -55,13 +101,13 @@ function Post(props) {
             <div className="card p-0 my-3"> {/*col-md-6 col-xs-12 col-sm-8*/}
                 <div className="card-body d-flex flex-row p-3">
                     <img style={style} src={"http://localhost:8080/api/profile/searchUsers/" + props.post.user.userId}
-                        className="avatar rounded-circle mx-3" 
+                        className="avatar rounded-circle mx-3"
                         alt="Profile picture"/>
-                    <div>
-                    <h5 className="card-title mb-0">{props.post.user.firstName + " " + props.post.user.lastName}</h5>
-                    <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>{dateTime.toLocaleString("en-GB",{timeZone: "UTC"})}</small></p>
-
-                </div>
+                    <div className="w-100">
+                        <h5 className="card-title mb-0">{props.post.user.firstName + " " + props.post.user.lastName}</h5>
+                        <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>{dateTime.toLocaleString("en-GB",{timeZone: "UTC"})}</small></p>
+                    </div>
+                    <div onClick={deletePost} id={"deleteButton" + props.post.postId} style={{display: "none", cursor: "pointer"}}><i className="far fa-trash-alt"></i></div>
                 </div>
                 <div className="card-body p-1">
                     <img src={postImageUrl} alt="Couldn't load image from URL" className="img-fluid rounded" id={"postImage" + props.post.postId} style={{display: "none", width: "100%"}}/>
@@ -70,8 +116,10 @@ function Post(props) {
                     </blockquote>
                     <div className="row">
                         <div className="col-xs-12 col-sm-4 col-md-4 m-2">
-                            <FontAwesomeIcon className="mx-2" icon={faGlassCheers} />{props.post.cheers.length}
-                            <FontAwesomeIcon className="mx-2" icon={faComments} />{props.post.comments.length}
+                            <FontAwesomeIcon className="mx-2" icon={faGlassCheers} onClick={cheer} style={{cursor: "pointer"}}/>{cheers}
+                            {/*{props.post.cheers.length}*/}
+                            <FontAwesomeIcon className="mx-2" icon={faComments} data-toggle="collapse" data-target={"#collapseExample" + props.post.postId}
+                                             aria-expanded="false" aria-controls="collapseExample" style={{cursor: "pointer"}}/>{props.post.comments.length}
                         </div>
                     </div>
                 </div>
@@ -87,7 +135,7 @@ function Post(props) {
                 </small>
                 <div className="collapse" id={"collapseExample" + props.post.postId}>
                     {props.post.comments.map((comment) => (
-                        <Comment comment={comment}/>
+                        <Comment comment={comment} value={props.value}/>
                     ))}
                 </div>
             </div>

@@ -5,4 +5,8 @@ import com.connector.beta.entities.Comment;
 public interface CommentServiceInterface {
 
     public void insertComment(Comment comment);
+
+    public Comment findCommentByCommentId(int commentId);
+
+    public void removeComment(Comment comment);
 }

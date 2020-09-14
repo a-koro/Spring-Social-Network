@@ -14,4 +14,15 @@ public class CommentServiceImpl implements CommentServiceInterface {
     public void insertComment(Comment comment) {
         commentRepo.save(comment);
     }
+
+    @Override
+    public Comment findCommentByCommentId(int commentId) {
+        Comment comment = commentRepo.findById(commentId).orElseThrow(() -> new RuntimeException("No data!"));
+        return comment;
+    }
+
+    @Override
+    public void removeComment(Comment comment) {
+        commentRepo.delete(comment);
+    }
 }

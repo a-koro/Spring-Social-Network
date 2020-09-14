@@ -20,12 +20,12 @@ public class Post implements Serializable {
     @ManyToOne
     @JoinColumn(name="user_id")
     private MyUser user;
-    @OneToMany(mappedBy = "post")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     List<Comment> comments;
-    @OneToMany(mappedBy = "post")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     List<Cheer> cheers;
-    @OneToOne(mappedBy = "post")
-//    @JsonIgnore
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL , mappedBy = "post")
+    @JsonIgnore
     PostImage postImage;
 
     public PostImage getPostImage() {
