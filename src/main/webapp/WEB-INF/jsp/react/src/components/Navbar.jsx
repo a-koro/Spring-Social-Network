@@ -1,5 +1,8 @@
 import React from 'react';
 import Requests from './Requests'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSmileBeam, faUserFriends} from "@fortawesome/free-solid-svg-icons";
+
 
 import {useHistory, Link} from "react-router-dom";
 import DataServices from "../services/DataServices";
@@ -204,7 +207,10 @@ function Navbar() {
                                     )) :
                                     <div className="card my-2 border-0">
                                         <div className="card-body d-flex flex-row pt-2 pb-0 px-1">
-                                            <h6 className="card-text align-bottom mt-2">Everything's up to date</h6>
+                                            <h6 className="card-text align-bottom text-center">
+                                                Everything's up to date
+                                                <FontAwesomeIcon className="ml-2" icon={faSmileBeam}/>
+                                            </h6>
                                         </div>
                                     </div>
                                 }
