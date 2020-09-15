@@ -131,46 +131,6 @@ function Chat(props) {
         );
     }
 
-    // function checkActiveContact(){
-    //     if (activeContact === undefined && response.data.length > 0) {
-    //         setActiveContact(response.data[0]);
-    //         console.log("set user0 active in if loop ", activeContact);
-    //         console.log("user 0 ", response.data[0]);
-    //     }
-    // }
-    // const loadContacts = () => {
-    //     const promise = getUsers().then(
-    //         (users) =>
-
-    //             users.map(
-    //                 (contact) => DataServices.countNewMessages(contact.userSecondId, user.userId).then(
-    //                     (count) => {
-    //                         contact.newMessages = count;
-    //                         return contact;
-    //                     })
-    //             )
-
-
-    //     );
-
-
-
-    //     promise.then((promises) =>
-    //         Promise.all(promises).then((users) => {
-    //             setContacts(users);
-    //             console.log("BEFORE activeContact in loadContacts outIf", activeContact);
-    //             if (activeContact === undefined && users.length > 0) {
-    //                 setActiveContact(users[0]);
-    //                 console.log("set user0 active in if loop ", activeContact);
-    //                 console.log("user 0 ", users[0]);
-    //             }
-    //             console.log("contacts outIf", users);
-    //             console.log("AFTER activeContact in loadContacts outIf", activeContact);
-    //         })
-    //     );
-
-
-    // };
 
 
 
@@ -195,7 +155,7 @@ function Chat(props) {
                                 >
                                     <div class="wrap">
                                         <span class="contact-status online"></span>
-                                        <img id={contact.UserSecondId} src="https://picsum.photos/id/237/200/300" alt="" />
+                                        <img  src={"http://localhost:8080/api/profile/searchUsers/"+contact.userSecondId} alt="" />
                                         <div class="meta">
                                             <p class="name">{contact.firstName + " " + contact.lastName}</p>
                                             {contact.newMessages !== undefined &&
@@ -223,7 +183,7 @@ function Chat(props) {
 
                 <div class="col-md-8 chat-room" >
                     <div class="contact-profile">
-                        <img src="https://picsum.photos/id/237/200/300" alt="" />
+                        <img  src={activeContact && "http://localhost:8080/api/profile/searchUsers/"+activeContact.userSecondId} alt="" />
                         <p>{activeContact && (activeContact.firstName + " " + activeContact.lastName)}</p>
                     </div>
                     <div >
@@ -232,7 +192,7 @@ function Chat(props) {
                             {messages.map((msg) => (
                                 <li class={msg.senderId === user.userId ? "sent" : "replies"}>
                                     {msg.senderId !== user.userId && (
-                                        <p>{activeContact.firstName}:</p>
+                                         <img className="chat-image" src={activeContact && "http://localhost:8080/api/profile/searchUsers/"+activeContact.userSecondId} alt="" />
                                     )}
                                     <p>{msg.content}</p>
                                 </li>

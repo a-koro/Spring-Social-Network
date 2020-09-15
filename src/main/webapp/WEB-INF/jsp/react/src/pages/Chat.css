@@ -207,3 +207,9 @@ padding-right: 0px;
 #chat .message-input .wrap button:focus {
   outline: none;
 }
+
+#chat .chat-image{
+  width: 25px !important;
+  height: 25px !important;
+ 
+}
