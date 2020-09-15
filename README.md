@@ -1,17 +1,17 @@
 # Connector
 
-Connector is a learning project for a Social Network Web Application.
+Connector is a Social Network Web Application created as a learning Project.
 
 ## Getting Started
 
 
 The App was created according to the MVC (Modem-View-Controller) paradigm. 
-Basis of the View component is created using ReactJs.
+Basis of the View component was made using ReactJs.
 
 Deploy the App locally:
 
 * [Node Package Manager](https://www.npmjs.com/get-npm) - Download npm
-* Navigate to *~\Spring-Social-Network-Backend\src\main\webapp\WEB-INF\jsp\react>*
+* Navigate to *~\Spring-Social-Network-Backend\src\main\webapp\WEB-INF\jsp\react*
  and run the following commands:
 ```
 npm install
