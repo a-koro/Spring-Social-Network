@@ -224,7 +224,59 @@
     line-height: 1;
     color: #262626;
     vertical-align: middle;
+    display: flex;
+    justify-content: center;
 }
+
+#cssSelector .card.hovercard .info .title .StartingDiv{
+    position: absolute;
+    margin-right: 76%;
+    margin-top: 0.4%;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv button {
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
+    background-color: #8c92ac;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv #removeB {
+    font-size: 8.5px;
+    margin-top: 5px;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv #AddFriendIcon {
+    max-width: 25px;
+    max-height: 20px;
+    margin-right: 5px;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv .InnerSpan {
+    font-size: 14px;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv div {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv div button {
+    font-size: 8px;
+    margin-top: 4px;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv div #acceptB{
+    background-color: #28a745;
+}
+
+#cssSelector .card.hovercard .info .title .StartingDiv div #declineB {
+    background-color: #dc3545;
+}
+
 
 #cssSelector .card.hovercard .info .desc {
     overflow: hidden;
@@ -240,3 +292,8 @@
 }
 
 #cssSelector .btn{ border-radius: 50%; width:32px; height:32px; line-height:18px;  }
+
+#wannaConnect {
+    text-decoration: none;
+    font-family: initial;
+}
