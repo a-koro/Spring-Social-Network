@@ -1,5 +1,8 @@
 import React from 'react';
 import Requests from './Requests'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSmileBeam, faUserFriends} from "@fortawesome/free-solid-svg-icons";
+
 
 import {useHistory, Link} from "react-router-dom";
 import DataServices from "../services/DataServices";
@@ -162,7 +165,7 @@ function Navbar() {
                                 Notifications
                             </a>
                             <div className="dropdown-menu" onClick={stopDefault} aria-labelledby="navbarDropdown">
-                                {friendReq ?
+                                {friendReq.length !==0 ?
                                     friendReq.map((item) => (
                                         <div onClick={stopDefault} className="dropdown-item">
                                             <Requests requesterInfo={{
@@ -174,7 +177,10 @@ function Navbar() {
                                     )) :
                                     <div className="card my-2 border-0">
                                         <div className="card-body d-flex flex-row pt-2 pb-0 px-1">
-                                            <h6 className="card-text align-bottom mt-2">Everything's up to date</h6>
+                                            <h6 className="card-text align-bottom text-center">
+                                                Everything's up to date
+                                                <FontAwesomeIcon className="ml-2" icon={faSmileBeam}/>
+                                            </h6>
                                         </div>
                                     </div>
                                 }
@@ -193,6 +199,14 @@ function Navbar() {
                         </li>
                         <li className="nav-item">
                             <Link to="/profile" className="nav-link">{username}</Link>
+                        </li>
+                        <li className="nav-item">
+                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                                <input type="hidden" name="cmd" value="_s-xclick" />
+                                <input type="hidden" name="hosted_button_id" value="B6MCPHFEUW3FN" />
+                                <input id="donatePaypal" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                                <img alt="" border="0" src="https://www.paypal.com/en_GR/i/scr/pixel.gif" width="1" height="1" />
+                            </form>
                         </li>
                         <li>
                             <a className="nav-link" href="/logout">Logout</a>
