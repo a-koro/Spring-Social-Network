@@ -5,10 +5,11 @@ import NewsFeed from './components/NewsFeed';
 import Search from './components/Search';
 import Profile from "./pages/Profile";
 import FriendsProfilePage from "./pages/FriendsProfilePage";
+import Chat from "./pages/Chat";
 
 const SearchContext = React.createContext({});
 
-function App() {
+function App(props) {
 
   return (
 
@@ -29,9 +30,10 @@ function App() {
                   <ResultsProvider>
                       <Redirect from="/index.html" to="/" exact />
                       <Route path="/results" component={Search}/>
-                      <Route path="/" exact component={NewsFeed}/>
+                      <Route exact path="/" render={(props)=><NewsFeed {...props}/>} />
                       <Route path="/profile" component={Profile}/>
                       <Route path="/profileAll" component={ () => <FriendsProfilePage/>}/>
+                      <Route exact path="/chat" render={(props) => <Chat {...props} />} />
                   </ResultsProvider>
               </Switch>
               </div>

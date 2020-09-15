@@ -3,6 +3,9 @@ import Post from './Post';
 import Contact from './Contact';
 import PostForm from './PostForm';
 import {CurrentUserProvider} from "./Navbar";
+import { loggedInUser } from "../atom/globalState";
+import DataServices from '../services/DataServices';
+import { useRecoilState } from "recoil";
 
 let postsForContext = [];
 
@@ -15,6 +18,7 @@ export const PostsProvider = (props) => {
         </PostsContext.Provider>
     );
 };
+
 
 const style = {
     height: "100vh",
@@ -32,6 +36,21 @@ function NewsFeed(props) {
     const [items, setItems] = React.useState([]);
     const [posts, setPosts] = React.useState([]);
     const [value, setValue] = React.useState(true);
+
+    const [user, setUser] = useRecoilState(loggedInUser);
+    React.useEffect(() => {
+
+        loadCurrentUser();
+      }, []);
+
+      function loadCurrentUser() {
+        DataServices.getCurrentUser().then(
+            response => {
+                console.log("userr recoil: ", response.data);
+                setUser(response.data);
+            }
+        ).catch(error => { console.log(error.response) });
+    }
 
     React.useEffect(() => {
             fetch('http://localhost:8080/api/newsFeed')

@@ -10,6 +10,9 @@ const URL_CREATE_RELATIONSHIP = 'http://localhost:8080/api/createRelationship'
 const URL_ACCEPT_RELATIONSHIP = 'http://localhost:8080/api/acceptRelationship'
 const URL_FRIEND_REQUESTS = 'http://localhost:8080/api/relationshipPending/'
 
+const URL_GET_CONTACTS='http://localhost:8080/api/user/';
+
+const URL_FIND_MESSAGES='http://localhost:8080/messages/';
 
 function TrainerDataService(){
 
@@ -23,6 +26,11 @@ function TrainerDataService(){
     this.createRelationship = createRelationship
     this.acceptRelationship = acceptRelationship
     this.getPendingRequests = getPendingRequests
+    this.getContacts=getContacts;
+    this.findChatMessages=findChatMessages;
+    this.findChatMessage=findChatMessage;
+    this.countNewMessages=countNewMessages;
+
 }
 
 
@@ -78,8 +86,25 @@ function getCurrentProfile(userId) {
 
 function imageUpload(userid){
     console.log("userid",userid);
-    return axios.post(URL_UPLOAD_IMAGE_PROFILE+userid+"image/upload");
+    return axios.post(URL_UPLOAD_IMAGE_PROFILE+userid+"/image/upload");
 
+}
+
+function getContacts(){
+
+    return axios.get(URL_GET_CONTACTS);
+}
+
+function findChatMessages(senderId,recipientId){
+    return axios.get(URL_FIND_MESSAGES + senderId + "/" + recipientId);
+}
+
+function findChatMessage(id){
+    return axios.get(URL_FIND_MESSAGES+id);
+}
+
+function countNewMessages(senderId,recipientId){
+    return axios.get(URL_FIND_MESSAGES+senderId+"/"+recipientId+"/count");
 }
 
 export default (new TrainerDataService());
