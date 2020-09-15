@@ -1,10 +1,20 @@
 import React from 'react';
 import Post from './Post';
-import Comment from './Comment';
 import Contact from './Contact';
 import PostForm from './PostForm';
 import {CurrentUserProvider} from "./Navbar";
-import $ from 'jquery';
+
+let postsForContext = [];
+
+export const PostsContext = React.createContext([]);
+
+export const PostsProvider = (props) => {
+    return (
+        <PostsContext.Provider value={postsForContext}>
+            {props.children}
+        </PostsContext.Provider>
+    );
+};
 
 const style = {
     height: "100vh",
@@ -29,6 +39,7 @@ function NewsFeed(props) {
                 .then(data => {
                     setItems(data.friends);
                     setPosts(data.posts);
+                    postsForContext = data.posts;
                 });
         }, [value]
     );

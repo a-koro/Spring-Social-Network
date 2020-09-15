@@ -10,25 +10,6 @@ const SearchContext = React.createContext({});
 
 function App() {
 
-    // We need dynamic URLs for Profile Components
-
-    // const [userId, setUserId] = React.useState(0);
-    //
-    // function getUserId() {
-    //
-    //     fetch("/userDetails", {
-    //         method: 'GET',
-    //         credentials: "include"
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             setUserId(data.userId);
-    //         });
-    // }
-
-    // React.useEffect(() => { getUserId();
-    // }, []);
-
   return (
 
       <div className="container-fluid p-0">

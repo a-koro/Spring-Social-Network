@@ -13,8 +13,6 @@ export const CurrentUserContext = React.createContext({});
 
 export const ResultsProvider = (props) => {
 
-    const [stateResults, setStateResults] = React.useState([]);
-
     return (
         <ResultsContext.Provider value={results}>
             {props.children}
@@ -31,40 +29,12 @@ export const CurrentUserProvider = (props) => {
     );
 };
 
-
-
-// export const UserIdContext = React.createContext(0);
-//
-// export const UserIdProvider = (props) => {
-//
-//     return (
-//         <UserIdContext.Provider value={0}>
-//             {props.children}
-//             {/* this indicates that the global store is accessible to all the child tags with MyProvider as Parent */}
-//         </UserIdContext.Provider>
-//     );
-// };
-
 const style = {
     objectFit: 'cover',
     borderRadius: '50%',
     width: '40px',
     height: '40px'
 };
-
-// function logout(evt) {
-//     evt.preventDefault();
-//
-//     fetch("/logout",
-//         {
-//             method: 'GET',
-//             credentials: "include"
-//         }).then(response => {
-//         window.location.href = "http://localhost:8080/";
-//     });
-//
-//     console.log("You have been logged out.");
-// }
 
 function Navbar() {
 

@@ -5,6 +5,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {faUserFriends} from "@fortawesome/free-solid-svg-icons";
 import { CurrentUserContext } from "../components/Navbar";
+import { PostsContext } from "../components/NewsFeed";
+import Post from '../components/Post';
 
 
 function ProfileAll(props) {
@@ -36,10 +38,12 @@ function ProfileAll(props) {
     const [userRel, setUserRel] = React.useState(null);
     const [update, setUpdate] = React.useState(0);
     const currentUser = React.useContext(CurrentUserContext);
+    const friendsPosts = React.useContext(PostsContext);
 
     useEffect(() => {
         getCurrentRelationship()
         getCurrentUser()
+        console.log(friendsPosts);
         // console.log(props.myUserId)
         // console.log(location.state.detail);
     }, [update]);
@@ -120,7 +124,6 @@ function ProfileAll(props) {
 
     return (
         <>
-            {console.log(currentUser.userId)}
             {console.log(ifStatements())}
             <div className="col-md-6 col-12 offset-md-3 offset-0">
                 <div id="cssSelector">
@@ -172,6 +175,16 @@ function ProfileAll(props) {
                     </div>
                 </div>
             </div>
+                <div className="col-md-6 col-12 offset-md-3">
+                    <PostsContext.Consumer>
+                        {(context) => (
+                            context.map((post) => (
+                                (post.user.userId === user.userId) &&
+                                    <Post post={post}/>
+                            ))
+                        )}
+                    </PostsContext.Consumer>
+                </div>
         </>
     )
 
