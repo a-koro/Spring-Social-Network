@@ -236,7 +236,7 @@ public class UserRelationshipController {
         });
 
         List<Integer> friendsIds = new ArrayList<>();
-//        friendsIds.add(currentUserId);
+        friendsIds.add(currentUserId);
         friendsDtoFiltered.forEach( f -> {
             friendsIds.add(f.getUserSecondId());
         });
