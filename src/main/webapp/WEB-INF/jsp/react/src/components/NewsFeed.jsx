@@ -98,7 +98,7 @@ function NewsFeed(props) {
                 </div>
                 <CurrentUserProvider>
                 {posts.map((post) => (
-                    <Post post={post} value={{value:value,setValue:setValue}} myUserId={props.myUserId}/>
+                    <Post post={post} value={{value:value,setValue:setValue}}/>
                 ))}
                 </CurrentUserProvider>
             {/*    <Post username="Rick Sanchez"*/}
