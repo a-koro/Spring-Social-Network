@@ -25,4 +25,9 @@ public class CommentServiceImpl implements CommentServiceInterface {
     public void removeComment(Comment comment) {
         commentRepo.delete(comment);
     }
+
+    @Override
+    public int getLengthOfPosts() {
+        return commentRepo.getLengthOfComments();
+    }
 }

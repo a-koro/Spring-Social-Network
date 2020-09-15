@@ -42,9 +42,9 @@ function Comment(props){
         setDateTime(tempDate);
 
         // Delete post render
-        if (props.comment.user.userId === currentUser.userId) {
-            document.getElementById("deleteButton" + props.comment.commentId).style.display = "block";
-        }
+        // if (props.comment.user.userId === currentUser.userId) {
+        //     document.getElementById("deleteButton" + props.comment.commentId).style.display = "block";
+        // }
     },[]);
 
     return (
@@ -62,7 +62,9 @@ function Comment(props){
                     </blockquote>
 
                 </div>
-                <div onClick={deleteComment} id={"deleteButton" + props.comment.commentId} style={{display: "none", cursor: "pointer"}} className="pr-2"><i className="far fa-trash-alt"></i></div>
+                {(props.comment.user.userId === currentUser.userId) &&
+                    <div onClick={deleteComment} id={"deleteButton" + props.comment.commentId} style={{cursor: "pointer"}} className="pr-2"><i className="far fa-trash-alt"></i></div>
+                }
             </div>
             <div className="card-body p-1">
                 <div className="row">

@@ -61,8 +61,9 @@
 <%--<c:if test="${empty param.error}">--%>
 <%--<p>My income is: <c:out value="${param.error}"/><p>--%>
 <%--    </c:if>--%>
-
+<div class="container-fluid">
 <div class="col-md-12">
+    <img src="/img/logo.jpg" width="300px" alt="Connector Logo" class="mx-auto d-block mt-5">
     <div class="card card-container">
         <img
                 src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
@@ -100,6 +101,7 @@
             <button type="submit" class="btn btn-success btn-block">Create New Account</button>
         </form>
     </div>
+</div>
 </div>
 </body>
 </html>

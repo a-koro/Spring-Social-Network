@@ -47,7 +47,7 @@ function NewsFeed(props) {
             </div>
             <div className="col-md-6 col-12">
 
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModal">
                     New Post
                 </button>
 

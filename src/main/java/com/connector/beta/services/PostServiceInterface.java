@@ -28,4 +28,6 @@ public interface PostServiceInterface {
     public List<PostProjection> findByUserIdsTEST();
 
     public void removePost(Post post);
+
+    public int getAllPosts();
 }

@@ -128,4 +128,9 @@ public class PostServiceImpl implements PostServiceInterface {
     public void removePost(Post post) {
         postRepo.delete(post);
     }
+
+    @Override
+    public int getAllPosts() {
+        return postRepo.getLengthOfPosts();
+    }
 }

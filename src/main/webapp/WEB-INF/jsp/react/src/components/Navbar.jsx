@@ -142,7 +142,7 @@ function Navbar() {
             {/*{saveCurrentUserId()}*/}
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <a className="navbar-brand" href="/">
-                    {/*<img src="http://placehold.it/150x50?text=Logo" width="30" height="30" className="d-inline-block align-top" alt="" loading="lazy" />*/}
+                    {/*<img src="/img/logo.jpg" height="54px" alt="Connector Logo" className="m-0"/>*/}
                     Connector
                 </a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"

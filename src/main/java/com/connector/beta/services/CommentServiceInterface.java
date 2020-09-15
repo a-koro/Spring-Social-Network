@@ -9,4 +9,6 @@ public interface CommentServiceInterface {
     public Comment findCommentByCommentId(int commentId);
 
     public void removeComment(Comment comment);
+
+    public int getLengthOfPosts();
 }

@@ -77,9 +77,10 @@ function Post(props) {
         setCheers(props.post.cheers.filter(cheer => cheer.active === true).length);
 
         // Delete post render
-        if (props.post.user.userId === currentUser.userId) {
-            document.getElementById("deleteButton" + props.post.postId).style.display = "block";
-        }
+        // if (props.post.user.userId === currentUser.userId) {
+        //     console.log(props.post);
+        //     document.getElementById("deleteButton" + props.post.postId).style.display = "block";
+        // }
 
         // Image render
         if (props.post.imageUrl === "BLOB") {
@@ -107,7 +108,9 @@ function Post(props) {
                         <h5 className="card-title mb-0">{props.post.user.firstName + " " + props.post.user.lastName}</h5>
                         <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>{dateTime.toLocaleString("en-GB",{timeZone: "UTC"})}</small></p>
                     </div>
-                    <div onClick={deletePost} id={"deleteButton" + props.post.postId} style={{display: "none", cursor: "pointer"}}><i className="far fa-trash-alt"></i></div>
+                    {(props.post.user.userId === currentUser.userId) &&
+                    <div onClick={deletePost} id={"deleteButton" + props.post.postId} style={{cursor: "pointer"}}><i className="far fa-trash-alt"></i></div>
+                    }
                 </div>
                 <div className="card-body p-1">
                     <img src={postImageUrl} alt="Couldn't load image from URL" className="img-fluid rounded" id={"postImage" + props.post.postId} style={{display: "none", width: "100%"}}/>

@@ -18,4 +18,7 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
     List<Post> findByUserUserIdInOrderByCreatedDesc(List<Integer> userIds);
 
     List<PostProjection> findAllByUserUserIdIn(List<Integer> postIds);
+
+    @Query("SELECT COUNT(p.postId) FROM Post p")
+    public int getLengthOfPosts();
 }

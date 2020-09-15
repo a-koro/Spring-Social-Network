@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 /**
@@ -27,6 +28,9 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserServiceInterface userServiceInterface;
 
+    @Autowired
+    private AuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -36,17 +40,19 @@ public class MyWebSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/searchUser").hasAnyRole("USER")
                 .antMatchers("/searchUsers").hasRole("USER")
-                .antMatchers("/").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/").hasAnyRole("USER")
                 .antMatchers("/index*").hasAnyRole("USER")
-                .antMatchers("/post/**").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/post/**").hasAnyRole("USER")
+                .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/register", "/js/**", "/css/**").permitAll()
 //                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .failureUrl("/login?error=true")
-                .permitAll()
-                .defaultSuccessUrl("/index.html", true)
+                    .loginPage("/login")
+                    .failureUrl("/login?error=true")
+                    .permitAll()
+//                    .defaultSuccessUrl("/index.html", true)
+                    .successHandler(myAuthenticationSuccessHandler)
                 .and()
                 .logout()
                 .logoutUrl("/logout")
