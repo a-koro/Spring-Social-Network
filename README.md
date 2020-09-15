@@ -36,6 +36,14 @@ Project's key features include:
 
 - Full-fledged **Chat** functionality
 
+## Accessibility and Testing
+
+
+1. To Log in the App, simply create an account via our Registration Page.
+2. Have a look at our test user with the following credentials: <br>username -> test@gmail.com <br> password -> **1234qwer**
+3. Have a look at all our registered Users using the Search functionality on the top left, leave the text blank and type enter.
+4. Finally, you can preview the admin page as well: <br>
+username- > admin <br> password -> **1234qwer**
 
 
 ## Technology Stack
@@ -57,18 +65,6 @@ Project's key features include:
 * [Tomcat](http://tomcat.apache.org/) - Application Server used
 * [JSP](https://www.oracle.com/java/technologies/jspt.html) - Java Server Pages Technology
 * [ReactJs](https://reactjs.org/) - JavaScript Library 
-
-
-
-## Accessibility and Testing
-
-
-1. To Log in the App, simply create an account via our Registration Page .
-2. Have a look at our test user with the following credentials: <br>username -> test@gmail.com <br> password -> **1234qwer**
-3. Finally you can preview the admin page as well: <br>
-username- > admin <br> password -> **1234qwer**
-4. Have a look at all our registered Users using the Search functionality on the top left, leave the text blank and type enter.
-
 
 
 ## Versioning
