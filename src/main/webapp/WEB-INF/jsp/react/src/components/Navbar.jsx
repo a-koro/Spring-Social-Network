@@ -190,7 +190,7 @@ function Navbar() {
                             <a className="nav-link" href="#">Messages</a>
                         </li>
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Conections</a>
+                            <Link to="/connections" className="nav-link">Connections</Link>
                         </li>
                         <li>
                             <img style={style} src="http://localhost:8080/api/profile/image/download"

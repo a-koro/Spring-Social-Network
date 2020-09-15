@@ -5,6 +5,17 @@ import PostForm from './PostForm';
 import {CurrentUserProvider} from "./Navbar";
 
 let postsForContext = [];
+let connections = [];
+
+export const ConnectionsContext = React.createContext([]);
+
+export const ConnectionsProvider = (props) => {
+    return (
+        <ConnectionsContext.Provider value={connections}>
+            {props.children}
+        </ConnectionsContext.Provider>
+    );
+};
 
 export const PostsContext = React.createContext([]);
 
@@ -40,6 +51,8 @@ function NewsFeed(props) {
                     setItems(data.friends);
                     setPosts(data.posts);
                     postsForContext = data.posts;
+                    connections = data.friends;
+                    console.log(data.friends);
                 });
         }, [value]
     );
