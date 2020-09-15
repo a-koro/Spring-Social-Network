@@ -29,6 +29,8 @@ public class MvcConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("/WEB-INF/jsp/react/build/static/");
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("/WEB-INF/jsp/react/build/img/");
         registry.addResourceHandler("index.html")
                 .addResourceLocations("/WEB-INF/jsp/react/build/index.html");
         registry.addResourceHandler("/static/**")

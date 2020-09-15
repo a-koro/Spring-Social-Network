@@ -5,9 +5,11 @@ import {useHistory, Link} from "react-router-dom";
 import DataServices from "../services/DataServices";
 
 let results = ["Test DATA 001"];
+let currentUser = {};
 let userId = 0;
 
-export const ResultsContext = React.createContext([]);
+export const ResultsContext = React.createContext({});
+export const CurrentUserContext = React.createContext({});
 
 export const ResultsProvider = (props) => {
 
@@ -20,6 +22,15 @@ export const ResultsProvider = (props) => {
         </ResultsContext.Provider>
     );
 };
+
+export const CurrentUserProvider = (props) => {
+    return (
+        <CurrentUserContext.Provider value={currentUser}>
+            {props.children}
+        </CurrentUserContext.Provider>
+    );
+};
+
 
 
 // export const UserIdContext = React.createContext(0);
@@ -73,6 +84,14 @@ function Navbar() {
             .then(response => response.json())
             .then(data => {
                 setUsername(data.firstName + " " + data.lastName);
+                currentUser = data;
+                // userId = data.userId
+                // setUserId(data.userId)
+                // console.log("Inside promise" + data.userId);
+                // history.push({
+                //     path: "/profileAll",
+                //     currentUserId: {id: data.userId}
+                // });
                 setUserId(data.userId);
             });
     }
@@ -109,9 +128,8 @@ function Navbar() {
             .then(data => {
                 setSearchResults(data);
                 results = data;
-                console.log("data from search", data);
-                console.log(results[0].email);
-                console.log(results[0].image);
+                console.log(data);
+                console.log(currentUser);
             });
         evt.target.search.value = "";
     }
@@ -149,7 +167,7 @@ function Navbar() {
             {/*{saveCurrentUserId()}*/}
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <a className="navbar-brand" href="/">
-                    {/*<img src="http://placehold.it/150x50?text=Logo" width="30" height="30" className="d-inline-block align-top" alt="" loading="lazy" />*/}
+                    {/*<img src="/img/logo.jpg" height="54px" alt="Connector Logo" className="m-0"/>*/}
                     Connector
                 </a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"

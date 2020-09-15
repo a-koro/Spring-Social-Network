@@ -8,4 +8,7 @@ public interface ImageServiceInterface {
     void uploadUserBackgroundImage(Integer userid, MultipartFile file);
 
     void saveImageProfile(Image image);
+
+    void isEmpty(MultipartFile file);
+    void isImage(MultipartFile file);
 }

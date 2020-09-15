@@ -18,13 +18,13 @@ public class Post implements Serializable {
     private Timestamp created;
     private String imageUrl;
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name="user_id")
     private MyUser user;
-    @OneToMany(mappedBy = "post")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     List<Comment> comments;
-    @OneToMany(mappedBy = "post")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
     List<Cheer> cheers;
-    @OneToOne(mappedBy = "post", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL , mappedBy = "post")
     @JsonIgnore
     PostImage postImage;
 

@@ -18,7 +18,7 @@ public class Comment implements Serializable {
     @ManyToOne
     @JoinColumn(name="user_id")
     private MyUser user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="post_id")
     @JsonIgnore
     private Post post;

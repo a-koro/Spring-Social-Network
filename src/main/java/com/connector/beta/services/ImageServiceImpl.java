@@ -83,7 +83,7 @@ public class ImageServiceImpl implements ImageServiceInterface{
         userService.userSave(myUser);
     }
 
-    private void isImage(MultipartFile file) {
+    public void isImage(MultipartFile file) {
         if(!Arrays.asList(IMAGE_JPEG.getMimeType(),
                 IMAGE_PNG.getMimeType(),
                 IMAGE_GIF.getMimeType()).contains(file.getContentType())){
@@ -91,7 +91,7 @@ public class ImageServiceImpl implements ImageServiceInterface{
         }
     }
 
-    private void isEmpty(MultipartFile file) {
+    public void isEmpty(MultipartFile file) {
         if(file.isEmpty()){
             throw new IllegalStateException("empty image");
         }

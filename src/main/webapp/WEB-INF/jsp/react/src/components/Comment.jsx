@@ -1,6 +1,6 @@
 import React from 'react';
-import { faGlassCheers } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CurrentUserContext } from "./Navbar";
+import {useHistory} from "react-router-dom";
 
 // function fetchData() {
 //     fetch('http://localhost:8080/getcityfromcountry/7', {mode: "cors"})
@@ -18,11 +18,33 @@ const style = {
 function Comment(props){
 
     const [dateTime, setDateTime] = React.useState(new Date());
+    const currentUser = React.useContext(CurrentUserContext);
+    const history = useHistory();
+
+    function deleteComment() {
+        fetch("/post/removeComment",{
+            method: "POST",
+            credentials: "include",
+            headers: {
+                commentId: props.comment.commentId
+            }
+        })
+            .then((data) => {
+                // history.push("/profile");
+                // history.push("/");
+                props.value.setValue(!props.value.value);
+            });
+    }
 
     React.useEffect(() => {
         let tempDate = new Date(props.comment.created);
         tempDate.setHours(tempDate.getHours()+3,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
         setDateTime(tempDate);
+
+        // Delete post render
+        // if (props.comment.user.userId === currentUser.userId) {
+        //     document.getElementById("deleteButton" + props.comment.commentId).style.display = "block";
+        // }
     },[]);
 
     return (
@@ -33,13 +55,16 @@ function Comment(props){
                 <img style={style} src={"http://localhost:8080/api/profile/searchUsers/" + props.comment.user.userId}
                     className="avatar rounded-circle mx-2" 
                     alt="Cinque Terre"/>
-                <div>
+                <div className="w-100">
                     <h6 className="card-text mb-0">{props.comment.user.firstName + " " + props.comment.user.lastName}</h6>
                     <blockquote className="card-text p-0 m-0">
                         <p className="mb-0">{props.comment.text}</p>
                     </blockquote>
-                </div>
 
+                </div>
+                {(props.comment.user.userId === currentUser.userId) &&
+                    <div onClick={deleteComment} id={"deleteButton" + props.comment.commentId} style={{cursor: "pointer"}} className="pr-2"><i className="far fa-trash-alt"></i></div>
+                }
             </div>
             <div className="card-body p-1">
                 <div className="row">

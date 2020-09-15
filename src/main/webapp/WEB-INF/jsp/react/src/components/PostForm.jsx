@@ -1,5 +1,6 @@
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 function PostForm(props) {
@@ -8,21 +9,22 @@ function PostForm(props) {
     const [buttonDisplay, setButtonDisplay] = React.useState("none");
     const regex = new RegExp("(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)");
     const [fileName, setFileName] = React.useState("Drag 'n' drop image, or click to browse ");
-
-    let formData= null;
+    const [imageFile, setImageFile] = React.useState(null);
+    const history = useHistory();
 
     const onDrop = useCallback(acceptedFiles => {
         const file = acceptedFiles[0];
-        console.log(file);
+        let formData = new FormData();
         setFileName(file.path + " ");
-        formData = new FormData();
         formData.append("file",file);
+        setImageFile(formData);
+        removeImage();
     }, []);
 
     function onSubmit(evt) {
         evt.preventDefault();
 
-        if (formData === null && (evt.target.text.value !== "" || evt.target.url.value !== "")) {
+        if (imageFile === null && (evt.target.text.value !== "" || evt.target.url.value !== "")) {
             fetch("http://localhost:8080/post/insertPost",{
                 method: 'POST',
                 credentials: "include",
@@ -33,26 +35,28 @@ function PostForm(props) {
             })
                 .then(response => response.json())
                 .then((data) => {
-
+                    document.getElementById("resetButton").click();
+                    props.closeModal();
+                    history.push("/profile");
+                })
+                .then(() => {
+                    history.push("/");
                 })
                 .catch((error) => {
                     console.error('Error:', error);
             });
         }
-        else if (formData !== null) {
+        else if (imageFile !== null) {
             axios.post(
                 "http://localhost:8080/post/insertPostWithFile",
-                formData,
+                imageFile,
                 {
                     headers:{
                         "Content-Type":"multipart/form-data",
-                        'text': evt.target.text.value,
-                        'imageUrl': evt.target.url.value
+                        'text': evt.target.text.value
                     }
                 }
-            ).then(()=>{
-
-            }).catch(err=>{
+            ).catch(err=>{
                 console.log(err);
             });
         }
@@ -60,8 +64,8 @@ function PostForm(props) {
             alert("Post cannot be empty");
         }
 
-        document.getElementById("resetButton").click();
-        props.closeModal();
+        // document.getElementById("resetButton").click();
+        // props.closeModal();
     }
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
@@ -76,6 +80,7 @@ function PostForm(props) {
             document.getElementById("url").value = evt.target.value;
             evt.target.value = "";
             setButtonDisplay("inline");
+            resetForm();
         }
     }
 
@@ -85,9 +90,10 @@ function PostForm(props) {
         document.getElementById("url").value = "";
     }
 
-    function resetForm(evt) {
+    function resetForm() {
         setFileName("Drag 'n' drop image, or click to browse ");
-        formData= null;
+        // imageFile= null;
+        setImageFile(null);
     }
 
     return (
