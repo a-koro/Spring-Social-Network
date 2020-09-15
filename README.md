@@ -48,11 +48,11 @@ Project's key features include:
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Spring Boot](https://spring.io/projects/spring-boot) - Back-End Framework used with the following dependencies:
 
-    * Spring Boot DevTools
-    * Spring Web MVC
-    * Spring Security
-    * Spring Data JPA
-    * WebSocket
+    * **Spring Boot DevTools**
+    * **Spring Web MVC**
+    * **Spring Security**
+    * **Spring Data JPA**
+    * **WebSocket**
 
 * [Tomcat](http://tomcat.apache.org/) - Application Server used
 * [JSP](https://www.oracle.com/java/technologies/jspt.html) - Java Server Pages Technology
