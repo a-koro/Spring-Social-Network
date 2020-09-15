@@ -297,3 +297,7 @@
     text-decoration: none;
     font-family: initial;
 }
+
+#donatePaypal {
+    margin-top: 8px;
+}
