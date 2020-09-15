@@ -4,7 +4,7 @@ import Navbar, {ResultsProvider, UserIdProvider} from './components/Navbar';
 import NewsFeed from './components/NewsFeed';
 import Search from './components/Search';
 import Profile from "./pages/Profile";
-import ProfileAll from "./pages/ProfileAll";
+import FriendsProfilePage from "./pages/FriendsProfilePage";
 
 const SearchContext = React.createContext({});
 
@@ -50,7 +50,7 @@ function App() {
                       <Route path="/results" component={Search}/>
                       <Route path="/" exact component={NewsFeed}/>
                       <Route path="/profile" component={Profile}/>
-                      <Route path="/profileAll" component={ () => <ProfileAll/>}/>
+                      <Route path="/profileAll" component={ () => <FriendsProfilePage/>}/>
                   </ResultsProvider>
               </Switch>
               </div>

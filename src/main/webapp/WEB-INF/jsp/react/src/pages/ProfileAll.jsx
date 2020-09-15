@@ -4,6 +4,7 @@ import DataServices from "../services/DataServices";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUserPlus} from "@fortawesome/free-solid-svg-icons";
 import {faUserFriends} from "@fortawesome/free-solid-svg-icons";
+import { CurrentUserContext } from "../components/Navbar";
 
 
 function ProfileAll(props) {
@@ -34,6 +35,7 @@ function ProfileAll(props) {
     const [user, setUser] = React.useState({});
     const [userRel, setUserRel] = React.useState(null);
     const [update, setUpdate] = React.useState(0);
+    const currentUser = React.useContext(CurrentUserContext);
 
     useEffect(() => {
         getCurrentRelationship()
@@ -54,7 +56,7 @@ function ProfileAll(props) {
     }
 
     function getCurrentRelationship() {
-        DataServices.getCurrentRelationship(props.myUserId, location.state.detail).then(
+        DataServices.getCurrentRelationship(currentUser.userId, location.state.detail).then(
             response => {
                 console.log("friendship status : ", response.data)
                 console.log(response.data.id.userFirstId)
@@ -67,7 +69,7 @@ function ProfileAll(props) {
     }
 
     const deleteRel = () => {
-        DataServices.deleteRelationship(props.myUserId, location.state.detail).then(
+        DataServices.deleteRelationship(currentUser.userId, location.state.detail).then(
             () => {
                 console.log("Relationship deleted")
                 setUpdate(1);
@@ -76,7 +78,7 @@ function ProfileAll(props) {
     }
 
     const acceptRel = () => {
-        DataServices.acceptRelationship(props.myUserId, location.state.detail).then (
+        DataServices.acceptRelationship(currentUser.userId, location.state.detail).then (
             () => {
                 console.log("Friend request Accepted")
                 setUpdate(3);
@@ -85,7 +87,7 @@ function ProfileAll(props) {
     }
 
     const createRel = () => {
-        DataServices.createRelationship(props.myUserId, location.state.detail).then(
+        DataServices.createRelationship(currentUser.userId, location.state.detail).then(
             () => {
                 console.log("Friend request sent")
                 setUpdate(2);
@@ -100,7 +102,7 @@ function ProfileAll(props) {
                 return "noRelationship"
             } else if (userRel.friends === true) {
                 return "friends";
-            } else if (props.myUserId < location.state.detail) {
+            } else if (currentUser.userId < location.state.detail) {
                 if (userRel.pendingFirstSecond) {
                     return "pendingFriendRequest";
                 } else {
@@ -118,6 +120,7 @@ function ProfileAll(props) {
 
     return (
         <>
+            {console.log(currentUser.userId)}
             {console.log(ifStatements())}
             <div className="col-md-6 col-12 offset-md-3 offset-0">
                 <div id="cssSelector">
