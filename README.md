@@ -58,7 +58,7 @@ Project's key features include:
 * [JSP](https://www.oracle.com/java/technologies/jspt.html) - Java Server Pages Technology
 * [ReactJs](https://reactjs.org/) - JavaScript Library 
 
-<br>
+
 
 ## Accessibility and Testing
 
@@ -89,7 +89,7 @@ Favorite CLI - [Git Bash](https://gitforwindows.org/)
 
 ## Acknowledgments 
 
-* [Bootcamp - PeopleCert](https://peoplecerteducation.org/)  <br> - Thank you for your excellent support and knowledge throughout the program. <br></br>
+* [Bootcamp - PeopleCert](https://peoplecerteducation.org/) - Thank you for your excellent support and knowledge throughout the program. <br></br>
 * **Mavros Spyros** - Invaluable support in *Java EE* & *Spring Boot*.
 <br></br>
 * **Minaidis Kostas** - Assistance and support in *CSS* - *JavaScript* & *React*
