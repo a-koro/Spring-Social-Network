@@ -6,11 +6,12 @@ import Search from './components/Search';
 import Profile from "./pages/Profile";
 import Connections from "./components/Connections";
 import FriendsProfilePage from "./pages/FriendsProfilePage";
+import Chat from "./pages/Chat";
 import ConnectionsPage from './pages/ConnectionsPage';
 
 const SearchContext = React.createContext({});
 
-function App() {
+function App(props) {
 
   return (
 
@@ -20,12 +21,13 @@ function App() {
               <div className="row m-0">
               <Switch>
                   <ResultsProvider>
-                          <Redirect from="/index.html" to="/" exact />
-                          <Route path="/results" component={Search}/>
-                          <Route path="/" exact component={NewsFeed}/>
-                          <Route path="/profile" component={Profile}/>
-                          <Route path="/connections" component={ConnectionsPage}/>
-                          <Route path="/profileAll" component={ () => <FriendsProfilePage/>}/>
+                      <Redirect from="/index.html" to="/" exact />
+                      <Route path="/results" component={Search}/>
+                      <Route exact path="/" render={(props)=><NewsFeed {...props}/>} />
+                      <Route path="/profile" component={Profile}/>
+                      <Route path="/connections" component={ConnectionsPage}/>
+                      <Route path="/profileAll" component={ () => <FriendsProfilePage/>}/>
+                      <Route exact path="/chat" render={(props) => <Chat {...props} />} />
                   </ResultsProvider>
               </Switch>
               </div>

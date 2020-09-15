@@ -187,7 +187,7 @@ function Navbar() {
                             </div>
                         </li>
                         <li className="nav-item active">
-                            <a className="nav-link" href="#">Messages</a>
+                        <Link to="/chat" className="nav-link">Messages</Link>                           
                         </li>
                         <li className="nav-item active">
                             <Link to="/connections" className="nav-link">Connections</Link>

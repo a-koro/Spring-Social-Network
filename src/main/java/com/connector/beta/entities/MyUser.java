@@ -6,6 +6,8 @@
 package com.connector.beta.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.connector.beta.websocketEntities.ChatMessage;
+import com.connector.beta.websocketEntities.ChatNotification;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -71,6 +73,17 @@ public class MyUser implements Serializable {
 
 
 
+
+    @OneToMany(mappedBy = "sender")
+    private List<ChatMessage> messagesSend;
+
+    @OneToMany(mappedBy = "recipient")
+    private List<ChatMessage> messagesRecipient;
+
+    @OneToMany(mappedBy = "senderNotification")
+    private List<ChatNotification> chatNotifications;
+
+
 //    public Set<UserFriends> getStatus() {
 //        return status;
 //    }
@@ -82,8 +95,31 @@ public class MyUser implements Serializable {
     public MyUser() {
     }
 
+    public List<ChatMessage> getMessagesSend() {
+        return messagesSend;
+    }
 
-//    public Set<UserFriends> getStatus() {
+    public void setMessagesSend(List<ChatMessage> messagesSend) {
+        this.messagesSend = messagesSend;
+    }
+
+    public List<ChatMessage> getMessagesRecipient() {
+        return messagesRecipient;
+    }
+
+    public void setMessagesRecipient(List<ChatMessage> messagesRecipient) {
+        this.messagesRecipient = messagesRecipient;
+    }
+
+    public List<ChatNotification> getChatNotifications() {
+        return chatNotifications;
+    }
+
+    public void setChatNotifications(List<ChatNotification> chatNotifications) {
+        this.chatNotifications = chatNotifications;
+    }
+
+    //    public Set<UserFriends> getStatus() {
 //        return status;
 //    }
 //
