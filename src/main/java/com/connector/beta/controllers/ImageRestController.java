@@ -75,31 +75,14 @@ public class ImageRestController {
         imageService.uploadUserBackgroundImage(userid,file);
     }
 
-
-
-
     @GetMapping("/image-background/download")
     public ResponseEntity<Resource> downloadUserBackgroundImage(){
-
         Integer userId= userService
                 .findUserIdByEmail(userService.findCurrentUsername());
 
-        return getResourceResponseEntity(userId);
-
-    }
-
-    @GetMapping("/image-background/download/{id}")
-    public ResponseEntity<Resource> downloadUserBackgroundImage(@PathVariable int id){
-
-        return getResourceResponseEntity(id);
-    }
-
-    private ResponseEntity<Resource> getResourceResponseEntity(@PathVariable int id) {
-        ImageBackground image = userService.findImageBackgroundFromUserId(id);
-
+        ImageBackground image = userService.findImageBackgroundFromUserId(userId);
         HttpHeaders header = new HttpHeaders();
         header.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=" + image.getTitle());
-
 
         return ResponseEntity.ok()
                 .headers(header)
@@ -108,6 +91,23 @@ public class ImageRestController {
                 .body(new ByteArrayResource(image.getFile()));
     }
 
+    @GetMapping("/image-background/download/{id}")
+
+    public ResponseEntity<Resource> downloadUserBackgroundImage(@PathVariable int id){
+
+        ImageBackground image = userService.findImageBackgroundFromUserId(id);
+        HttpHeaders header = new HttpHeaders();
+        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=" + image.getTitle());
+
+        return ResponseEntity.ok()
+                .headers(header)
+
+                .contentLength(image.getFile().length)
+
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+
+                .body(new ByteArrayResource(image.getFile()));
+    }
 
     @GetMapping("/searchUsers/{id}")
     public ResponseEntity<Resource> getFile(@PathVariable Integer id) {

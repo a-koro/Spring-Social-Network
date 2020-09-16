@@ -161,6 +161,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!-- REMOVE THE PLUGIN BELOW IF YOU ARE RUNNING THE APP FROM NETBEANS IDE -->
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>

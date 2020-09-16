@@ -19,6 +19,7 @@ npm install
 ```
 npm run build
 ```
+NOTE: Remove plug-in from pom.xml line 165 if you are using NetBeans IDE
 
 
 * Run the project using your favorite IDE
