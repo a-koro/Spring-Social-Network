@@ -59,6 +59,9 @@
 </head>
 <body>
 <div class="col-md-12">
+    <a href="/">
+        <img src="/img/logo.jpg" width="300px" alt="Connector Logo" class="mx-auto d-block mt-5">
+    </a>
     <div class="card card-container">
         <img
                 src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
