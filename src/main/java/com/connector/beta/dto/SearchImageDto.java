@@ -1,6 +1,6 @@
 package com.connector.beta.dto;
 
-import org.springframework.core.io.ByteArrayResource;
+
 
 public class SearchImageDto {
     private String firstName;

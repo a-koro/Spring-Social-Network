@@ -60,17 +60,7 @@ public class ImageRestController {
        Integer userId= userService
                .findUserIdByEmail(userService.findCurrentUsername());
 
-       Image image = userService.findImageProfileFromUserId(userId);
-
-        HttpHeaders header = new HttpHeaders();
-        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=" + image.getTitle());
-
-
-        return ResponseEntity.ok()
-                .headers(header)
-                .contentLength(image.getFile().length)
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .body(new ByteArrayResource(image.getFile()));
+        return getResourceResponseEntity(userId);
 
     }
 
@@ -94,23 +84,17 @@ public class ImageRestController {
         Integer userId= userService
                 .findUserIdByEmail(userService.findCurrentUsername());
 
-        ImageBackground image = userService.findImageBackgroundFromUserId(userId);
-
-        HttpHeaders header = new HttpHeaders();
-        header.add(HttpHeaders.CONTENT_DISPOSITION, "attachement; filename=" + image.getTitle());
-
-
-        return ResponseEntity.ok()
-                .headers(header)
-                .contentLength(image.getFile().length)
-                .contentType(MediaType.parseMediaType("application/octet-stream"))
-                .body(new ByteArrayResource(image.getFile()));
+        return getResourceResponseEntity(userId);
 
     }
 
     @GetMapping("/image-background/download/{id}")
     public ResponseEntity<Resource> downloadUserBackgroundImage(@PathVariable int id){
 
+        return getResourceResponseEntity(id);
+    }
+
+    private ResponseEntity<Resource> getResourceResponseEntity(@PathVariable int id) {
         ImageBackground image = userService.findImageBackgroundFromUserId(id);
 
         HttpHeaders header = new HttpHeaders();
@@ -127,6 +111,10 @@ public class ImageRestController {
 
     @GetMapping("/searchUsers/{id}")
     public ResponseEntity<Resource> getFile(@PathVariable Integer id) {
+        return getResourceResponseEntity(id);
+    }
+
+    private ResponseEntity<Resource> getResourceResponseEntity(@PathVariable Integer id) {
         Image image = userService.findImageProfileFromUserId(id);
 
         HttpHeaders header = new HttpHeaders();
