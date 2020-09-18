@@ -5,7 +5,7 @@ Connector is a Social Network Web Application created as a learning Project.
 Here is a sample View of our **Home Page** after successful authorization:
 
 <br></br>
-<img src="./SamplePictures/finalImage.png" alt="Home Page">
+<img src="./SamplePictures/finalImageBlack.png" alt="Home Page">
 <br></br>
 
 ## Getting Started
