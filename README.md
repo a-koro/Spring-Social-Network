@@ -11,7 +11,7 @@ Here is a sample View of our **Home Page** after successful authorization:
 ## Getting Started
 
 
-The App was created according to the MVC (Modem-View-Controller) paradigm. 
+The App was created according to the MVC (Model-View-Controller) paradigm. 
 Basis of the View component was made using ReactJs.
 
 Deploy the App locally:
