@@ -8,6 +8,7 @@ function PostForm(props) {
     const [imgUrl, setImgUrl] = React.useState("");
     const [buttonDisplay, setButtonDisplay] = React.useState("none");
     const regex = new RegExp("(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|gif|png)");
+    const base64regex = new RegExp(/(data:image\/[^;]+;base64[^"]+)/g);
     const [fileName, setFileName] = React.useState("Drag 'n' drop image, or click to browse ");
     const [imageFile, setImageFile] = React.useState(null);
     const history = useHistory();
@@ -63,15 +64,23 @@ function PostForm(props) {
         else {
             alert("Post cannot be empty");
         }
-
-        // document.getElementById("resetButton").click();
-        // props.closeModal();
     }
 
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop});
 
     let removeButtonStyle = {
         display: buttonDisplay
+    }
+
+    function checkImage(imageSrc) {
+        let img = new Image();
+        img.onload = function () {
+            console.log("Exists");
+        };
+        img.onerror = function () {
+            console.log("Does not Exist");
+        };
+        img.src = imageSrc;
     }
 
     function findUrl(evt) {
@@ -92,7 +101,6 @@ function PostForm(props) {
 
     function resetForm() {
         setFileName("Drag 'n' drop image, or click to browse ");
-        // imageFile= null;
         setImageFile(null);
     }
 
@@ -102,8 +110,8 @@ function PostForm(props) {
             <button onClick={removeImage} style={removeButtonStyle} className="btn btn-white">x</button>
             <form onSubmit={onSubmit}>
                 <div className="form-group">
-                    <input type="text" className="form-control" id="exampleInputEmail1" aria-describedby="freeText"
-                           placeholder="What are you thinking?" onChange={findUrl} name="text"/>
+                    <textarea className="form-control" id="exampleInputEmail1" aria-describedby="freeText"
+                              placeholder="What are you thinking?" onChange={findUrl} name="text" maxLength="250" rows="5"></textarea>
                         <small id="freeText" className="form-text text-muted">Only visible to your connections.</small>
                     <input type="hidden" id="url" name="url"/>
                 </div>

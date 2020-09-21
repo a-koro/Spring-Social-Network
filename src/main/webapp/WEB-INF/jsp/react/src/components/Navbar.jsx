@@ -108,7 +108,6 @@ function Navbar() {
     }
 
     function getAllRequests() {
-        console.log(userId)
         if (userId) {
             DataServices.getPendingRequests(userId).then(
                 response => {

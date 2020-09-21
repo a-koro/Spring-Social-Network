@@ -57,7 +57,6 @@ function NewsFeed(props) {
       function loadCurrentUser() {
         DataServices.getCurrentUser().then(
             response => {
-                console.log("userr recoil: ", response.data);
                 setUser(response.data);
             }
         ).catch(error => { console.log(error.response) });
@@ -71,7 +70,6 @@ function NewsFeed(props) {
                     setPosts(data.posts);
                     postsForContext = data.posts;
                     connections = data.friends;
-                    console.log(data.friends);
                 });
         }, [value]
     );
