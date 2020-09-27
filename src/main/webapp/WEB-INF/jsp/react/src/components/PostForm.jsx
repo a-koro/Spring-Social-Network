@@ -57,7 +57,16 @@ function PostForm(props) {
                         'text': evt.target.text.value
                     }
                 }
-            ).catch(err=>{
+            )
+                .then(() => {
+                    document.getElementById("resetButton").click();
+                    props.closeModal();
+                    history.push("/profile");
+                })
+                .then(() => {
+                    history.push("/");
+                })
+                .catch(err=>{
                 console.log(err);
             });
         }
