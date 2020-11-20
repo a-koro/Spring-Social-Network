@@ -16,6 +16,13 @@ import {
 import { getUsers } from "../ApiUtil";
 
 var stompClient = null;
+const style = {
+    objectFit: 'cover',
+    borderRadius: '50%',
+    width: '40px',
+    height: '40px'
+};
+
 function Chat(props) {
 
 
@@ -138,12 +145,8 @@ function Chat(props) {
         <div id="chat" className="container">
             <div className="row">
                 <div className="col-md-4 friends">
-               
-
-                    
                     <div id="contacts">
                         <ul>
-
                             {contacts.map((contact) => (
                                 <li
                                     onClick={() => setActiveContact(contact)}
@@ -155,7 +158,7 @@ function Chat(props) {
                                 >
                                     <div class="wrap">
                                         <span class="contact-status online"></span>
-                                        <img  src={"http://localhost:8080/api/profile/searchUsers/"+contact.userSecondId} alt="" />
+                                        <img style={style}  src={"http://localhost:8080/api/profile/searchUsers/"+contact.userSecondId} alt="" />
                                         <div class="meta">
                                             <p class="name">{contact.firstName + " " + contact.lastName}</p>
                                             {contact.newMessages !== undefined &&
@@ -166,24 +169,14 @@ function Chat(props) {
                                                 )}
                                         </div>
                                     </div>
-                                   
                                 </li>
-                                
                             ))}
-                       
-
                         </ul>
-
- 
                     </div>
-
-                
                 </div>
-
-
                 <div class="col-md-8 chat-room" >
                     <div class="contact-profile">
-                        <img  src={activeContact && "http://localhost:8080/api/profile/searchUsers/"+activeContact.userSecondId} alt="" />
+                        <img style={style} src={activeContact && "http://localhost:8080/api/profile/searchUsers/"+activeContact.userSecondId} alt="" />
                         <p>{activeContact && (activeContact.firstName + " " + activeContact.lastName)}</p>
                     </div>
                     <div >
@@ -192,14 +185,14 @@ function Chat(props) {
                             {messages.map((msg) => (
                                 <li class={msg.senderId === user.userId ? "sent" : "replies"}>
                                     {msg.senderId !== user.userId && (
-                                         <img className="chat-image" src={activeContact && "http://localhost:8080/api/profile/searchUsers/"+activeContact.userSecondId} alt="" />
+                                         <img style={style} className="chat-image" src={activeContact && "http://localhost:8080/api/profile/searchUsers/"+activeContact.userSecondId} alt="" />
                                     )}
                                     <p>{msg.content}</p>
                                 </li>
                             ))}
- 
+
                         </ul>
-                        
+
                     </ScrollToBottom>
                     </div>
                     <div class="message-input">
@@ -217,7 +210,6 @@ function Chat(props) {
                                     }
                                 }}
                             />
-
                             <Button
                                 icon={<i class="fa fa-paper-plane" aria-hidden="true"></i>}
                                 onClick={() => {
@@ -228,7 +220,6 @@ function Chat(props) {
                         </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     )
