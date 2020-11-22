@@ -129,19 +129,14 @@ public class PostController {
     // New endpoint to update posts
     @PostMapping(path = "/updatePost", produces = "application/json")
     public ResponseEntity updatePost(@RequestHeader int postId,@RequestBody Map<String, String> body) {
-
-        System.out.println(543345);
-
         Post postToUpdate = postServiceInterface.findPostByPostId(postId);
         UserDto currentUser = userServiceInterface.getCurrentUser();
         if(postToUpdate.getUser().getUserId() == currentUser.getUserId()) {
-            System.out.println("you can update post");
             postToUpdate.setText(body.get("text"));
             postServiceInterface.updatePost(postToUpdate);
             return ResponseEntity.ok().build();
         }
         else {
-            System.out.println("You cannot update post");
             return ResponseEntity.status(403).build();
         }
     }
