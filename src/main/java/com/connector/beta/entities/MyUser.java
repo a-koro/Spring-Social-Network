@@ -74,13 +74,16 @@ public class MyUser implements Serializable {
 
 
 
-    @OneToMany(mappedBy = "sender")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "sender")
+    @JsonIgnore
     private List<ChatMessage> messagesSend;
 
-    @OneToMany(mappedBy = "recipient")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recipient")
+    @JsonIgnore
     private List<ChatMessage> messagesRecipient;
 
-    @OneToMany(mappedBy = "senderNotification")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "senderNotification")
+    @JsonIgnore
     private List<ChatNotification> chatNotifications;
 
 

@@ -5,6 +5,7 @@ import { faGlassCheers } from '@fortawesome/free-solid-svg-icons';
 import { CurrentUserContext } from "./Navbar";
 import Comment from './Comment';
 import {useHistory} from "react-router-dom";
+import Axios from 'axios';
 
 const style = {
     objectFit: 'cover',
@@ -18,6 +19,8 @@ function Post(props) {
     const [postImageUrl, setPostImageUrl] = React.useState("");
     const [dateTime, setDateTime] = React.useState(new Date());
     const [cheers, setCheers] = React.useState(0);
+    const [editable, setEditable] = React.useState(false);
+    const [text, setText] = React.useState(props.post.text);
     const history = useHistory();
 
     const currentUser = React.useContext(CurrentUserContext);
@@ -37,6 +40,30 @@ function Post(props) {
             .then(data => props.value.setValue(!props.value.value));
 
         evt.target.input.value = "";
+    }
+
+    async function updatePost(evt) {
+        if(editable) {
+            try {
+                await Axios.post(
+                    '/post/updatePost',
+                    {
+                        'text': text
+                    },
+                    {
+                        withCredentials: true,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            postId: props.post.postId
+                        }
+                    }
+                );
+            } catch (err) {
+                console.log(err);
+                setText(props.post.text);
+            }
+        }
+        setEditable(!editable);
     }
 
     function cheer() {
@@ -109,13 +136,21 @@ function Post(props) {
                         <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>{dateTime.toLocaleString("en-GB",{timeZone: "UTC"})}</small></p>
                     </div>
                     {(props.post.user.userId === currentUser.userId) &&
-                    <div onClick={deletePost} id={"deleteButton" + props.post.postId} style={{cursor: "pointer"}}><i className="far fa-trash-alt"></i></div>
+                        <>
+                            <div onClick={updatePost} id={"deleteButton" + props.post.postId} style={{cursor: "pointer"}}><i className="far fa-edit mr-2"></i></div>
+                            <div onClick={deletePost} id={"deleteButton" + props.post.postId} style={{cursor: "pointer"}}><i className="far fa-trash-alt"></i></div>
+                        </>
                     }
                 </div>
                 <div className="card-body p-1">
                     <img src={postImageUrl} alt="Couldn't load image from URL" className="img-fluid rounded" id={"postImage" + props.post.postId} style={{display: "none", width: "100%"}}/>
                     <blockquote className="card-text p-3 m-0">
-                        <p className="mb-0">{props.post.text}</p>
+                        { !editable &&
+                            <p className="mb-0">{text}</p>
+                        }
+                        { editable &&
+                            <textarea value={text} rows="6" minLength="2" maxLength="255" className="form-control" onChange={(evt) => {setText(evt.target.value)}}></textarea>
+                        }
                     </blockquote>
                     <div className="row">
                         <div className="col-xs-12 col-sm-4 col-md-4 m-2">

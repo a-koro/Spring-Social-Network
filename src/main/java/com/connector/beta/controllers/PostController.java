@@ -1,10 +1,12 @@
 package com.connector.beta.controllers;
 
+import com.connector.beta.dto.UserDto;
 import com.connector.beta.projections.PostProjection;
 import com.connector.beta.entities.*;
 import com.connector.beta.services.CommentServiceInterface;
 import com.connector.beta.services.PostServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
+import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -16,10 +18,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/post")
@@ -120,5 +124,25 @@ public class PostController {
             commentServiceInterface.removeComment(comment);
         }
         return "Comment Deleted";
+    }
+
+    // New endpoint to update posts
+    @PostMapping(path = "/updatePost", produces = "application/json")
+    public ResponseEntity updatePost(@RequestHeader int postId,@RequestBody Map<String, String> body) {
+
+        System.out.println(543345);
+
+        Post postToUpdate = postServiceInterface.findPostByPostId(postId);
+        UserDto currentUser = userServiceInterface.getCurrentUser();
+        if(postToUpdate.getUser().getUserId() == currentUser.getUserId()) {
+            System.out.println("you can update post");
+            postToUpdate.setText(body.get("text"));
+            postServiceInterface.updatePost(postToUpdate);
+            return ResponseEntity.ok().build();
+        }
+        else {
+            System.out.println("You cannot update post");
+            return ResponseEntity.status(403).build();
+        }
     }
 }

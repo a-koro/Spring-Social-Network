@@ -72,9 +72,6 @@ public class AuthenticationController {
                                      @Valid @ModelAttribute("newUser") MyUser myUser,
                                      BindingResult bindingResult) {
 
-//        System.out.println(myUser.getBirthday());
-//          Creating a conflict to test
-//        System.out.println(passwordEncoder.encode(myUser.getPassword()));
         System.out.println(bindingResult);
         System.out.println(myUser.getBirthday());
 //        Test Comment
@@ -96,7 +93,7 @@ public class AuthenticationController {
         //        System.out.println(userRole.getClass());
         myUser.setRoles(roles);
 
-        Image image = imageRepo.findById(82).orElseThrow(()->new IllegalArgumentException("image not found"));
+        Image image = imageRepo.findById(143).orElseThrow(()->new IllegalArgumentException("image not found"));
         Image newImage= new Image();
         newImage.setFile(image.getFile());
         newImage.setTitle(image.getTitle());
