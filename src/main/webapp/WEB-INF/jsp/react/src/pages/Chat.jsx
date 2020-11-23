@@ -57,7 +57,7 @@ function Chat(props) {
     const connect = () => {
         const Stomp = require("stompjs");
         var SockJS = require("sockjs-client");
-        SockJS = new SockJS("http://localhost:8080/ws");
+        SockJS = new SockJS("/ws");
         stompClient = Stomp.over(SockJS);
         stompClient.connect({}, onConnected, onError);
     };
@@ -158,7 +158,7 @@ function Chat(props) {
                                 >
                                     <div class="wrap">
                                         <span class="contact-status online"></span>
-                                        <img style={style}  src={"http://localhost:8080/api/profile/searchUsers/"+contact.userSecondId} alt="" />
+                                        <img style={style}  src={"/api/profile/searchUsers/"+contact.userSecondId} alt="" />
                                         <div class="meta">
                                             <p class="name">{contact.firstName + " " + contact.lastName}</p>
                                             {contact.newMessages !== undefined &&
@@ -176,7 +176,7 @@ function Chat(props) {
                 </div>
                 <div class="col-md-8 chat-room" >
                     <div class="contact-profile">
-                        <img style={style} src={activeContact && "http://localhost:8080/api/profile/searchUsers/"+activeContact.userSecondId} alt="" />
+                        <img style={style} src={activeContact && "/api/profile/searchUsers/"+activeContact.userSecondId} alt="" />
                         <p>{activeContact && (activeContact.firstName + " " + activeContact.lastName)}</p>
                     </div>
                     <div >
@@ -185,7 +185,7 @@ function Chat(props) {
                             {messages.map((msg) => (
                                 <li class={msg.senderId === user.userId ? "sent" : "replies"}>
                                     {msg.senderId !== user.userId && (
-                                         <img style={style} className="chat-image" src={activeContact && "http://localhost:8080/api/profile/searchUsers/"+activeContact.userSecondId} alt="" />
+                                         <img style={style} className="chat-image" src={activeContact && "/api/profile/searchUsers/"+activeContact.userSecondId} alt="" />
                                     )}
                                     <p>{msg.content}</p>
                                 </li>

@@ -112,7 +112,7 @@ function Post(props) {
         // Image render
         if (props.post.imageUrl === "BLOB") {
             document.getElementById("postImage"+props.post.postId).style.display = "block";
-            setPostImageUrl("http://localhost:8080/post/downloadPostImage/" + props.post.postId);
+            setPostImageUrl("/post/downloadPostImage/" + props.post.postId);
         }
         else if (props.post.imageUrl !== "" && props.post.imageUrl !== null) {
             document.getElementById("postImage"+props.post.postId).style.display = "block";

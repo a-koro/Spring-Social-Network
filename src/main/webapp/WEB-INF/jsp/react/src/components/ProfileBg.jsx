@@ -22,7 +22,7 @@ export default function ProfileBg(props) {
 
     
     const background = {
-        background: `url("http://localhost:8080/api/profile/image-background/download")`,
+        background: `url("/api/profile/image-background/download")`,
         backgroundSize: "cover",
         height: "300px"
 };
@@ -53,7 +53,7 @@ return (
                         <DropzoneBg/>
                     </div>
                     <div className="avatar">
-                        <img style={style} alt="image-profile" src="http://localhost:8080/api/profile/image/download" />
+                        <img style={style} alt="image-profile" src="/api/profile/image/download" />
                         <Dropzone />
                     </div>
                     <div className="info">
