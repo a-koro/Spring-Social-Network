@@ -63,7 +63,7 @@ function NewsFeed(props) {
     }
 
     React.useEffect(() => {
-            fetch('http://localhost:8080/api/newsFeed')
+            fetch('/api/newsFeed')
                 .then(response => response.json())
                 .then(data => {
                     setItems(data.friends);
