@@ -16,6 +16,11 @@ public class CommentServiceImpl implements CommentServiceInterface {
     }
 
     @Override
+    public void updateComment(Comment comment) {
+        commentRepo.save(comment);
+    }
+
+    @Override
     public Comment findCommentByCommentId(int commentId) {
         Comment comment = commentRepo.findById(commentId).orElseThrow(() -> new RuntimeException("No data!"));
         return comment;

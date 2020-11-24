@@ -73,7 +73,6 @@ public class AuthenticationController {
                                      BindingResult bindingResult) {
 
         System.out.println(bindingResult);
-        System.out.println(myUser.getBirthday());
 //        Test Comment
 
         if (bindingResult.hasErrors()) {

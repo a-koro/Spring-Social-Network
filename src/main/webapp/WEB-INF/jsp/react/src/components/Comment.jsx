@@ -1,6 +1,7 @@
 import React from 'react';
 import { CurrentUserContext } from "./Navbar";
 import {useHistory} from "react-router-dom";
+import Axios from "axios";
 
 // function fetchData() {
 //     fetch('http://localhost:8080/getcityfromcountry/7', {mode: "cors"})
@@ -18,6 +19,8 @@ const style = {
 function Comment(props){
 
     const [dateTime, setDateTime] = React.useState(new Date());
+    const [editable, setEditable] = React.useState(false);
+    const [text, setText] = React.useState(props.comment.text);
     const currentUser = React.useContext(CurrentUserContext);
     const history = useHistory();
 
@@ -34,6 +37,30 @@ function Comment(props){
                 // history.push("/");
                 props.value.setValue(!props.value.value);
             });
+    }
+
+    async function updatePost() {
+        if(editable) {
+            try {
+                await Axios.post(
+                    '/post/updateComment',
+                    {
+                        'text': text
+                    },
+                    {
+                        withCredentials: true,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            commentId: props.comment.commentId
+                        }
+                    }
+                );
+            } catch (err) {
+                console.log(err);
+                setText(props.post.text);
+            }
+        }
+        setEditable(!editable);
     }
 
     React.useEffect(() => {
@@ -58,12 +85,20 @@ function Comment(props){
                 <div className="w-100">
                     <h6 className="card-text mb-0">{props.comment.user.firstName + " " + props.comment.user.lastName}</h6>
                     <blockquote className="card-text p-0 m-0">
-                        <p className="mb-0">{props.comment.text}</p>
+                        { !editable &&
+                            <p className="mb-0">{text}</p>
+                        }
+                        { editable &&
+                            <textarea value={text} rows="3" minLength="1" maxLength="250" className="form-control" onChange={(evt) => {setText(evt.target.value)}}></textarea>
+                        }
                     </blockquote>
 
                 </div>
                 {(props.comment.user.userId === currentUser.userId) &&
-                    <div onClick={deleteComment} id={"deleteButton" + props.comment.commentId} style={{cursor: "pointer"}} className="pr-2"><i className="far fa-trash-alt"></i></div>
+                    <>
+                        <div onClick={updatePost} id={"updateButton" + props.comment.commentId} style={{cursor: "pointer"}}><i className="far fa-edit mr-2"></i></div>
+                        <div onClick={deleteComment} id={"deleteButton" + props.comment.commentId} style={{cursor: "pointer"}} className="pr-2"><i className="far fa-trash-alt"></i></div>
+                    </>
                 }
             </div>
             <div className="card-body p-1">

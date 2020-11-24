@@ -129,15 +129,36 @@ public class PostController {
     // New endpoint to update posts
     @PostMapping(path = "/updatePost", produces = "application/json")
     public ResponseEntity updatePost(@RequestHeader int postId,@RequestBody Map<String, String> body) {
-        Post postToUpdate = postServiceInterface.findPostByPostId(postId);
-        UserDto currentUser = userServiceInterface.getCurrentUser();
-        if(postToUpdate.getUser().getUserId() == currentUser.getUserId()) {
-            postToUpdate.setText(body.get("text"));
-            postServiceInterface.updatePost(postToUpdate);
-            return ResponseEntity.ok().build();
+        try {
+            Post postToUpdate = postServiceInterface.findPostByPostId(postId);
+            UserDto currentUser = userServiceInterface.getCurrentUser();
+            if ((postToUpdate.getUser().getUserId() == currentUser.getUserId()) && (body.get("text").length() <= 250)) {
+                postToUpdate.setText(body.get("text"));
+                postServiceInterface.updatePost(postToUpdate);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.status(403).build();
+            }
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(500).build();
         }
-        else {
-            return ResponseEntity.status(403).build();
+    }
+
+    // New endpoint to update comments
+    @PostMapping("/updateComment")
+    public ResponseEntity updateComment(@RequestHeader int commentId, @RequestBody Map<String, String> body) {
+        try {
+            Comment commentToUpdate = commentServiceInterface.findCommentByCommentId(commentId);
+            UserDto currentUser = userServiceInterface.getCurrentUser();
+            if((commentToUpdate.getUser().getUserId() == currentUser.getUserId()) && (body.get("text").length() <= 250)) {
+                commentToUpdate.setText(body.get("text"));
+                commentServiceInterface.updateComment(commentToUpdate);
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.status(403).build();
+            }
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).build();
         }
     }
 }

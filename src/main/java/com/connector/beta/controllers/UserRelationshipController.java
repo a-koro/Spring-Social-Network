@@ -158,8 +158,6 @@ public class UserRelationshipController {
 
         relationships.forEach(r -> System.out.println(r.getId().getUserFirstId() + " " + r.getId().getUserSecondId()));
 
-        System.out.println(relationships.get(0).getMyUser1().getFirstName());
-
         List<UserIdAndNamesDto> userInfoList = new ArrayList<>();
 
         relationships.forEach(r -> {

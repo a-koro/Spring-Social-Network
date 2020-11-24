@@ -137,7 +137,7 @@ function Post(props) {
                     </div>
                     {(props.post.user.userId === currentUser.userId) &&
                         <>
-                            <div onClick={updatePost} id={"deleteButton" + props.post.postId} style={{cursor: "pointer"}}><i className="far fa-edit mr-2"></i></div>
+                            <div onClick={updatePost} id={"updateButton" + props.post.postId} style={{cursor: "pointer"}}><i className="far fa-edit mr-2"></i></div>
                             <div onClick={deletePost} id={"deleteButton" + props.post.postId} style={{cursor: "pointer"}}><i className="far fa-trash-alt"></i></div>
                         </>
                     }
@@ -149,7 +149,7 @@ function Post(props) {
                             <p className="mb-0">{text}</p>
                         }
                         { editable &&
-                            <textarea value={text} rows="6" minLength="2" maxLength="255" className="form-control" onChange={(evt) => {setText(evt.target.value)}}></textarea>
+                            <textarea value={text} rows="6" minLength="1" maxLength="250" className="form-control" onChange={(evt) => {setText(evt.target.value)}}></textarea>
                         }
                     </blockquote>
                     <div className="row">
@@ -164,7 +164,7 @@ function Post(props) {
                 <form className="mx-2" onSubmit={insertComment}>
                     <div className="form-group">
                         <input type="text" className="form-control" id="commentInput"
-                               placeholder="Enter a comment..." name="input"/>
+                               placeholder="Enter a comment..." name="input" minLength="1"  maxLength="250"/>
                     </div>
                 </form>
                 <small className="ml-2 mt-0 mb-1" data-toggle="collapse" data-target={"#collapseExample" + props.post.postId}
