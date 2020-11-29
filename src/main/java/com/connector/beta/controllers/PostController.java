@@ -133,7 +133,7 @@ public class PostController {
             Post postToUpdate = postServiceInterface.findPostByPostId(postId);
             UserDto currentUser = userServiceInterface.getCurrentUser();
             if ((postToUpdate.getUser().getUserId() == currentUser.getUserId()) && (body.get("text").length() <= 250)) {
-                postToUpdate.setText(body.get("text"));
+                postToUpdate.setText(body.get("text").trim());
                 postServiceInterface.updatePost(postToUpdate);
                 return ResponseEntity.ok().build();
             } else {
@@ -151,7 +151,7 @@ public class PostController {
             Comment commentToUpdate = commentServiceInterface.findCommentByCommentId(commentId);
             UserDto currentUser = userServiceInterface.getCurrentUser();
             if((commentToUpdate.getUser().getUserId() == currentUser.getUserId()) && (body.get("text").length() <= 250)) {
-                commentToUpdate.setText(body.get("text"));
+                commentToUpdate.setText(body.get("text").trim());
                 commentServiceInterface.updateComment(commentToUpdate);
                 return ResponseEntity.ok().build();
             } else {

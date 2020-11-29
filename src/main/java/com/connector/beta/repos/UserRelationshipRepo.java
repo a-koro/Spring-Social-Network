@@ -1,6 +1,7 @@
 package com.connector.beta.repos;
 
 import com.connector.beta.Pojos.UserFriendsDto;
+import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.UserRelationship;
 import com.connector.beta.entities.UserRelationshipKey;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -49,5 +50,9 @@ public interface UserRelationshipRepo extends JpaRepository<UserRelationship, Us
             @Param("myUserId2") Integer myUserId2);
 
 
+    // Testing a method to get all friends using UNION keyword
+    @Query(value = "select user_second_id as user from user_relationship where user_first_id = ? union select user_first_id as user from user_relationship where user_second_id = ?",
+            nativeQuery = true)
+    List<Integer> getAllFriendsWithUnion(Integer myUserId, Integer myUserId2);
 
 }
