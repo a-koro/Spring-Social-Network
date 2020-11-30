@@ -16,7 +16,7 @@ function Connections() {
                 <ConnectionsContext.Consumer>
                     {(context) => (
                         context.map((item) => (
-                            <ConnectionCard username={item.firstName + " " + item.lastName} userId={item.userSecondId} />
+                            <ConnectionCard username={item.firstName + " " + item.lastName} userId={item.userId} />
                         ))
                     )}
                 </ConnectionsContext.Consumer>

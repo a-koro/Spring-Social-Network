@@ -7,6 +7,7 @@ import com.connector.beta.dto.NewsFeedDTO;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.UserRelationship;
 import com.connector.beta.entities.UserRelationshipKey;
+import com.connector.beta.projections.MyUserProjection;
 import com.connector.beta.repos.UserRelationshipRepo;
 import com.connector.beta.repos.UserRepo;
 import com.connector.beta.services.PostServiceInterface;
@@ -215,36 +216,53 @@ public class UserRelationshipController {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int currentUserId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow(() -> new RuntimeException("Error: User Id not found"));
 
-        List<UserFriendsDto> friendsDto = userRelationshipRepo.getAllFriendsWithNames(currentUserId);
-        List<UserFriendsDto> friendsDtoSecond = userRelationshipRepo.getAllFriendsWithNamesSecond(currentUserId);
-
-        List<UserFriendsDto> friendsDtoFiltered = Stream.concat(friendsDto.stream(), friendsDtoSecond.stream())
-                .filter(friend -> !friend.getEmail().equals(user.getUsername()))
-                .sorted(Comparator.comparingInt(UserFriendsDto::getUserFirstId))
-                .collect(Collectors.toList());
-
-
-//        All friends placed at userSecondId
-
-        friendsDtoFiltered.forEach(f -> {
-            if (f.getUserFirstId() != currentUserId) {
-                f.setUserSecondId(f.getUserFirstId());
-                f.setUserFirstId(currentUserId);
-            }
+//        ################### (Changed NewsFeedDTO friends list to MyUserProjection from UserFriendsDto)
+//        ################### (Also changed in React NewsFeed.jsx friends iteration from item.userSecondId to item.userId)
+//        ################### (and Connections.jsx friends iteration from item.userSecondId to item.userId)
+        List<MyUserProjection> listOfUnionFriends = userRelationshipRepo.getAllFriendsWithUnion(currentUserId,currentUserId);
+        List<Integer> friendsUnionIds = new ArrayList<>();
+        friendsUnionIds.add(currentUserId);
+        listOfUnionFriends.forEach( f -> {
+            friendsUnionIds.add(f.getUserId());
         });
-
-        List<Integer> friendsIds = new ArrayList<>();
-        friendsIds.add(currentUserId);
-        friendsDtoFiltered.forEach( f -> {
-            friendsIds.add(f.getUserSecondId());
-        });
-
-        NewsFeedDTO newsFeedDto = new NewsFeedDTO();
-        newsFeedDto.setPosts(postServiceInterface.findByUserIds(friendsIds));
-        newsFeedDto.setFriends(friendsDtoFiltered);
+        NewsFeedDTO newsFeedUnionDto = new NewsFeedDTO();
+        newsFeedUnionDto.setPosts(postServiceInterface.findByUserIds(friendsUnionIds));
+        newsFeedUnionDto.setFriends(listOfUnionFriends);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(newsFeedDto);
+                .body(newsFeedUnionDto);
+//        ###################
+
+//        List<UserFriendsDto> friendsDto = userRelationshipRepo.getAllFriendsWithNames(currentUserId);
+//        List<UserFriendsDto> friendsDtoSecond = userRelationshipRepo.getAllFriendsWithNamesSecond(currentUserId);
+//
+//        List<UserFriendsDto> friendsDtoFiltered = Stream.concat(friendsDto.stream(), friendsDtoSecond.stream())
+//                .filter(friend -> !friend.getEmail().equals(user.getUsername()))
+//                .sorted(Comparator.comparingInt(UserFriendsDto::getUserFirstId))
+//                .collect(Collectors.toList());
+//
+//
+////        All friends placed at userSecondId
+//
+//        friendsDtoFiltered.forEach(f -> {
+//            if (f.getUserFirstId() != currentUserId) {
+//                f.setUserSecondId(f.getUserFirstId());
+//                f.setUserFirstId(currentUserId);
+//            }
+//        });
+//
+//        List<Integer> friendsIds = new ArrayList<>();
+//        friendsIds.add(currentUserId);
+//        friendsDtoFiltered.forEach( f -> {
+//            friendsIds.add(f.getUserSecondId());
+//        });
+//
+//        NewsFeedDTO newsFeedDto = new NewsFeedDTO();
+//        newsFeedDto.setPosts(postServiceInterface.findByUserIds(friendsIds));
+//        newsFeedDto.setFriends(friendsDtoFiltered);
+//
+//        return ResponseEntity.status(HttpStatus.OK)
+//                .body(newsFeedDto);
     }
 
 }

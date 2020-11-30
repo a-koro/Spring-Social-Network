@@ -4,6 +4,7 @@ import com.connector.beta.Pojos.UserFriendsDto;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.entities.UserRelationship;
 import com.connector.beta.entities.UserRelationshipKey;
+import com.connector.beta.projections.MyUserProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -50,9 +51,15 @@ public interface UserRelationshipRepo extends JpaRepository<UserRelationship, Us
             @Param("myUserId2") Integer myUserId2);
 
 
-    // Testing a method to get all friends using UNION keyword
-    @Query(value = "select user_second_id as user from user_relationship where user_first_id = ? union select user_first_id as user from user_relationship where user_second_id = ?",
+    // Native query method that uses union keyword and returns a projection
+    @Query(value = "select u.user_id as userId, u.first_name as firstName, u.last_name as lastName from user_relationship ur " +
+            "join " +
+            "users u on u.user_id = ur.user_second_id where ur.user_first_id = ? and ur.friends = true " +
+            "union " +
+            "select u1.user_id as userId, u1.first_name as firstName, u1.last_name as lastName from user_relationship ur1 " +
+            "join " +
+            "users u1 on u1.user_id = ur1.user_first_id where ur1.user_second_id = ? and ur1.friends = true",
             nativeQuery = true)
-    List<Integer> getAllFriendsWithUnion(Integer myUserId, Integer myUserId2);
+    List<MyUserProjection> getAllFriendsWithUnion(Integer myUserId, Integer myUserId2);
 
 }

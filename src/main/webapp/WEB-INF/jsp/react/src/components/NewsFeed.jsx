@@ -82,26 +82,26 @@ function NewsFeed(props) {
         <>
             <div className="col-md-3 col-12 d-none d-md-block">
                 <div>{items.map((item) => (
-                    <Contact  userFriendId = {item.userSecondId} username={ item.firstName + " " + item.lastName}/>
+                    <Contact  userFriendId = {item.userId} username={ item.firstName + " " + item.lastName}/>
                 ))}
                 </div>
             </div>
             <div className="col-md-6 col-12">
 
-                <button type="button" class="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" className="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModal">
                     New Post
                 </button>
 
-                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeButton">
+                <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="exampleModalLabel">New Post</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close" id="closeButton">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+                            <div className="modal-body">
                                 <PostForm closeModal={closeModal} value={value} setValue={setValue}/>
                             </div>
                         </div>
