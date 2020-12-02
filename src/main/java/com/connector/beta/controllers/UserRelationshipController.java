@@ -11,6 +11,7 @@ import com.connector.beta.projections.MyUserProjection;
 import com.connector.beta.repos.UserRelationshipRepo;
 import com.connector.beta.repos.UserRepo;
 import com.connector.beta.services.PostServiceInterface;
+import com.connector.beta.services.UserRelationshipInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
@@ -39,6 +40,8 @@ public class UserRelationshipController {
     UserRelationshipRepo userRelationshipRepo;
     @Autowired
     PostServiceInterface postServiceInterface;
+    @Autowired
+    UserRelationshipInterface userRelationshipInterface;
 
 
     @GetMapping("/user")
@@ -191,8 +194,6 @@ public class UserRelationshipController {
     public ResponseEntity<UserRelationship> getUsersRelationship(@Valid @RequestBody UserRelationshipParams userParams) {
         System.out.println("current User Id + " + userParams.getCurrentUserId() + " profile Page Id + " + userParams.getProfilePageId());
 
-//        UserRelationship myFirstRelationship = null;
-
         UserRelationship myFirstRelationship = userRelationshipRepo.CheckRelationshipIfExists(userParams.getProfilePageId(), userParams.getCurrentUserId());
         if (myFirstRelationship == null) {
             UserRelationship userRelationship = new UserRelationship();
@@ -219,7 +220,7 @@ public class UserRelationshipController {
 //        ################### (Changed NewsFeedDTO friends list to MyUserProjection from UserFriendsDto)
 //        ################### (Also changed in React NewsFeed.jsx friends iteration from item.userSecondId to item.userId)
 //        ################### (and Connections.jsx friends iteration from item.userSecondId to item.userId)
-        List<MyUserProjection> listOfUnionFriends = userRelationshipRepo.getAllFriendsWithUnion(currentUserId,currentUserId);
+        List<MyUserProjection> listOfUnionFriends = userRelationshipInterface.findAllFriends(currentUserId);
         List<Integer> friendsUnionIds = new ArrayList<>();
         friendsUnionIds.add(currentUserId);
         listOfUnionFriends.forEach( f -> {
