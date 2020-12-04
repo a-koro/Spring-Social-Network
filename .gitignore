@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Sensetive Data ###
-/application.properties
+src/main/resources/application.properties
