@@ -27,7 +27,7 @@ function ConnectionCard(props) {
             {console.log(props)}
             <div className="card my-2 border-0">
                 <div className="card-body d-flex flex-row pt-2 pb-0 px-1">
-                    <img style={style} src={"http://localhost:8080/api/profile/searchUsers/" + props.userId}
+                    <img style={style} src={"/api/profile/searchUsers/" + props.userId}
                          className="avatar rounded-circle mx-2"
                          alt="Profile Picture"/>
                     <h5 className="card-text align-bottom mt-4 ml-3">{props.username}</h5>

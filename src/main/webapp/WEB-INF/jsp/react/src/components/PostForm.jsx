@@ -26,7 +26,7 @@ function PostForm(props) {
         evt.preventDefault();
 
         if (imageFile === null && (evt.target.text.value !== "" || evt.target.url.value !== "")) {
-            fetch("http://localhost:8080/post/insertPost",{
+            fetch("/post/insertPost",{
                 method: 'POST',
                 credentials: "include",
                 headers: {
@@ -49,7 +49,7 @@ function PostForm(props) {
         }
         else if (imageFile !== null) {
             axios.post(
-                "http://localhost:8080/post/insertPostWithFile",
+                "/post/insertPostWithFile",
                 imageFile,
                 {
                     headers:{

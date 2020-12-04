@@ -4,7 +4,7 @@ import {useHistory} from "react-router-dom";
 import Axios from "axios";
 
 // function fetchData() {
-//     fetch('http://localhost:8080/getcityfromcountry/7', {mode: "cors"})
+//     fetch('/getcityfromcountry/7', {mode: "cors"})
 //         .then(response => response.json())
 //         .then(data => console.log(data));
 // }
@@ -79,7 +79,7 @@ function Comment(props){
         <div className="card p-0 my-1 mx-2">
             <div className="card-body d-flex flex-row pt-2 pb-0 px-1 mb-0">
                 {/* "https://cdn.vox-cdn.com/thumbor/G8A4RF-QWQl7jItQw93r402os_0=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/10816041/rick_and_morty_s02_still.jpg" */}
-                <img style={style} src={"http://localhost:8080/api/profile/searchUsers/" + props.comment.user.userId}
+                <img style={style} src={"/api/profile/searchUsers/" + props.comment.user.userId}
                     className="avatar rounded-circle mx-2" 
                     alt="Cinque Terre"/>
                 <div className="w-100">

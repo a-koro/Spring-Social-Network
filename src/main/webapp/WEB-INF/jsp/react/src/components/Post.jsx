@@ -120,7 +120,7 @@ function Post(props) {
         }
         // else if (!(props.post.postImage === null || props.post.postImage === undefined)) {
         //     document.getElementById("postImage"+props.post.postId).style.display = "block";
-        //     setPostImageUrl("http://localhost:8080/post/downloadPostImage/" + props.post.postId);
+        //     setPostImageUrl("/post/downloadPostImage/" + props.post.postId);
         // }
     },[]);
 
@@ -128,7 +128,7 @@ function Post(props) {
         <>
             <div className="card p-0 my-3"> {/*col-md-6 col-xs-12 col-sm-8*/}
                 <div className="card-body d-flex flex-row p-3">
-                    <img style={style} src={"http://localhost:8080/api/profile/searchUsers/" + props.post.user.userId}
+                    <img style={style} src={"/api/profile/searchUsers/" + props.post.user.userId}
                         className="avatar rounded-circle mx-3"
                         alt="Profile picture"/>
                     <div className="w-100">

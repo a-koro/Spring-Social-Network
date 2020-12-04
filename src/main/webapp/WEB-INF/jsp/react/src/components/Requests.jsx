@@ -11,7 +11,7 @@ const style = {
 
 function Requests(props) {
 
-    let url = "http://localhost:8080/api/profile/searchUsers/" + props.requesterInfo.id;
+    let url = "/api/profile/searchUsers/" + props.requesterInfo.id;
     let history = useHistory();
 
 

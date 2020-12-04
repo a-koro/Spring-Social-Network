@@ -1,7 +1,7 @@
 
 
 
-const URL_GET_CONTACTS='http://localhost:8080/api/user/';
+const URL_GET_CONTACTS='/api/user/';
 
 
 export function getUsers() {

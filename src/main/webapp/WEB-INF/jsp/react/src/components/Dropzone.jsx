@@ -24,7 +24,7 @@ function Dropzone() {
       formData.append("file",file);
 
       axios.post(
-        `http://localhost:8080/api/profile/image/upload`,
+        `/api/profile/image/upload`,
         formData,
         {
             headers:{
