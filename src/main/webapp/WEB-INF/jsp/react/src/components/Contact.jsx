@@ -22,7 +22,7 @@ const style = {
 
 function Contact(props) {
 
-    let url = "http://localhost:8080/api/profile/searchUsers/" + props.userFriendId;
+    let url = "/api/profile/searchUsers/" + props.userFriendId;
     let history = useHistory();
 
 

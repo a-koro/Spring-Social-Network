@@ -20,8 +20,8 @@ function ProfileAll(props) {
     };
 
     const location = useLocation();
-    const url = "http://localhost:8080/api/profile/searchUsers/" + location.state.detail
-    const backgroundUrl = 'http://localhost:8080/api/profile/image-background/download/' + location.state.detail
+    const url = "/api/profile/searchUsers/" + location.state.detail
+    const backgroundUrl = '/api/profile/image-background/download/' + location.state.detail
 
     const background = {
         background: `url(${backgroundUrl})`,
