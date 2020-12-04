@@ -192,7 +192,7 @@ function Navbar() {
                             <Link to="/connections" className="nav-link">Connections</Link>
                         </li>
                         <li>
-                            <img style={style} src="http://localhost:8080/api/profile/image/download"
+                            <img style={style} src="/api/profile/image/download"
                                  className="avatar rounded-circle ml-3"
                                  alt="Cinque Terre"/>
                         </li>
