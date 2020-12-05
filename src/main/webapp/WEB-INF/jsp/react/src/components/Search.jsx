@@ -15,7 +15,7 @@ function Search(props) {
                 <ResultsContext.Consumer>
                     {(context) => (
                         context.map((item) => (
-                            <ResultUser username={item.firstName + " " + item.lastName} avatar={item.url} onClick={() => {console.log(item)}}/>
+                            <ResultUser username={item.firstName + " " + item.lastName} avatar={item.userId} onClick={() => {console.log(item)}}/>
                         ))
                     )}
                 </ResultsContext.Consumer>
