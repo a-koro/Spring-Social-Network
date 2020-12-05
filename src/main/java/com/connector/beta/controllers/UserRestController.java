@@ -61,21 +61,31 @@ public class UserRestController {
 
         List<SearchImageDto> search = list.stream()
                 .filter(u -> u.getUserId() != currentUserId)
-                .map(file -> {
-                    String url = ServletUriComponentsBuilder
-                            .fromCurrentContextPath()
-                            .path("api/profile/searchUsers/")
-                            .path(file.getUserId().toString())
-                            .toUriString();
+                .map(file -> new SearchImageDto(
+                        file.getFirstName(),
+                        file.getLastName(),
+                        file.getUserId(),
+                        file.getImage().getType(),
+                        file.getImage().getSize()
+                )).collect(Collectors.toList());
 
-                    return new SearchImageDto(
-                            file.getFirstName(),
-                            file.getLastName(),
-                            url,
-                            file.getImage().getType(),
-                            file.getImage().getSize()
-                    );
-                }).collect(Collectors.toList());
+//        List<SearchImageDto> search = list.stream()
+//                .filter(u -> u.getUserId() != currentUserId)
+//                .map(file -> {
+//                    String url = ServletUriComponentsBuilder
+//                            .fromCurrentContextPath()
+//                            .path("api/profile/searchUsers/")
+//                            .path(file.getUserId().toString())
+//                            .toUriString();
+//
+//                    return new SearchImageDto(
+//                            file.getFirstName(),
+//                            file.getLastName(),
+//                            url,
+//                            file.getImage().getType(),
+//                            file.getImage().getSize()
+//                    );
+//                }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(search);
     }

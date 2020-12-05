@@ -36,7 +36,7 @@ function Contact(props) {
         console.log(props.avatar)
         history.push( {
             pathname: '/ProfileAll',
-            state: {detail: getUserId(props)}
+            state: {detail: props.avatar}
         })
 
     }
@@ -46,7 +46,7 @@ function Contact(props) {
         <>
             <div className="card my-2 border-0">
                 <div className="card-body d-flex flex-row pt-2 pb-0 px-1">
-                    <img style={style} src={props.avatar}
+                    <img style={style} src={"/api/profile/searchUsers/" + props.avatar}
                          className="avatar rounded-circle mx-2"
                          alt="Profile Picture"/>
                     {/*{console.log(getUserId(props))}*/}

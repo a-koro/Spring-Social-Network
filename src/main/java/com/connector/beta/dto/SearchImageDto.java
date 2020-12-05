@@ -5,17 +5,17 @@ package com.connector.beta.dto;
 public class SearchImageDto {
     private String firstName;
     private String lastName;
-    private String url;
+    private int userId;
     private String type;
     private String size;
 
     public SearchImageDto() {
     }
 
-    public SearchImageDto(String firstName, String lastName, String url, String type, String size) {
+    public SearchImageDto(String firstName, String lastName, int userId, String type, String size) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.url = url;
+        this.userId = userId;
         this.type = type;
         this.size = size;
     }
@@ -36,12 +36,12 @@ public class SearchImageDto {
         this.lastName = lastName;
     }
 
-    public String getUrl() {
-        return url;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getType() {
