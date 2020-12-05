@@ -139,8 +139,8 @@ function Navbar() {
             {/*{saveCurrentUserId()}*/}
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <a className="navbar-brand" href="/">
-                    {/*<img src="/img/logo.jpg" height="54px" alt="Connector Logo" className="m-0"/>*/}
-                    Connector
+                    <img src="/img/logo.png" height="35" alt="Connector Logo" className="m-0"/>
+                    {/*Connector*/}
                 </a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -199,14 +199,14 @@ function Navbar() {
                         <li className="nav-item">
                             <Link to="/profile" className="nav-link">{username}</Link>
                         </li>
-                        <li className="nav-item">
-                            <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                                <input type="hidden" name="cmd" value="_s-xclick" />
-                                <input type="hidden" name="hosted_button_id" value="B6MCPHFEUW3FN" />
-                                <input id="donatePaypal" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
-                                <img alt="" border="0" src="https://www.paypal.com/en_GR/i/scr/pixel.gif" width="1" height="1" />
-                            </form>
-                        </li>
+                        {/*<li className="nav-item">*/}
+                        {/*    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">*/}
+                        {/*        <input type="hidden" name="cmd" value="_s-xclick" />*/}
+                        {/*        <input type="hidden" name="hosted_button_id" value="B6MCPHFEUW3FN" />*/}
+                        {/*        <input id="donatePaypal" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />*/}
+                        {/*        <img alt="" border="0" src="https://www.paypal.com/en_GR/i/scr/pixel.gif" width="1" height="1" />*/}
+                        {/*    </form>*/}
+                        {/*</li>*/}
                         <li>
                             <a className="nav-link" href="/logout">Logout</a>
                         </li>

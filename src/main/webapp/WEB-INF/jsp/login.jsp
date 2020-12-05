@@ -62,46 +62,51 @@
 <%--<p>My income is: <c:out value="${param.error}"/><p>--%>
 <%--    </c:if>--%>
 <div class="container-fluid">
-<div class="col-md-12">
-    <img src="/img/logo.jpg" width="300px" alt="Connector Logo" class="mx-auto d-block mt-5">
-    <div class="card card-container">
-        <img
-                src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                alt="profile-img"
-                class="profile-img-card"
-        />
-        <form action="/login" method="post">
-            <c:if test="${param.logout}">
-            <div class="form-group">
-                <div class="alert alert-success" style="text-align: center">
-                    Logout Successful
-                </div>
-                </c:if>
-
+    <div class="row">
+    <div class="col-lg-4 offset-lg-4 col-sm-6 offset-sm-3 col-xs-12">
+        <img src="/img/logo.jpg" width="300px" alt="Connector Logo" class="mx-auto d-block mt-5">
+        <div class="card">
+            <img
+                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                    alt="profile-img"
+                    class="profile-img-card"
+            />
+            <form action="/login" method="post">
+                <c:if test="${param.logout}">
                 <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" class="form-control" name="username" id="username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="password" id="password">
-                </div>
-                <c:if test="${param.error}">
-                <div class="form-group">
-                    <div class="alert alert-danger" style="text-align: center">
-                        Invalid Credentials
+                    <div class="alert alert-success" style="text-align: center">
+                        Logout Successful
                     </div>
-                </div>
-                </c:if>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary btn-block" value="Submit">
-                </div>
-        </form>
-        <form action="/register">
-            <button type="submit" class="btn btn-success btn-block">Create New Account</button>
-        </form>
+                    </c:if>
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" name="username" id="username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" id="password">
+                    </div>
+                    <c:if test="${param.error}">
+                    <div class="form-group">
+                        <div class="alert alert-danger" style="text-align: center">
+                            Invalid Credentials
+                        </div>
+                    </div>
+                    </c:if>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-block" value="Submit">
+                    </div>
+            </form>
+            <form action="/register">
+                <button type="submit" class="btn btn-success btn-block">Create New Account</button>
+            </form>
+        </div>
+        <div class="fixed-bottom w-100 bg-light text-center">
+            <small>Connector &#169; 2020</small>
+        </div>
     </div>
-</div>
+    </div>
 </div>
 </body>
 </html>
