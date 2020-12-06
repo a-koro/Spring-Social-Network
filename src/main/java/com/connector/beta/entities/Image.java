@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "images")
@@ -80,5 +81,17 @@ public class Image implements Serializable {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "imageid=" + imageid +
+                ", title='" + title + '\'' +
+                ", file=" + Arrays.toString(file) +
+                ", type='" + type + '\'' +
+                ", size='" + size + '\'' +
+                ", user=" + user +
+                '}';
     }
 }
