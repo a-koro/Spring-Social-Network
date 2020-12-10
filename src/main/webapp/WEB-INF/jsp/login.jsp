@@ -63,10 +63,10 @@
 <%--    </c:if>--%>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-3 pl-0 d-none d-xl-inline">
-            <img src="/img/back.jpg"/>
+        <div class="col-lg-5 pl-0 d-none d-lg-inline">
+            <img class="img-fluid" src="/img/back.jpg"/>
         </div>
-    <div class="col-lg-4 col-xl-3 col-sm-6 offset-sm-3 col-xs-12 mt-4">
+    <div class="col-lg-4 col-xl-3 col-sm-6 offset-sm-3 offset-lg-1 col-xs-12 mt-4">
         <div class="text-center">
             <img class="img-fluid" src="/img/logo.jpg" width="300px" alt="Connector Logo" class="mx-auto d-block mt-5">
         </div>
