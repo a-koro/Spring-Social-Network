@@ -94,6 +94,18 @@ function Post(props) {
             });
     }
 
+    function viewProfile() {
+        if(props.post.user.userId === currentUser.userId) {
+            history.push("/profile");
+        }
+        else {
+            history.push({
+                pathname: '/ProfileAll',
+                state: {detail: props.post.user.userId}
+            });
+        }
+    }
+
     React.useEffect(() => {
         // Date render
         let tempDate = new Date(props.post.created);
@@ -130,9 +142,10 @@ function Post(props) {
                 <div className="card-body d-flex flex-row p-3">
                     <img style={style} src={"/api/profile/searchUsers/" + props.post.user.userId}
                         className="avatar rounded-circle mx-3"
-                        alt="Profile picture"/>
-                    <div className="w-100">
-                        <h5 className="card-title mb-0">{props.post.user.firstName + " " + props.post.user.lastName}</h5>
+                        alt="Profile picture"
+                        onClick={viewProfile}/>
+                    <div className="w-100" onClick={viewProfile}>
+                        <h5 className="card-title mb-0" style={{cursor: "pointer"}}>{props.post.user.firstName + " " + props.post.user.lastName}</h5>
                         <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>{dateTime.toLocaleString("en-GB",{timeZone: "UTC"})}</small></p>
                     </div>
                     {(props.post.user.userId === currentUser.userId) &&

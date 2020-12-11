@@ -63,6 +63,18 @@ function Comment(props){
         setEditable(!editable);
     }
 
+    function viewProfile() {
+        if(props.comment.user.userId === currentUser.userId) {
+            history.push("/profile");
+        }
+        else {
+            history.push({
+                pathname: '/ProfileAll',
+                state: {detail: props.comment.user.userId}
+            });
+        }
+    }
+
     React.useEffect(() => {
         let tempDate = new Date(props.comment.created);
         tempDate.setHours(tempDate.getHours()+3,tempDate.getMinutes(),tempDate.getSeconds(),tempDate.getMilliseconds());
@@ -81,9 +93,10 @@ function Comment(props){
                 {/* "https://cdn.vox-cdn.com/thumbor/G8A4RF-QWQl7jItQw93r402os_0=/1400x1050/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/10816041/rick_and_morty_s02_still.jpg" */}
                 <img style={style} src={"/api/profile/searchUsers/" + props.comment.user.userId}
                     className="avatar rounded-circle mx-2" 
-                    alt="Cinque Terre"/>
+                    alt="Cinque Terre"
+                    onClick={viewProfile}/>
                 <div className="w-100">
-                    <h6 className="card-text mb-0">{props.comment.user.firstName + " " + props.comment.user.lastName}</h6>
+                    <h6 className="card-text mb-0" onClick={viewProfile} style={{cursor: "pointer"}}>{props.comment.user.firstName + " " + props.comment.user.lastName}</h6>
                     <blockquote className="card-text p-0 m-0">
                         { !editable &&
                             <p className="mb-0">{text}</p>
