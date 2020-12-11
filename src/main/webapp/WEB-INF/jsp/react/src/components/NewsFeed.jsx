@@ -47,6 +47,7 @@ function NewsFeed(props) {
     const [items, setItems] = React.useState([]);
     const [posts, setPosts] = React.useState([]);
     const [value, setValue] = React.useState(true);
+    const [loadingSpinner, setLoadingSpinner] = React.useState(true);
 
     const [user, setUser] = useRecoilState(loggedInUser);
     React.useEffect(() => {
@@ -70,6 +71,7 @@ function NewsFeed(props) {
                     setPosts(data.posts);
                     postsForContext = data.posts;
                     connections = data.friends;
+                    setLoadingSpinner(false);
                 });
         }, [value]
     );
@@ -91,6 +93,14 @@ function NewsFeed(props) {
                 <button type="button" className="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModal">
                     New Post
                 </button>
+
+                { loadingSpinner &&
+                    <div className="text-center mt-5">
+                        <div className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                }
 
                 <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
