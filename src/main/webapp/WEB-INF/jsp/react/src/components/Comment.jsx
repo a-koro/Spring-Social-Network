@@ -2,6 +2,7 @@ import React from 'react';
 import { CurrentUserContext } from "./Navbar";
 import {useHistory} from "react-router-dom";
 import Axios from "axios";
+import TimeAgo from 'react-timeago';
 
 // function fetchData() {
 //     fetch('/getcityfromcountry/7', {mode: "cors"})
@@ -120,7 +121,8 @@ function Comment(props){
                     {/*    <FontAwesomeIcon className="mx-2" icon={faGlassCheers} />{8}*/}
                     {/*</div>*/}
                     <div className="col-11 text-right">
-                        <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>{dateTime.toLocaleString("en-GB",{timeZone: "UTC"})}</small></p>
+                        <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i><TimeAgo date={props.comment.created}/></small></p>
+                        {/*<p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>{dateTime.toLocaleString("en-GB",{timeZone: "UTC"})}</small></p>*/}
                     </div>
                 </div>
             </div>

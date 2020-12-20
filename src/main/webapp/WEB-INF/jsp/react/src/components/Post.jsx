@@ -6,6 +6,7 @@ import { CurrentUserContext } from "./Navbar";
 import Comment from './Comment';
 import {useHistory} from "react-router-dom";
 import Axios from 'axios';
+import TimeAgo from 'react-timeago';
 
 const style = {
     objectFit: 'cover',
@@ -146,7 +147,8 @@ function Post(props) {
                         onClick={viewProfile}/>
                     <div className="w-100" onClick={viewProfile}>
                         <h5 className="card-title mb-0" style={{cursor: "pointer"}}>{props.post.user.firstName + " " + props.post.user.lastName}</h5>
-                        <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>{dateTime.toLocaleString("en-GB",{timeZone: "UTC"})}</small></p>
+                        <p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i><TimeAgo date={props.post.created}/></small></p>
+                        {/*<p className="card-text text-secondary"><small><i className="far fa-clock pr-2"></i>{dateTime.toLocaleString("en-GB",{timeZone: "UTC"})}</small></p>*/}
                     </div>
                     {(props.post.user.userId === currentUser.userId) &&
                         <>
