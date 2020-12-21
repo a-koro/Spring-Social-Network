@@ -50,6 +50,7 @@ function NewsFeed(props) {
     const [posts, setPosts] = React.useState([]);
     const [value, setValue] = React.useState(true);
     const [loadingSpinner, setLoadingSpinner] = React.useState(true);
+    const [loadingArticleSpinner, setLoadingArticleSpinner] = React.useState(true);
 
     const [trending, setTrending] = React.useState([]);
 
@@ -72,6 +73,7 @@ function NewsFeed(props) {
             await Axios.get('https://mern-articlomaric-app.herokuapp.com/api/getTrendingArticles')
                 .then((response) => {
                     setTrending(response.data);
+                    setLoadingArticleSpinner(false);
                 });
 
         } catch(err) {
@@ -149,6 +151,13 @@ function NewsFeed(props) {
             </div>
             <div className="col-md-3 d-lg-block d-none">
                 <h5 className="text-right mt-5">Trending on Atricl-O-matic</h5>
+                { loadingArticleSpinner &&
+                    <div className="text-center mt-5">
+                        <div className="spinner-border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                }
                 {trending.map((trend) => {
                     return <><hr/><ArticlePrev key={trend._id} article={trend}/></>
                 })}
