@@ -1,0 +1,15 @@
+.prevArticle:hover {
+    cursor: pointer;
+}
+
+.imageScaling {
+    object-fit: cover;
+    width: 100%;
+    height: 300px;
+}
+
+.imageScalingSmall {
+    object-fit: cover;
+    height: 110px;
+    width: 100%;
+}

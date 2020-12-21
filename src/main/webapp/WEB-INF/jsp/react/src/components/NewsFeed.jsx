@@ -6,6 +6,8 @@ import {CurrentUserProvider} from "./Navbar";
 import { loggedInUser } from "../atom/globalState";
 import DataServices from '../services/DataServices';
 import { useRecoilState } from "recoil";
+import Axios from 'axios';
+import ArticlePrev from "./ArticlePrev";
 
 let postsForContext = [];
 let connections = [];
@@ -49,6 +51,8 @@ function NewsFeed(props) {
     const [value, setValue] = React.useState(true);
     const [loadingSpinner, setLoadingSpinner] = React.useState(true);
 
+    const [trending, setTrending] = React.useState([]);
+
     const [user, setUser] = useRecoilState(loggedInUser);
     React.useEffect(() => {
 
@@ -63,6 +67,18 @@ function NewsFeed(props) {
         ).catch(error => { console.log(error.response) });
     }
 
+    async function fetchTrendingArticles() {
+        try {
+            await Axios.get('https://mern-articlomaric-app.herokuapp.com/api/getTrendingArticles')
+                .then((response) => {
+                    setTrending(response.data);
+                });
+
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     React.useEffect(() => {
             fetch('/api/newsFeed')
                 .then(response => response.json())
@@ -75,6 +91,10 @@ function NewsFeed(props) {
                 });
         }, [value]
     );
+
+      React.useEffect(() => {
+        fetchTrendingArticles();
+      },[]);
 
     function closeModal() {
         document.getElementById("closeButton").click();
@@ -126,6 +146,12 @@ function NewsFeed(props) {
             {/*          post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family. Although Beth welcomes Rick into her home, her husband, Jerry, isn't as happy about the family reunion."/>*/}
             {/*    <Comment username="Alex Koro"*/}
             {/*             post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family."/>*/}
+            </div>
+            <div className="col-md-3 d-lg-block d-none">
+                <h5 className="text-right mt-5">Trending on Atricl-O-matic</h5>
+                {trending.map((trend) => {
+                    return <><hr/><ArticlePrev key={trend._id} article={trend}/></>
+                })}
             </div>
         </>
     );
