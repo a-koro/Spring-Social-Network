@@ -6,6 +6,7 @@ import {faSmileBeam, faUserFriends} from "@fortawesome/free-solid-svg-icons";
 
 import {useHistory, Link} from "react-router-dom";
 import DataServices from "../services/DataServices";
+import '../css/notifications.css';
 
 let results = ["Test DATA 001"];
 let currentUser = {};
@@ -163,10 +164,11 @@ function Navbar() {
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Notifications
                             </a>
-                            <div className="dropdown-menu" onClick={stopDefault} aria-labelledby="navbarDropdown">
+                            <div className="dropdown-menu dropdown-menu-right notificationsDiv" onClick={stopDefault} aria-labelledby="navbarDropdown">
+                                    {friendReq.length > 0 && <small className="text-left ml-3">Connection Requests</small>}
                                 {friendReq.length !==0 ?
                                     friendReq.map((item) => (
-                                        <div onClick={stopDefault} className="dropdown-item">
+                                        <div onClick={stopDefault} className="dropdown-item px-1 py-0">
                                             <Requests requesterInfo={{
                                                 myId: userId,
                                                 id: item.userId,

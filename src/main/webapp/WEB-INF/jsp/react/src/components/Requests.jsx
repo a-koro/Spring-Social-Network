@@ -44,13 +44,17 @@ function Requests(props) {
     return (
         <>
             <div className="card my-2 border-0">
-                <div className="card-body d-flex flex-row pt-2 pb-0 px-1">
-                    <img style={style} src={url}
-                         className="avatar rounded-circle mx-2"
-                         alt="Profile Picture"/>
-                    <h6 className="card-text align-bottom mt-2">{props.requesterInfo.username} <span id="wannaConnect">would like to connect</span></h6>
-                    <button className="btn btn-success ml-2" onClick={acceptRel}>Accept</button>
-                    <button className="btn btn-danger ml-2" onClick={deleteRel}>Decline</button>
+                <div className="card-body d-flex flex-row justify-content-between m-0 p-0">
+                    <div className="d-flex flex-row">
+                        <img style={style} src={url}
+                             className="avatar rounded-circle mx-2"
+                             alt="Profile Picture"/>
+                        <h6 className="card-text align-bottom mt-2">{props.requesterInfo.username}</h6>
+                    </div>
+                    <div>
+                        <button className="btn btn-success ml-2" onClick={acceptRel}><i className="fas fa-user-check"></i></button>
+                        <button className="btn btn-danger ml-2" onClick={deleteRel}><i className="fas fa-user-times"></i></button>
+                    </div>
                 </div>
             </div>
 
