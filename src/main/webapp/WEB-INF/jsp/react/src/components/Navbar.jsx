@@ -88,8 +88,7 @@ function Navbar() {
     function fetchUsers(evt) {
         evt.preventDefault();
 
-        let searchBar = document.getElementById("searchBar");
-
+        if(evt.target.search.value)
         fetch("/searchUsers",
             {
                 method: 'GET',
