@@ -22,9 +22,14 @@ public class Comment implements Serializable {
     @JoinColumn(name="post_id")
     @JsonIgnore
     private Post post;
+    private Boolean viewed;
 
     public Comment() {
     }
+
+    public Boolean getViewed() { return viewed; }
+
+    public void setViewed(Boolean viewed) { this.viewed = viewed; }
 
     public Integer getCommentId() {
         return commentId;
