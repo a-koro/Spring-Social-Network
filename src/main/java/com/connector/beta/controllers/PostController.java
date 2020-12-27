@@ -55,6 +55,7 @@ public class PostController {
         comment.setPost(postServiceInterface.findPostByPostId(postId));
         comment.setUser(userServiceInterface.getUserDetails(principal.getName()));
         comment.setCreated(new Timestamp(System.currentTimeMillis()));
+        comment.setViewed(false);
         commentServiceInterface.insertComment(comment);
         return comment;
     }
@@ -160,5 +161,13 @@ public class PostController {
         } catch (Exception ex) {
             return ResponseEntity.status(500).build();
         }
+    }
+
+    @GetMapping("/getNewComments")
+    public ResponseEntity getNewComments() {
+
+        List<Post> postsWithNewComments = new ArrayList<>();
+
+        return ResponseEntity.status(HttpStatus.OK).body(postsWithNewComments);
     }
 }
