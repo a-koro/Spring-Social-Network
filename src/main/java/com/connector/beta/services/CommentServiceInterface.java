@@ -1,6 +1,9 @@
 package com.connector.beta.services;
 
 import com.connector.beta.entities.Comment;
+import com.connector.beta.entities.MyUser;
+
+import java.util.List;
 
 public interface CommentServiceInterface {
 
@@ -13,4 +16,6 @@ public interface CommentServiceInterface {
     public void removeComment(Comment comment);
 
     public int getLengthOfPosts();
+
+    public List<Comment> getNewComments(MyUser user);
 }

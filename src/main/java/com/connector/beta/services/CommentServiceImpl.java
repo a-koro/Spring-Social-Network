@@ -1,9 +1,12 @@
 package com.connector.beta.services;
 
 import com.connector.beta.entities.Comment;
+import com.connector.beta.entities.MyUser;
 import com.connector.beta.repos.CommentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentServiceInterface {
@@ -34,5 +37,10 @@ public class CommentServiceImpl implements CommentServiceInterface {
     @Override
     public int getLengthOfPosts() {
         return commentRepo.getLengthOfComments();
+    }
+
+    @Override
+    public List<Comment> getNewComments(MyUser user) {
+        return commentRepo.findAllByPostUserAndUserNotAndViewedFalseOrderByCreatedAsc(user, user);
     }
 }
