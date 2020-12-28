@@ -166,8 +166,9 @@ public class PostController {
     @GetMapping("/getNewComments")
     public ResponseEntity getNewComments() {
 
-        List<Post> postsWithNewComments = new ArrayList<>();
+        MyUser user = userServiceInterface.getUserDetails(userServiceInterface.findCurrentUsername());
+        List<Comment> newComments = commentServiceInterface.getNewComments(user);
 
-        return ResponseEntity.status(HttpStatus.OK).body(postsWithNewComments);
+        return ResponseEntity.status(HttpStatus.OK).body(newComments);
     }
 }
