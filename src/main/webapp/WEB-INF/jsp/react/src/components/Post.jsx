@@ -178,7 +178,7 @@ function Post(props) {
                 </div>
                 <form className="mx-2" onSubmit={insertComment}>
                     <div className="form-group">
-                        <input type="text" className="form-control" id="commentInput"
+                        <input type="text" className="form-control"
                                placeholder="Enter a comment..." name="input" minLength="1"  maxLength="250"/>
                     </div>
                 </form>
@@ -187,8 +187,8 @@ function Post(props) {
                     Show/Hide Comments
                 </small>
                 <div className="collapse" id={"collapseExample" + props.post.postId}>
-                    {props.post.comments.map((comment) => (
-                        <Comment comment={comment} value={props.value}/>
+                    {props.post.comments.sort((a,b)=>{return new Date(a.created) - new Date(b.created)}).map((comment) => (
+                        <Comment comment={comment} value={props.value} key={comment.commentId}/>
                     ))}
                 </div>
             </div>
