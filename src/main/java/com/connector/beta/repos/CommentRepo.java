@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CommentRepo extends JpaRepository<Comment, Integer> {
 
-    public List<Comment> findAllByPostUserAndUserNotAndViewedFalseOrderByCreatedAsc(MyUser user, MyUser user1);
+    public List<Comment> findAllByPostUserAndUserNotAndCommentViewedViewedFalseOrderByCreatedAsc(MyUser user, MyUser user1);
 
     @Query("SELECT COUNT(c.commentId) FROM Comment c")
     public int getLengthOfComments();
