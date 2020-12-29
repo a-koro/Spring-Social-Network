@@ -22,14 +22,26 @@ public class Comment implements Serializable {
     @JoinColumn(name="post_id")
     @JsonIgnore
     private Post post;
-    private Boolean viewed;
+//    private Boolean viewed;
+
+    @OneToOne(mappedBy = "comment", cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private CommentViewed commentViewed;
 
     public Comment() {
     }
 
-    public Boolean getViewed() { return viewed; }
+    public CommentViewed getCommentViewed() {
+        return commentViewed;
+    }
 
-    public void setViewed(Boolean viewed) { this.viewed = viewed; }
+    public void setCommentViewed(CommentViewed commentViewed) {
+        this.commentViewed = commentViewed;
+    }
+
+//    public Boolean getViewed() { return viewed; }
+//
+//    public void setViewed(Boolean viewed) { this.viewed = viewed; }
 
     public Integer getCommentId() {
         return commentId;
