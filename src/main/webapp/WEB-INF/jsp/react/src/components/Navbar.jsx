@@ -2,6 +2,7 @@ import React from 'react';
 import Requests from './Requests'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSmileBeam, faUserFriends} from "@fortawesome/free-solid-svg-icons";
+import Axios from 'axios';
 
 
 import {useHistory, Link} from "react-router-dom";
@@ -47,6 +48,7 @@ function Navbar() {
     const [friendReq, setFriendReq] = React.useState([]);
     const [updateValue, setUpdateValue] = React.useState(0);
     const [searchResults, setSearchResults] = React.useState([]);
+    const [newComments, setNewComments] = React.useState([]);
     const history = useHistory();
 
     function getCurrentUser() {
@@ -70,9 +72,18 @@ function Navbar() {
             });
     }
 
+    function getNewComments() {
+        Axios.get('/post/getNewComments')
+            .then((response) => {
+                console.log(response.data);
+                setNewComments(response.data);
+            }).catch((err) => {console.log(err)});
+    }
+
     React.useEffect(() => {
         getCurrentUser();
         getAllRequests();
+        getNewComments();
         // saveCurrentUserId()
     }, [userId, updateValue]);
 
@@ -165,7 +176,7 @@ function Navbar() {
                             </a>
                             <div className="dropdown-menu dropdown-menu-right notificationsDiv" onClick={stopDefault} aria-labelledby="navbarDropdown">
                                     {friendReq.length > 0 && <small className="text-left ml-3">Connection Requests</small>}
-                                {friendReq.length !==0 ?
+                                {friendReq.length !==0 &&
                                     friendReq.map((item) => (
                                         <div onClick={stopDefault} className="dropdown-item px-1 py-0">
                                             <Requests requesterInfo={{
@@ -174,16 +185,25 @@ function Navbar() {
                                                 username: item.firstName + " " + item.lastName
                                             }} handleUpdate={setUpdateValue}/>
                                         </div>
-                                    )) :
-                                    <div className="card my-2 border-0">
-                                        <div className="card-body d-flex flex-row pt-2 pb-0 px-1">
-                                            <h6 className="card-text align-bottom text-center">
-                                                Everything's up to date
-                                                <FontAwesomeIcon className="ml-2" icon={faSmileBeam}/>
-                                            </h6>
-                                        </div>
-                                    </div>
+                                    ))}
+                                {newComments.length > 0 && <small className="text-left ml-3">New Comments on your Posts</small>}
+                                {newComments.length > 0 &&
+                                    newComments.map((item) => (
+                                        <>
+                                            <hr/>
+                                        <small className="text-left ml-3">{item.user.lastName} commented on your post</small>
+                                        </>
+                                    ))
                                 }
+                                    {/*<div className="card my-2 border-0">*/}
+                                    {/*    <div className="card-body d-flex flex-row pt-2 pb-0 px-1">*/}
+                                    {/*        <h6 className="card-text align-bottom text-center">*/}
+                                    {/*            Everything's up to date*/}
+                                    {/*            <FontAwesomeIcon className="ml-2" icon={faSmileBeam}/>*/}
+                                    {/*        </h6>*/}
+                                    {/*    </div>*/}
+                                    {/*</div>*/}
+                                {/*}*/}
                             </div>
                         </li>
                         <li className="nav-item active">
