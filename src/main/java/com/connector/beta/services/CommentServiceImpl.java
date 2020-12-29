@@ -41,6 +41,6 @@ public class CommentServiceImpl implements CommentServiceInterface {
 
     @Override
     public List<Comment> getNewComments(MyUser user) {
-        return commentRepo.findAllByPostUserAndUserNotAndViewedFalseOrderByCreatedAsc(user, user);
+        return commentRepo.findAllByPostUserAndUserNotAndCommentViewedViewedFalseOrderByCreatedAsc(user, user);
     }
 }

@@ -3,6 +3,7 @@ package com.connector.beta.controllers;
 import com.connector.beta.dto.UserDto;
 import com.connector.beta.projections.PostProjection;
 import com.connector.beta.entities.*;
+import com.connector.beta.repos.CommentViewedRepo;
 import com.connector.beta.services.CommentServiceInterface;
 import com.connector.beta.services.PostServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
@@ -38,6 +39,9 @@ public class PostController {
     @Autowired
     UserServiceInterface userServiceInterface;
 
+    @Autowired
+    CommentViewedRepo commentViewedRepo;
+
     @GetMapping("/testUrl")
     public List<PostProjection> testRetrievePots(Principal principal) {
 //        System.out.println(principal.toString());
@@ -55,8 +59,12 @@ public class PostController {
         comment.setPost(postServiceInterface.findPostByPostId(postId));
         comment.setUser(userServiceInterface.getUserDetails(principal.getName()));
         comment.setCreated(new Timestamp(System.currentTimeMillis()));
-        comment.setViewed(false);
+//        comment.setViewed(false);
         commentServiceInterface.insertComment(comment);
+        CommentViewed cv = new CommentViewed();
+        cv.setComment(comment);
+        cv.setViewed(false);
+        commentViewedRepo.save(cv);
         return comment;
     }
 
