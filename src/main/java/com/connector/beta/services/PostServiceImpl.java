@@ -133,4 +133,10 @@ public class PostServiceImpl implements PostServiceInterface {
     public int getAllPosts() {
         return postRepo.getLengthOfPosts();
     }
+
+    @Override
+    public Post getSpecificPostFromCommentId(Integer commentId) throws NullPointerException {
+        Post post = postRepo.findByCommentsCommentId(commentId).orElseThrow(() -> new NullPointerException("Post not found"));
+        return post;
+    }
 }

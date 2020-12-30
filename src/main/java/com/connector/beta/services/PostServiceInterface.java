@@ -30,4 +30,6 @@ public interface PostServiceInterface {
     public void removePost(Post post);
 
     public int getAllPosts();
+
+    public Post getSpecificPostFromCommentId(Integer commentId) throws NullPointerException;
 }
