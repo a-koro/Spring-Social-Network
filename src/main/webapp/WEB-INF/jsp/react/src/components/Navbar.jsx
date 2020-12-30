@@ -3,8 +3,7 @@ import Requests from './Requests'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSmileBeam, faUserFriends} from "@fortawesome/free-solid-svg-icons";
 import Axios from 'axios';
-
-
+import NewCommentNotification from "./NewCommentNotification";
 import {useHistory, Link} from "react-router-dom";
 import DataServices from "../services/DataServices";
 import '../css/notifications.css';
@@ -189,10 +188,12 @@ function Navbar() {
                                 {newComments.length > 0 && <small className="text-left ml-3">New Comments on your Posts</small>}
                                 {newComments.length > 0 &&
                                     newComments.map((item) => (
-                                        <>
-                                            <hr/>
-                                        <small className="text-left ml-3">{item.user.lastName} commented on your post</small>
-                                        </>
+                                        <NewCommentNotification comment={item}/>
+                                        // <>
+                                        //     <br/>
+                                        //     <h6>{item.user.lastName}</h6>
+                                        // <small className="text-left ml-3">commented on your post</small>
+                                        // </>
                                     ))
                                 }
                                     {/*<div className="card my-2 border-0">*/}
