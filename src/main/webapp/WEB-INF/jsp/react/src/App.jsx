@@ -8,6 +8,7 @@ import Connections from "./components/Connections";
 import FriendsProfilePage from "./pages/FriendsProfilePage";
 import Chat from "./pages/Chat";
 import ConnectionsPage from './pages/ConnectionsPage';
+import SinglePost from "./components/SinglePost";
 
 const SearchContext = React.createContext({});
 
@@ -27,6 +28,7 @@ function App(props) {
                       <Route path="/profile" component={Profile}/>
                       <Route path="/connections" component={ConnectionsPage}/>
                       <Route path="/profileAll" component={ () => <FriendsProfilePage/>}/>
+                      <Route path="/post" component={SinglePost}/>
                       <Route exact path="/chat" render={(props) => <Chat {...props} />} />
                   </ResultsProvider>
               </Switch>
