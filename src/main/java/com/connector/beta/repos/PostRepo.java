@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface PostRepo extends JpaRepository<Post, Integer> {
@@ -21,4 +22,6 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
 
     @Query("SELECT COUNT(p.postId) FROM Post p")
     public int getLengthOfPosts();
+
+    Optional<Post> findByCommentsCommentId(Integer commentId);
 }
