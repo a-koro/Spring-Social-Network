@@ -4,6 +4,7 @@ import com.connector.beta.dto.UserDto;
 import com.connector.beta.projections.PostProjection;
 import com.connector.beta.entities.*;
 import com.connector.beta.repos.CommentViewedRepo;
+import com.connector.beta.repos.PostRepo;
 import com.connector.beta.services.CommentServiceInterface;
 import com.connector.beta.services.PostServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
@@ -178,5 +179,19 @@ public class PostController {
         List<Comment> newComments = commentServiceInterface.getNewComments(user);
 
         return ResponseEntity.status(HttpStatus.OK).body(newComments);
+    }
+
+    @GetMapping("/getSpecificPost/{commentId}")
+    public ResponseEntity getSpecificPost(@PathVariable Integer commentId) {
+
+        try {
+            Post post = postServiceInterface.getSpecificPostFromCommentId(commentId);
+            return ResponseEntity.status(HttpStatus.OK).body(post);
+        } catch (NullPointerException ex) {
+            System.out.println(ex.getMessage());
+            return ResponseEntity.status(500).build();
+        }
+
+
     }
 }
