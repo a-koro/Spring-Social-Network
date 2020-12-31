@@ -18,4 +18,6 @@ public interface CommentServiceInterface {
     public int getLengthOfPosts();
 
     public List<Comment> getNewComments(MyUser user);
+
+    public void markCommentAsViewed(Integer commentId) throws NullPointerException;
 }

@@ -186,6 +186,7 @@ public class PostController {
 
         try {
             Post post = postServiceInterface.getSpecificPostFromCommentId(commentId);
+            commentServiceInterface.markCommentAsViewed(commentId);
             return ResponseEntity.status(HttpStatus.OK).body(post);
         } catch (NullPointerException ex) {
             System.out.println(ex.getMessage());

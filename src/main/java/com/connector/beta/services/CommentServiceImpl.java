@@ -1,6 +1,7 @@
 package com.connector.beta.services;
 
 import com.connector.beta.entities.Comment;
+import com.connector.beta.entities.CommentViewed;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.repos.CommentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,5 +43,14 @@ public class CommentServiceImpl implements CommentServiceInterface {
     @Override
     public List<Comment> getNewComments(MyUser user) {
         return commentRepo.findAllByPostUserAndUserNotAndCommentViewedViewedFalseOrderByCreatedAsc(user, user);
+    }
+
+    @Override
+    public void markCommentAsViewed(Integer commentId) throws NullPointerException {
+        Comment comment = commentRepo.findById(commentId).orElseThrow(() -> new NullPointerException("Comment not found"));
+        CommentViewed commentViewed = comment.getCommentViewed();
+        commentViewed.setViewed(true);
+        comment.setCommentViewed(commentViewed);
+        commentRepo.save(comment);
     }
 }
