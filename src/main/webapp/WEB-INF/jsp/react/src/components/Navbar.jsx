@@ -74,7 +74,6 @@ function Navbar() {
     function getNewComments() {
         Axios.get('/post/getNewComments')
             .then((response) => {
-                console.log(response.data);
                 setNewComments(response.data);
             }).catch((err) => {console.log(err)});
     }
@@ -188,12 +187,9 @@ function Navbar() {
                                 {newComments.length > 0 && <small className="text-left ml-3">New Comments on your Posts</small>}
                                 {newComments.length > 0 &&
                                     newComments.map((item) => (
-                                        <NewCommentNotification comment={item}/>
-                                        // <>
-                                        //     <br/>
-                                        //     <h6>{item.user.lastName}</h6>
-                                        // <small className="text-left ml-3">commented on your post</small>
-                                        // </>
+                                        <div className="dropdown-item px-2 py-0 m-0">
+                                            <NewCommentNotification comment={item} updateNotifications={getNewComments}/>
+                                        </div>
                                     ))
                                 }
                                     {/*<div className="card my-2 border-0">*/}
