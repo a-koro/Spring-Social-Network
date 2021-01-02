@@ -24,4 +24,7 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
     public int getLengthOfPosts();
 
     Optional<Post> findByCommentsCommentId(Integer commentId);
+
+    @Query(value = "SELECT * FROM posts p INNER JOIN users u ON p.user_id = u.user_id WHERE p.user_id IN ? LIMIT ?,?", nativeQuery = true)
+    List<PostProjection> findAllPostsOfConnectionsFiveByFive(List<Integer> userIds, Integer offset, Integer limit);
 }
