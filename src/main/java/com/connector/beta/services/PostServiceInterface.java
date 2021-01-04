@@ -32,4 +32,6 @@ public interface PostServiceInterface {
     public int getAllPosts();
 
     public Post getSpecificPostFromCommentId(Integer commentId) throws NullPointerException;
+
+    public List<Post> findByUserIdsAndByPage(List<Integer> userIds, Integer page);
 }

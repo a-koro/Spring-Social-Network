@@ -5,6 +5,8 @@ import com.connector.beta.projections.PostProjection;
 import com.connector.beta.entities.*;
 import com.connector.beta.repos.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -138,5 +140,11 @@ public class PostServiceImpl implements PostServiceInterface {
     public Post getSpecificPostFromCommentId(Integer commentId) throws NullPointerException {
         Post post = postRepo.findByCommentsCommentId(commentId).orElseThrow(() -> new NullPointerException("Post not found"));
         return post;
+    }
+
+    @Override
+    public List<Post> findByUserIdsAndByPage(List<Integer> userIds, Integer page) {
+        Pageable pageWithFiveElements = PageRequest.of(page,5);
+        return postRepo.findByUserUserIdInOrderByCreatedDesc(userIds, pageWithFiveElements);
     }
 }
