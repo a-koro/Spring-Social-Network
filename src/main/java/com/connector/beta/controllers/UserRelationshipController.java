@@ -5,14 +5,20 @@ import com.connector.beta.Pojos.UserIdAndNamesDto;
 import com.connector.beta.Pojos.UserRelationshipParams;
 import com.connector.beta.dto.NewsFeedDTO;
 import com.connector.beta.entities.MyUser;
+import com.connector.beta.entities.Post;
 import com.connector.beta.entities.UserRelationship;
 import com.connector.beta.entities.UserRelationshipKey;
 import com.connector.beta.projections.MyUserProjection;
+import com.connector.beta.projections.PostProjection;
+import com.connector.beta.repos.PostRepo;
 import com.connector.beta.repos.UserRelationshipRepo;
 import com.connector.beta.repos.UserRepo;
 import com.connector.beta.services.PostServiceInterface;
 import com.connector.beta.services.UserRelationshipInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +28,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -42,7 +49,8 @@ public class UserRelationshipController {
     PostServiceInterface postServiceInterface;
     @Autowired
     UserRelationshipInterface userRelationshipInterface;
-
+    @Autowired
+    PostRepo postRepo;
 
     @GetMapping("/user")
     public ResponseEntity<List<UserFriendsDto>> CurrentUserInfo() {
@@ -212,7 +220,7 @@ public class UserRelationshipController {
 
     // This controller is an updated version of the above to send the posts and the connections at the same time
     @GetMapping("/newsFeed")
-    public ResponseEntity<NewsFeedDTO> getFriendsAndPosts() {
+    public ResponseEntity<NewsFeedDTO> getFriendsAndPosts(HttpServletRequest request) {
 
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         int currentUserId = userRepo.findUserIdByEmail(user.getUsername()).orElseThrow(() -> new RuntimeException("Error: User Id not found"));
@@ -227,9 +235,11 @@ public class UserRelationshipController {
             friendsUnionIds.add(f.getUserId());
         });
         NewsFeedDTO newsFeedUnionDto = new NewsFeedDTO();
-        newsFeedUnionDto.setPosts(postServiceInterface.findByUserIds(friendsUnionIds));
+        //newsFeedUnionDto.setPosts(postServiceInterface.findByUserIds(friendsUnionIds));
+        newsFeedUnionDto.setPosts(postServiceInterface.findByUserIdsAndByPage(friendsUnionIds, 0));
         newsFeedUnionDto.setFriends(listOfUnionFriends);
 
+        request.getSession().setAttribute("friendsIds",friendsUnionIds);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(newsFeedUnionDto);
 //        ###################
@@ -266,4 +276,10 @@ public class UserRelationshipController {
 //                .body(newsFeedDto);
     }
 
+    @GetMapping("/testNewRepoMethod/{page}")
+    public ResponseEntity testMethodRepo(@PathVariable Integer page, HttpServletRequest request) {
+        Pageable firstPageWithFiveElements = PageRequest.of(page,5);
+        List<Post> posts = postRepo.findByUserUserIdInOrderByCreatedDesc((List<Integer>)request.getSession().getAttribute("friendsIds"), firstPageWithFiveElements);
+        return ResponseEntity.status(HttpStatus.OK).body(posts);
+    }
 }
