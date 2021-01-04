@@ -3,6 +3,7 @@ package com.connector.beta.repos;
 import com.connector.beta.dto.PostDto;
 import com.connector.beta.projections.PostProjection;
 import com.connector.beta.entities.Post;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,6 +26,5 @@ public interface PostRepo extends JpaRepository<Post, Integer> {
 
     Optional<Post> findByCommentsCommentId(Integer commentId);
 
-    @Query(value = "SELECT * FROM posts p INNER JOIN users u ON p.user_id = u.user_id WHERE p.user_id IN ? LIMIT ?,?", nativeQuery = true)
-    List<PostProjection> findAllPostsOfConnectionsFiveByFive(List<Integer> userIds, Integer offset, Integer limit);
+    List<Post> findByUserUserIdInOrderByCreatedDesc(List<Integer> userIds, Pageable pageable);
 }
