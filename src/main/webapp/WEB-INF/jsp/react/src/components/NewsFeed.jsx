@@ -9,6 +9,8 @@ import { useRecoilState } from "recoil";
 import Axios from 'axios';
 import ArticlePrev from "./ArticlePrev";
 
+import { useBottomScrollListener } from 'react-bottom-scroll-listener';
+
 let postsForContext = [];
 let connections = [];
 
@@ -101,6 +103,12 @@ function NewsFeed(props) {
     function closeModal() {
         document.getElementById("closeButton").click();
     }
+
+    useBottomScrollListener(() => {
+        Axios.get('/api/testNewRepoMethod/1').then((response) => {
+            setPosts(posts.concat(response.data));
+        });
+    });
 
     return (
         <>
