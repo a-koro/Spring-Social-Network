@@ -53,6 +53,7 @@ function NewsFeed(props) {
     const [value, setValue] = React.useState(true);
     const [loadingSpinner, setLoadingSpinner] = React.useState(true);
     const [loadingArticleSpinner, setLoadingArticleSpinner] = React.useState(true);
+    const [page, setPage] = React.useState(1);
 
     const [trending, setTrending] = React.useState([]);
 
@@ -91,7 +92,9 @@ function NewsFeed(props) {
                     setPosts(data.posts);
                     postsForContext = data.posts;
                     connections = data.friends;
-                    setLoadingSpinner(false);
+                    if(data.posts.length < 5) {
+                        setLoadingSpinner(false);
+                    }
                 });
         }, [value]
     );
@@ -105,9 +108,15 @@ function NewsFeed(props) {
     }
 
     useBottomScrollListener(() => {
-        Axios.get('/api/testNewRepoMethod/1').then((response) => {
-            setPosts(posts.concat(response.data));
-        });
+        if(loadingSpinner) {
+            Axios.get(`/api/testNewRepoMethod/${page}`).then((response) => {
+                setPosts(posts.concat(response.data));
+                if (response.data.length === 0 || response.data.length < 5) {
+                    setLoadingSpinner(false);
+                }
+            });
+            setPage(page + 1);
+        }
     });
 
     return (
@@ -123,15 +132,6 @@ function NewsFeed(props) {
                 <button type="button" className="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModal">
                     New Post
                 </button>
-
-                { loadingSpinner &&
-                    <div className="text-center mt-5">
-                        <div className="spinner-border" role="status">
-                            <span className="sr-only">Loading...</span>
-                        </div>
-                    </div>
-                }
-
                 <div className="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
@@ -152,10 +152,13 @@ function NewsFeed(props) {
                     <Post post={post} value={{value:value,setValue:setValue}}/>
                 ))}
                 </CurrentUserProvider>
-            {/*    <Post username="Rick Sanchez"*/}
-            {/*          post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family. Although Beth welcomes Rick into her home, her husband, Jerry, isn't as happy about the family reunion."/>*/}
-            {/*    <Comment username="Alex Koro"*/}
-            {/*             post="After having been missing for nearly 20 years, Rick Sanchez suddenly arrives at daughter Beth's doorstep to move in with her and her family."/>*/}
+                { loadingSpinner &&
+                <div className="text-center mt-5 mb-5">
+                    <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div>
+                }
             </div>
             <div className="col-md-3 d-lg-block d-none">
                 <div className="sticky-top">
