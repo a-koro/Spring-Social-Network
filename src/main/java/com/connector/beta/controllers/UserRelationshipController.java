@@ -276,7 +276,7 @@ public class UserRelationshipController {
 //                .body(newsFeedDto);
     }
 
-    @GetMapping("/testNewRepoMethod/{page}")
+    @GetMapping("/getPostPage/{page}")
     public ResponseEntity testMethodRepo(@PathVariable Integer page, HttpServletRequest request) {
         Pageable firstPageWithFiveElements = PageRequest.of(page,5);
         List<Post> posts = postRepo.findByUserUserIdInOrderByCreatedDesc((List<Integer>)request.getSession().getAttribute("friendsIds"), firstPageWithFiveElements);

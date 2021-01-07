@@ -109,7 +109,7 @@ function NewsFeed(props) {
 
     useBottomScrollListener(() => {
         if(loadingSpinner) {
-            Axios.get(`/api/testNewRepoMethod/${page}`).then((response) => {
+            Axios.get(`/api/getPostPage/${page}`).then((response) => {
                 setPosts(posts.concat(response.data));
                 if (response.data.length === 0 || response.data.length < 5) {
                     setLoadingSpinner(false);
