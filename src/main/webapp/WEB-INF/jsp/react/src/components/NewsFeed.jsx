@@ -8,6 +8,7 @@ import DataServices from '../services/DataServices';
 import { useRecoilState } from "recoil";
 import Axios from 'axios';
 import ArticlePrev from "./ArticlePrev";
+import '../css/trendingArticles.css'
 
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 
@@ -162,17 +163,19 @@ function NewsFeed(props) {
             </div>
             <div className="col-md-3 d-lg-block d-none">
                 <div className="sticky-top">
-                    <h5 className="text-right mt-5">Trending on Atricl-O-matic</h5>
-                    { loadingArticleSpinner &&
-                    <div className="text-center mt-5">
-                        <div className="spinner-border" role="status">
-                            <span className="sr-only">Loading...</span>
+                    <div className="mr-2 scrollable">
+                        <h5 className="text-right mt-5">Trending on Atricl-O-matic</h5>
+                        { loadingArticleSpinner &&
+                        <div className="text-center mt-5">
+                            <div className="spinner-border" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </div>
                         </div>
+                        }
+                        {trending.map((trend) => {
+                            return <><hr/><ArticlePrev key={trend._id} article={trend}/></>
+                        })}
                     </div>
-                    }
-                    {trending.map((trend) => {
-                        return <><hr/><ArticlePrev key={trend._id} article={trend}/></>
-                    })}
                 </div>
             </div>
         </>
