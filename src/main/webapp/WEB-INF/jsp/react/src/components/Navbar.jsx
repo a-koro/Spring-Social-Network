@@ -146,7 +146,7 @@ function Navbar() {
     return (
         <>
             {/*{saveCurrentUserId()}*/}
-            <nav className="navbar navbar-expand-lg navbar-light bg-light">
+            <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
                 <a className="navbar-brand" href="/">
                     <img src="/img/logo.png" height="35" alt="Connector Logo" className="m-0"/>
                     {/*Connector*/}

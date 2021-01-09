@@ -123,12 +123,12 @@ function NewsFeed(props) {
     return (
         <>
             <div className="col-md-3 col-12 d-none d-md-block">
-                <div className="sticky-top">{items.map((item) => (
+                <div className="scrollable">{items.map((item) => (
                     <Contact  userFriendId = {item.userId} username={ item.firstName + " " + item.lastName}/>
                 ))}
                 </div>
             </div>
-            <div className="col-md-6 col-12">
+            <div className="col-md-6 col-12 postsList">
 
                 <button type="button" className="btn btn-primary mt-2" data-toggle="modal" data-target="#exampleModal">
                     New Post
@@ -162,7 +162,7 @@ function NewsFeed(props) {
                 }
             </div>
             <div className="col-md-3 d-lg-block d-none">
-                <div className="sticky-top">
+                {/*<div className="sticky-top">*/}
                     <div className="mr-2 scrollable">
                         <h5 className="text-right mt-5">Trending on Atricl-O-matic</h5>
                         { loadingArticleSpinner &&
@@ -176,7 +176,7 @@ function NewsFeed(props) {
                             return <><hr/><ArticlePrev key={trend._id} article={trend}/></>
                         })}
                     </div>
-                </div>
+                {/*</div>*/}
             </div>
         </>
     );
