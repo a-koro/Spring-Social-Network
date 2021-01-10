@@ -40,6 +40,11 @@ const style = {
     height: '40px'
 };
 
+const style2 = {
+    "float": "right",
+    "margin-right": "12px"
+};
+
 function Navbar() {
 
     const [username, setUsername] = React.useState(" ");
@@ -120,7 +125,6 @@ function Navbar() {
         if (userId) {
             DataServices.getPendingRequests(userId).then(
                 response => {
-                    console.log("All friend requests", response.data);
                     setFriendReq(response.data);
                 }
             ).catch(error => {
@@ -168,6 +172,10 @@ function Navbar() {
                             <Link to="/" className="nav-link">Feed</Link>
                         </li>
                         <li className="nav-item dropdown">
+                            {((friendReq.length > 0) || (newComments.length > 0)) &&
+                                <span className="badge badge-pill badge-primary"
+                                  style={style2}>{friendReq.length + newComments.length}</span>
+                            }
                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Notifications
