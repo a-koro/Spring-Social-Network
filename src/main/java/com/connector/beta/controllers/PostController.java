@@ -20,7 +20,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.ws.Response;
 import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -193,6 +195,20 @@ public class PostController {
             return ResponseEntity.status(500).build();
         }
 
+    }
+
+    @GetMapping("/getUsersPosts/{userId}")
+    public ResponseEntity getUsersPosts(@PathVariable Integer userId, HttpServletRequest request) {
+        try {
+            List<Integer> friendsIds = (List<Integer>)request.getSession().getAttribute("friendsIds");
+            if(friendsIds.contains(userId)) {
+                return ResponseEntity.status(HttpStatus.OK).body(postServiceInterface.findByUser(userId));
+            }
+            return ResponseEntity.status(403).build();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return ResponseEntity.status(500).build();
+        }
 
     }
 }
