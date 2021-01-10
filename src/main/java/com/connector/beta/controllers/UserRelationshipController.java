@@ -240,6 +240,7 @@ public class UserRelationshipController {
         newsFeedUnionDto.setFriends(listOfUnionFriends);
 
         request.getSession().setAttribute("friendsIds",friendsUnionIds);
+        request.getSession().setAttribute("loggedInUserId", currentUserId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(newsFeedUnionDto);
 //        ###################
