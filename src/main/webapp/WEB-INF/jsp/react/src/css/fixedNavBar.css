@@ -17,3 +17,7 @@
 .postsList {
     top: 62px;
 }
+
+.marginFromTopForFixedNavbar {
+    margin-top: 62px;
+}
