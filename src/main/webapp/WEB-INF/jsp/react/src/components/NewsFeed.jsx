@@ -8,7 +8,7 @@ import DataServices from '../services/DataServices';
 import { useRecoilState } from "recoil";
 import Axios from 'axios';
 import ArticlePrev from "./ArticlePrev";
-import '../css/trendingArticles.css'
+import '../css/fixedNavBar.css';
 
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
 

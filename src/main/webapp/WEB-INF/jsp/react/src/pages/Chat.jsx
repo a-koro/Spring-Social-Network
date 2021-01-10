@@ -6,6 +6,7 @@ import { Button, message } from "antd";
 import ScrollToBottom from "react-scroll-to-bottom";
 import './Chat.css';
 import { useRecoilValue, useRecoilState } from "recoil";
+import '../css/fixedNavBar.css';
 
 import {
     loggedInUser,
@@ -143,7 +144,7 @@ function Chat(props) {
 
     return (
         <div id="chat" className="container">
-            <div className="row">
+            <div className="row marginFromTopForFixedNavbar">
                 <div className="col-md-4 friends">
                     <div id="contacts">
                         <ul>
