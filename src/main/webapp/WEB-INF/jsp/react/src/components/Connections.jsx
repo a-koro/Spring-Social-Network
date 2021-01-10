@@ -11,7 +11,7 @@ function Connections() {
         <>
             {console.log(friends)}
             <div className="col-sm-6 offset-sm-3 col-xs-12 marginFromTopForFixedNavbar">
-                <h4>
+                <h4 className="my-4">
                     Connections
                 </h4>
                 <ConnectionsContext.Consumer>
