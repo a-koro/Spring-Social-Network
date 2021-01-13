@@ -40,7 +40,7 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/*.json")
                 .addResourceLocations("/WEB-INF/jsp/react/build/");
         registry.addResourceHandler("/*.ico")
-                .addResourceLocations("/WEB-INF/jsp/build/");
+                .addResourceLocations("/WEB-INF/jsp/react/build/");
     }
 
 //    Validator Bean for Error Message Customisation
