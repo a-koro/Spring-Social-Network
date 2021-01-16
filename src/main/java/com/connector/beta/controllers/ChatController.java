@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -51,7 +52,7 @@ public class ChatController {
 
         chatMessage.setSender(userService.findById(messageDto.getSenderId()));
         chatMessage.setRecipient(userService.findById(messageDto.getRecipientId()));
-
+        chatMessage.setCreated(new Date());
            chatMessage.setChatRoom(chatRoomService.getChatRoom(chatMessage.getSender().getUserId(),chatMessage.getRecipient().getUserId()));
            ChatMessage saved = chatMessageService.save(chatMessage);
         messagingTemplate.convertAndSendToUser(
