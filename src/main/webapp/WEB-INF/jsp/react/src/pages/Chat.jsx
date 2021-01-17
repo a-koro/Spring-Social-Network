@@ -104,13 +104,16 @@ function Chat(props) {
         console.log("notification ", notification);
         console.log("active ", active);
 
-        if (active.userSecondId == notification.userId) {
+        if (activeContact.userSecondId == notification.userId) {
             DataServices.findChatMessage(notification.chatNotificationId).then((message) => {
                 const newMessages = JSON.parse(sessionStorage.getItem("recoil-persist"))
                     .chatMessages;
 
                 newMessages.push(message.data);
                 setMessages(newMessages);
+
+                console.log("chat active contact from recoil state ", activeContact);
+                console.log("chat active contact from sessionStorage ", JSON.parse(sessionStorage.getItem("recoil-persist")).chatActiveContact);
 
                 console.log("newMessages ", newMessages);
                 console.log("message ", message.data);
