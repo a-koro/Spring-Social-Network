@@ -7,6 +7,7 @@ import NewCommentNotification from "./NewCommentNotification";
 import {useHistory, Link} from "react-router-dom";
 import DataServices from "../services/DataServices";
 import '../css/notifications.css';
+import MessengerContext from '../contexts/MessengerContext';
 
 let results = ["Test DATA 001"];
 let currentUser = {};
@@ -54,6 +55,7 @@ function Navbar() {
     const [searchResults, setSearchResults] = React.useState([]);
     const [newComments, setNewComments] = React.useState([]);
     const history = useHistory();
+    const {koroUser, setKoroUser} = React.useContext(MessengerContext);
 
     function getCurrentUser() {
 
@@ -65,6 +67,7 @@ function Navbar() {
             .then(data => {
                 setUsername(data.firstName + " " + data.lastName);
                 currentUser = data;
+                setKoroUser(data);
                 // userId = data.userId
                 // setUserId(data.userId)
                 // console.log("Inside promise" + data.userId);
