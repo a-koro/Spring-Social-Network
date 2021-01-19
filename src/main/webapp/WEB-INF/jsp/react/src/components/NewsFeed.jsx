@@ -11,6 +11,7 @@ import ArticlePrev from "./ArticlePrev";
 import '../css/fixedNavBar.css';
 
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
+import MessengerContext from "../contexts/MessengerContext";
 
 let postsForContext = [];
 let connections = [];
@@ -55,12 +56,13 @@ function NewsFeed(props) {
     const [loadingSpinner, setLoadingSpinner] = React.useState(true);
     const [loadingArticleSpinner, setLoadingArticleSpinner] = React.useState(true);
     const [page, setPage] = React.useState(1);
+    const {koroUser, setKoroUser} = React.useContext(MessengerContext);
 
     const [trending, setTrending] = React.useState([]);
 
     const [user, setUser] = useRecoilState(loggedInUser);
-    React.useEffect(() => {
 
+    React.useEffect(() => {
         loadCurrentUser();
       }, []);
 
