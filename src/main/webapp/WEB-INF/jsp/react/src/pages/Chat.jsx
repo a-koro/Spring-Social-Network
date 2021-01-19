@@ -34,11 +34,8 @@ function Chat(props) {
     const [text, setText] = useState("");
 
     useEffect(() => {
-
         connect();
         loadContacts();
-
-
     }, []);
 
 
@@ -104,7 +101,7 @@ function Chat(props) {
         console.log("notification ", notification);
         console.log("active ", active);
 
-        if (activeContact.userSecondId == notification.userId) {
+        if (active.userSecondId == notification.userId) {
             DataServices.findChatMessage(notification.chatNotificationId).then((message) => {
                 const newMessages = JSON.parse(sessionStorage.getItem("recoil-persist"))
                     .chatMessages;
