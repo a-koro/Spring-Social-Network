@@ -7,28 +7,32 @@ import Profile from "./pages/Profile";
 import Connections from "./components/Connections";
 import FriendsProfilePage from "./pages/FriendsProfilePage";
 import Chat from "./pages/Chat";
-import ConnectionsPage from './pages/ConnectionsPage';
+//import ConnectionsPage from './pages/ConnectionsPage';
 import SinglePost from "./components/SinglePost";
-import MessengerContext from "./contexts/MessengerContext";
+import GlobalContext from "./contexts/GlobalContext";
+import Messenger from "./components/Messenger";
 
 const SearchContext = React.createContext({});
 
 function App(props) {
 
-    const [koroUser, setKoroUser] = React.useState({});
+    const [authenticatedUser, setAuthenticatedUser] = React.useState({});
     const [activeChat, setActiveChat] = React.useState({});
     const [chatMessages, setChatMessages] = React.useState([]);
+    const [connections, setConnections] = React.useState([]);
 
     return (
         <div className="container-fluid p-0">
             <BrowserRouter>
-                <MessengerContext.Provider value={{
-                    koroUser,
-                    setKoroUser,
+                <GlobalContext.Provider value={{
+                    authenticatedUser,
+                    setAuthenticatedUser,
                     activeChat,
                     setActiveChat,
                     chatMessages,
-                    setChatMessages
+                    setChatMessages,
+                    connections,
+                    setConnections
                 }}>
                     <Navbar/>
                     <div className="row m-0">
@@ -38,14 +42,15 @@ function App(props) {
                                 <Route path="/results" component={Search}/>
                                 <Route exact path="/" render={(props) => <NewsFeed {...props}/>}/>
                                 <Route path="/profile" component={Profile}/>
-                                <Route path="/connections" component={ConnectionsPage}/>
+                                <Route path="/connections" component={Connections}/>
                                 <Route path="/profileAll" component={() => <FriendsProfilePage/>}/>
                                 <Route path="/post" component={SinglePost}/>
                                 <Route exact path="/chat" render={(props) => <Chat {...props} />}/>
+                                {/*<Route path="/chat" component={Messenger}/>*/}
                             </ResultsProvider>
                         </Switch>
                     </div>
-                </MessengerContext.Provider>
+                </GlobalContext.Provider>
             </BrowserRouter>
         </div>
     );
