@@ -11,16 +11,16 @@ import ArticlePrev from "./ArticlePrev";
 import '../css/fixedNavBar.css';
 
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
-import MessengerContext from "../contexts/MessengerContext";
+import GlobalContext from "../contexts/GlobalContext";
 
 let postsForContext = [];
-let connections = [];
+let connectionsCon = [];
 
 export const ConnectionsContext = React.createContext([]);
 
 export const ConnectionsProvider = (props) => {
     return (
-        <ConnectionsContext.Provider value={connections}>
+        <ConnectionsContext.Provider value={connectionsCon}>
             {props.children}
         </ConnectionsContext.Provider>
     );
@@ -56,7 +56,7 @@ function NewsFeed(props) {
     const [loadingSpinner, setLoadingSpinner] = React.useState(true);
     const [loadingArticleSpinner, setLoadingArticleSpinner] = React.useState(true);
     const [page, setPage] = React.useState(1);
-    const {koroUser, setKoroUser} = React.useContext(MessengerContext);
+    const {connections, setConnections} = React.useContext(GlobalContext);
 
     const [trending, setTrending] = React.useState([]);
 
@@ -94,7 +94,8 @@ function NewsFeed(props) {
                     setItems(data.friends);
                     setPosts(data.posts);
                     postsForContext = data.posts;
-                    connections = data.friends;
+                    connectionsCon = data.friends;
+                    setConnections(data.friends);
                     if(data.posts.length < 5) {
                         setLoadingSpinner(false);
                     }

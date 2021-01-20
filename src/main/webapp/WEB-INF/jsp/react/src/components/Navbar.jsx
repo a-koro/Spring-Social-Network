@@ -7,7 +7,7 @@ import NewCommentNotification from "./NewCommentNotification";
 import {useHistory, Link} from "react-router-dom";
 import DataServices from "../services/DataServices";
 import '../css/notifications.css';
-import MessengerContext from '../contexts/MessengerContext';
+import GlobalContext from '../contexts/GlobalContext';
 
 let results = ["Test DATA 001"];
 let currentUser = {};
@@ -55,7 +55,7 @@ function Navbar() {
     const [searchResults, setSearchResults] = React.useState([]);
     const [newComments, setNewComments] = React.useState([]);
     const history = useHistory();
-    const {koroUser, setKoroUser} = React.useContext(MessengerContext);
+    const {authenticatedUser, setAuthenticatedUser} = React.useContext(GlobalContext);
 
     function getCurrentUser() {
 
@@ -67,14 +67,7 @@ function Navbar() {
             .then(data => {
                 setUsername(data.firstName + " " + data.lastName);
                 currentUser = data;
-                setKoroUser(data);
-                // userId = data.userId
-                // setUserId(data.userId)
-                // console.log("Inside promise" + data.userId);
-                // history.push({
-                //     path: "/profileAll",
-                //     currentUserId: {id: data.userId}
-                // });
+                setAuthenticatedUser(data);
                 setUserId(data.userId);
             });
     }
@@ -184,6 +177,9 @@ function Navbar() {
                                 Notifications
                             </a>
                             <div className="dropdown-menu dropdown-menu-right notificationsDiv" onClick={stopDefault} aria-labelledby="navbarDropdown">
+                                { (friendReq.length == 0 && newComments.length == 0) &&
+                                    <small className="ml-2">No New Notifications</small>
+                                }
                                     {friendReq.length > 0 && <small className="text-left ml-3">Connection Requests</small>}
                                 {friendReq.length !==0 &&
                                     friendReq.map((item) => (
