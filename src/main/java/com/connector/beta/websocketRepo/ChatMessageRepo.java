@@ -1,6 +1,7 @@
 package com.connector.beta.websocketRepo;
 
 
+import com.connector.beta.projections.MyUserProjection;
 import com.connector.beta.websocketEntities.ChatMessage;
 import com.connector.beta.websocketEntities.ChatRoom;
 
@@ -30,4 +31,16 @@ public interface ChatMessageRepo extends JpaRepository<ChatMessage, Integer> {
     void updateStatuses(@Param("sender") Integer senderId,
                         @Param("recipient") Integer recipientId,
                         @Param("status") String status);
+
+    @Query(value = "select distinct userId, firstName, lastName from (select u.user_id as userId, u.first_name as firstName, u.last_name as lastName, cm.created as created " +
+            "from chat_message cm " +
+            "join users u on u.user_id = cm.sender_id " +
+            "where cm.recipient_id = ?1 " +
+            "union " +
+            "select u1.user_id as userId, u1.first_name as firstName, u1.last_name as lastName, cm1.created as created " +
+            "from chat_message cm1 " +
+            "join users u1 on u1.user_id = cm1.recipient_id " +
+            "where cm1.sender_id = ?1 order by created desc) as connections",
+            nativeQuery = true)
+    public List<MyUserProjection> getAllChatsOrderedByLastMessage(Integer myUserId1);
 }
