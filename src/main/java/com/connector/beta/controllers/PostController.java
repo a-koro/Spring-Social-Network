@@ -1,6 +1,7 @@
 package com.connector.beta.controllers;
 
 import com.connector.beta.dto.UserDto;
+import com.connector.beta.projections.MyUserProjection;
 import com.connector.beta.projections.PostProjection;
 import com.connector.beta.entities.*;
 import com.connector.beta.repos.CommentViewedRepo;
@@ -8,6 +9,7 @@ import com.connector.beta.repos.PostRepo;
 import com.connector.beta.services.CommentServiceInterface;
 import com.connector.beta.services.PostServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
+import com.connector.beta.websocketRepo.ChatMessageRepo;
 import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,9 @@ public class PostController {
 
     @Autowired
     CommentViewedRepo commentViewedRepo;
+
+    @Autowired
+    ChatMessageRepo chatMessageRepo;
 
     @GetMapping("/testUrl")
     public List<PostProjection> testRetrievePots(Principal principal) {
@@ -210,5 +215,13 @@ public class PostController {
             return ResponseEntity.status(500).build();
         }
 
+    }
+
+    @GetMapping("/testNewMessengerConnectionsListMethod")
+    public List<MyUserProjection> getMessengerConnectionsList(HttpServletRequest request) {
+
+        Integer loggedInUserId = (Integer)request.getSession().getAttribute("loggedInUserId");
+        List<MyUserProjection> listOfChats = chatMessageRepo.getAllChatsOrderedByLastMessage(loggedInUserId);
+        return listOfChats;
     }
 }
