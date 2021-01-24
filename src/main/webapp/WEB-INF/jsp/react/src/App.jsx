@@ -45,8 +45,8 @@ function App(props) {
                                 <Route path="/connections" component={Connections}/>
                                 <Route path="/profileAll" component={() => <FriendsProfilePage/>}/>
                                 <Route path="/post" component={SinglePost}/>
-                                <Route exact path="/chat" render={(props) => <Chat {...props} />}/>
-                                {/*<Route path="/chat" component={Messenger}/>*/}
+                                {/*<Route exact path="/chat" render={(props) => <Chat {...props} />}/>*/}
+                                <Route path="/chat" component={Messenger}/>
                             </ResultsProvider>
                         </Switch>
                     </div>
