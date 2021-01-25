@@ -36,11 +36,22 @@ public interface ChatMessageRepo extends JpaRepository<ChatMessage, Integer> {
             "from chat_message cm " +
             "join users u on u.user_id = cm.sender_id " +
             "where cm.recipient_id = ?1 " +
+            "and u.user_id in (" +
+            "select u.user_id from user_relationship ur join users u on u.user_id = ur.user_second_id where ur.user_first_id = ?1 and ur.friends = true " +
+            "union " +
+            "select u1.user_id from user_relationship ur1 join users u1 on u1.user_id = ur1.user_first_id where ur1.user_second_id = ?1 and ur1.friends = true " +
+            ")" +
             "union " +
             "select u1.user_id as userId, u1.first_name as firstName, u1.last_name as lastName, cm1.created as created " +
             "from chat_message cm1 " +
             "join users u1 on u1.user_id = cm1.recipient_id " +
-            "where cm1.sender_id = ?1 order by created desc) as connections",
+            "where cm1.sender_id = ?1 " +
+            "and u1.user_id in (" +
+            "select u.user_id from user_relationship ur join users u on u.user_id = ur.user_second_id where ur.user_first_id = ?1 and ur.friends = true " +
+            "union " +
+            "select u1.user_id from user_relationship ur1 join users u1 on u1.user_id = ur1.user_first_id where ur1.user_second_id = ?1 and ur1.friends = true " +
+            ")" +
+            "order by created desc) as connections",
             nativeQuery = true)
     public List<MyUserProjection> getAllChatsOrderedByLastMessage(Integer myUserId1);
 }
