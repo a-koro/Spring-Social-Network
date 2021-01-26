@@ -3,6 +3,8 @@ package com.connector.beta.controllers;
 import com.connector.beta.dto.ChatNotificationDto;
 import com.connector.beta.entities.MyUser;
 import com.connector.beta.mapper.UserMapper;
+import com.connector.beta.projections.MyUserProjection;
+import com.connector.beta.services.MessengerServiceInterface;
 import com.connector.beta.services.UserServiceInterface;
 import com.connector.beta.websocketEntities.ChatMessage;
 
@@ -17,7 +19,9 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +45,9 @@ public class ChatController {
         this.userService = userService;
         this.userMapper = userMapper;
     }
+
+    @Autowired
+    MessengerServiceInterface messengerServiceInterface;
 
     @MessageMapping("/chat")
     public void processMessage(@Payload ChatMessageDto messageDto) {
@@ -95,4 +102,11 @@ public class ChatController {
                 .ok(chatMessageService.countNewMessages(senderId, recipientId));
     }
 
+    @GetMapping("/messages/getChats")
+    @ResponseBody
+    public List<MyUserProjection> getChats(HttpServletRequest request) {
+        Integer loggedInUserId = (Integer)request.getSession().getAttribute("loggedInUserId");
+        List<MyUserProjection> listOfChats = messengerServiceInterface.getChats(loggedInUserId);
+        return listOfChats;
+    }
 }
