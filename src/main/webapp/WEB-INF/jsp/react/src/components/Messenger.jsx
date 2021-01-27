@@ -2,6 +2,8 @@ import React from 'react';
 import GlobalContext from "../contexts/GlobalContext";
 import Contact from "./Contact";
 import Axios from 'axios';
+import '../css/messenger.css';
+import MessengerContact from "./MessengerContact";
 
 export default function Messenger(props) {
 
@@ -28,6 +30,10 @@ export default function Messenger(props) {
     React.useEffect(() => {
         getChats();
     },[]);
+
+    React.useEffect(() => {
+        getChatMessages(activeChat.userId);
+    },[activeChat]);
 
     return (
         <div className="col-lg-8 col-12 offset-lg-2 mt-5 pt-3">
@@ -56,15 +62,22 @@ export default function Messenger(props) {
                     </div>
                 </div>
             </div>
-            <div className="col-4">
-                {
-                    chats.map((chat) => (
-                        <Contact  userFriendId = {chat.userId} username={ chat.firstName + " " + chat.lastName}/>
-                    ))
-                }
-            </div>
-            <div className="col-8">
-
+            <div className="row">
+                <div className="col-4 pr-0">
+                    {
+                        chats.map((chat) => (
+                            <div>
+                                <MessengerContact  contact={chat}/>
+                            </div>
+                        ))
+                    }
+                </div>
+                <div className="col-8 border border-light tallDiv">
+                    <Contact  userFriendId = {activeChat.userId} username={ activeChat.firstName + " " + activeChat.lastName}/>
+                    { chatMessages.map((msg) => (
+                        <h6>{msg.content}</h6>
+                    ))}
+                </div>
             </div>
         </div>
     );
