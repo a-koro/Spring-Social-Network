@@ -65,9 +65,10 @@ username- > admin <br> password -> **1234qwer**
 ## Technology Stack
 
 
-* [IntelliJ Ultimate Edition](https://www.jetbrains.com/idea/) - Our preferred IDE
+[comment]: <> (* [IntelliJ Ultimate Edition]&#40;https://www.jetbrains.com/idea/&#41; - Our preferred IDE)
 * [MySQL](https://www.mysql.com/)- Database used
-* [MySQL Workbench](https://www.mysql.com/products/workbench/) - Data Base Visual Tool
+
+[comment]: <> (* [MySQL Workbench]&#40;https://www.mysql.com/products/workbench/&#41; - Data Base Visual Tool)
 * [Java 8](https://java.com/en/download/faq/release_changes.xml) - Java version used
 * [Maven](https://maven.apache.org/) - Dependency Management
 * [Spring Boot](https://spring.io/projects/spring-boot) - Back-End Framework used with the following dependencies:
@@ -86,8 +87,8 @@ username- > admin <br> password -> **1234qwer**
 ## Versioning
 
 
-We use [Git](https://git-scm.com/) for versioning. <br>
-Favorite CLI - [Git Bash](https://gitforwindows.org/) 
+[Git](https://git-scm.com/) for versioning. <br>
+[Git Bash](https://gitforwindows.org/) - Favorite CLI
 
 
 ## Authors 
@@ -99,10 +100,13 @@ Favorite CLI - [Git Bash](https://gitforwindows.org/)
 * **Korovesis Alexandros** - [GitHub](https://github.com/a-koro)
 [LinkedIn](https://www.linkedin.com/in/alexandros-korovesis-3995b9167/)
 
-## Acknowledgments 
+[comment]: <> (## Acknowledgments )
 
-* [Bootcamp - PeopleCert](https://peoplecerteducation.org/) - Thank you for your excellent support and knowledge throughout the program. <br></br>
-* **Mavros Spyros** - Invaluable support in *Java EE* & *Spring Boot*.
-<br></br>
-* **Minaidis Kostas** - Assistance and support in *CSS* - *JavaScript* & *React*
+[comment]: <> (* [Bootcamp - PeopleCert]&#40;https://peoplecerteducation.org/&#41; - Thank you for your excellent support and knowledge throughout the program. <br></br>)
+
+[comment]: <> (* **Mavros Spyros** - Invaluable support in *Java EE* & *Spring Boot*.)
+
+[comment]: <> (<br></br>)
+
+[comment]: <> (* **Minaidis Kostas** - Assistance and support in *CSS* - *JavaScript* & *React*)
 
