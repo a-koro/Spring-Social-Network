@@ -1,5 +1,5 @@
 import React from 'react';
-import {useHistory} from 'react-router-dom'
+import {useHistory} from 'react-router-dom';
 
 const style = {
     objectFit: 'cover',
@@ -8,23 +8,10 @@ const style = {
     height: '40px'
 };
 
-// export const ContactPage = props => {
-//     let history = useHistory();
-//
-//     const onClick = e => {
-//         history.push({
-//             pathname: '/ProfileAll',
-//             ourUserId: props.userFriendId
-//         });
-//     }
-// }
-
-
 function Contact(props) {
 
     let url = "/api/profile/searchUsers/" + props.userFriendId;
     let history = useHistory();
-
 
     const onClick = e => {
         e.preventDefault();
