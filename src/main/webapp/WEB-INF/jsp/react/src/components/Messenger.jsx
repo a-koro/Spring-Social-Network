@@ -4,6 +4,7 @@ import Contact from "./Contact";
 import Axios from 'axios';
 import '../css/messenger.css';
 import MessengerContact from "./MessengerContact";
+import MessengerMessage from "./MessengerMessage";
 
 export default function Messenger(props) {
 
@@ -14,16 +15,18 @@ export default function Messenger(props) {
     const [chats, setChats] = React.useState([]);
 
     function getChatMessages(userId) {
-        Axios.get(`/messages/${userId}/${authenticatedUser.userId}`).then((response) => {
-            setChatMessages(response.data);
-        });
+        if (userId) {
+            Axios.get(`/messages/${userId}/${authenticatedUser.userId}`).then((response) => {
+                setChatMessages(response.data);
+            });
+        }
     }
 
     function getChats() {
         Axios.get('/messages/getChats').then((response) => {
             setChats(response.data);
             setActiveChat(response.data[0]);
-            getChatMessages(response.data[0].userId);
+            //getChatMessages(response.data[0].userId);
         });
     }
 
@@ -38,7 +41,7 @@ export default function Messenger(props) {
     return (
         <div className="col-lg-8 col-12 offset-lg-2 mt-5 pt-3">
             {/*Button trigger modal*/}
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" className="btn btn-primary my-3" data-toggle="modal" data-target="#exampleModal">
                 New Chat
             </button>
 
@@ -63,20 +66,34 @@ export default function Messenger(props) {
                 </div>
             </div>
             <div className="row">
-                <div className="col-4 pr-0">
-                    {
-                        chats.map((chat) => (
-                            <div>
-                                <MessengerContact  contact={chat}/>
-                            </div>
-                        ))
-                    }
+                <div className="col-4 pr-0 tallDiv">
+                    <div className="tallDivOfChats hideScrollBar">
+                        {
+                            chats.map((chat) => (
+                                <div>
+                                    <MessengerContact  contact={chat}/>
+                                </div>
+                            ))
+                        }
+                    </div>
                 </div>
                 <div className="col-8 border border-light tallDiv">
-                    <Contact  userFriendId = {activeChat.userId} username={ activeChat.firstName + " " + activeChat.lastName}/>
-                    { chatMessages.map((msg) => (
-                        <h6>{msg.content}</h6>
-                    ))}
+                    { activeChat.userId &&
+                        <Contact  userFriendId = {activeChat.userId} username={ activeChat.firstName + " " + activeChat.lastName}/>
+                    }
+                    <div className="tallOverFlow">
+                        <ul style={{'listStyle': 'none'}}>
+                            { chatMessages.map((msg) => (
+                                <li>
+                                    <MessengerMessage message={msg}/>
+                                    <br/>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="m-3">
+                        <i className="far fa-paper-plane fa-2x"></i>
+                    </div>
                 </div>
             </div>
         </div>
