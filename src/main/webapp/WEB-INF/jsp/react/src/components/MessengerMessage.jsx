@@ -6,13 +6,47 @@ const style = {
 
 export default function MessengerMessage(props) {
 
-    console.log(props.message.created);
+    let createdProp = new Date(props.message.timestamp);
+
+    const [created, setCreated] = React.useState(createdProp.toString());
+
+    function isToday(someDate) {
+        const today = new Date();
+        return someDate.getDate() == today.getDate() &&
+            someDate.getMonth() == today.getMonth() &&
+            someDate.getFullYear() == today.getFullYear();
+    }
+
+    function isSameYear(someDate) {
+        const today = new Date();
+        return someDate.getFullYear() == today.getFullYear();
+    }
+
+    function formatCreated() {
+        if(isToday(createdProp)) {
+            setCreated(createdProp.getHours() + ":" + createdProp.getMinutes());
+        }
+        else if(isSameYear(createdProp)) {
+            setCreated(createdProp.toDateString().slice(0,-5));
+        }
+        else {
+            setCreated(createdProp.toDateString());
+        }
+    }
+
+    React.useEffect(() => {
+        formatCreated();
+    },[]);
+
     return (
             <>
-                <div className="bg-info float-right" style={style}>
-                    <p>{props.message.content}</p>
+                <div className={props.message.senderId == props.authUser.userId ? "bg-light float-right" : "bg-secondary float-left text-light"} style={style}>
+                    <p className="m-1">{props.message.content}</p>
                 </div>
-                <p>{props.message.timestamp}</p>
+                <br/>
+                <div className={props.message.senderId == props.authUser.userId ? "text-right" : "text-left"}>
+                    <small className="text-secondary">{created}</small>
+                </div>
             </>
     );
 }

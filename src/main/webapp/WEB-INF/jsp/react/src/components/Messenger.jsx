@@ -77,15 +77,15 @@ export default function Messenger(props) {
                         }
                     </div>
                 </div>
-                <div className="col-8 border border-light tallDiv">
+                <div className="col-8 border border-light px-0 tallDiv">
                     { activeChat.userId &&
                         <Contact  userFriendId = {activeChat.userId} username={ activeChat.firstName + " " + activeChat.lastName}/>
                     }
                     <div className="tallOverFlow">
-                        <ul style={{'listStyle': 'none'}}>
+                        <ul className="px-1" style={{'listStyle': 'none'}}>
                             { chatMessages.map((msg) => (
                                 <li>
-                                    <MessengerMessage message={msg}/>
+                                    <MessengerMessage message={msg} authUser={authenticatedUser}/>
                                     <br/>
                                 </li>
                             ))}
