@@ -11,15 +11,55 @@ import Chat from "./pages/Chat";
 import SinglePost from "./components/SinglePost";
 import GlobalContext from "./contexts/GlobalContext";
 import Messenger from "./components/Messenger";
+import DataServices from "./services/DataServices";
+import Stomp from "stompjs";
+import SockJS from "sockjs-client";
 
 const SearchContext = React.createContext({});
 
 function App(props) {
 
+    let SockJSr = new SockJS("/ws");
     const [authenticatedUser, setAuthenticatedUser] = React.useState({});
     const [activeChat, setActiveChat] = React.useState({});
     const [chatMessages, setChatMessages] = React.useState([]);
     const [connections, setConnections] = React.useState([]);
+    const [stompClient, setStompClient] = React.useState(Stomp.over(SockJSr));
+
+    const connect = () => {
+        stompClient.connect({}, onConnected, onError);
+    };
+
+    const onError = (err) => {
+        console.log(err);
+    };
+
+    const onConnected = () => {
+        console.log("connected");
+        stompClient.subscribe(
+            "/user/" + authenticatedUser.userId + "/queue/messages",
+            onMessageReceived
+        );
+    };
+
+    const onMessageReceived = (msg) => {
+        const notification = JSON.parse(msg.body);
+        console.log(msg.body);
+
+        if (activeChat.userId === notification.userId) {
+            DataServices.findChatMessage(notification.chatNotificationId).then((message) => {
+                const newMessages = chatMessages;
+                newMessages.push(message.data);
+                setChatMessages(newMessages);
+            }).catch(error => { console.log(error.response) });
+        } else {
+            console.log("Received a new message from " + notification.firstName + " " + notification.lastName);
+        }
+    };
+
+    React.useEffect(() => {
+        connect();
+    },[authenticatedUser]);
 
     return (
         <div className="container-fluid p-0">
@@ -32,7 +72,8 @@ function App(props) {
                     chatMessages,
                     setChatMessages,
                     connections,
-                    setConnections
+                    setConnections,
+                    stompClient
                 }}>
                     <Navbar/>
                     <div className="row m-0">
