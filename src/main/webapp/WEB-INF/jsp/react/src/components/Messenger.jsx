@@ -5,6 +5,8 @@ import Axios from 'axios';
 import '../css/messenger.css';
 import MessengerContact from "./MessengerContact";
 import MessengerMessage from "./MessengerMessage";
+import DataServices from "../services/DataServices";
+import {message} from "antd";
 
 export default function Messenger(props) {
 
@@ -12,7 +14,9 @@ export default function Messenger(props) {
     const {activeChat, setActiveChat} = React.useContext(GlobalContext);
     const {chatMessages, setChatMessages} = React.useContext(GlobalContext);
     const {connections} = React.useContext(GlobalContext);
+    const {stompClient} = React.useContext(GlobalContext);
     const [chats, setChats] = React.useState([]);
+    const [message, setMessage] = React.useState("");
 
     function getChatMessages(userId) {
         if (userId) {
@@ -28,6 +32,26 @@ export default function Messenger(props) {
             setActiveChat(response.data[0]);
             //getChatMessages(response.data[0].userId);
         });
+    }
+
+    const sendMessage = (msg) => {
+        if (msg.trim() !== "") {
+            const message = {
+                senderId: authenticatedUser.userId,
+                recipientId: activeChat.userId,
+                content: msg,
+                timestamp: new Date(),
+            };
+            stompClient.send("/app/chat", {}, JSON.stringify(message));
+            const newMessages = [...chatMessages];
+            newMessages.push(message);
+            setChatMessages(newMessages);
+        }
+    };
+
+    function submitForm(evt) {
+        evt.preventDefault();
+        sendMessage(message);
     }
 
     React.useEffect(() => {
@@ -77,12 +101,12 @@ export default function Messenger(props) {
                         }
                     </div>
                 </div>
-                <div className="col-8 border border-light px-0 tallDiv">
+                <div className="col-8 border border-light px-0 tallDiv pb-2">
                     { activeChat.userId &&
                         <Contact  userFriendId = {activeChat.userId} username={ activeChat.firstName + " " + activeChat.lastName}/>
                     }
                     <div className="tallOverFlow">
-                        <ul className="px-1" style={{'listStyle': 'none'}}>
+                        <ul className="px-3" style={{'listStyle': 'none'}}>
                             { chatMessages.map((msg) => (
                                 <li>
                                     <MessengerMessage message={msg} authUser={authenticatedUser}/>
@@ -92,7 +116,20 @@ export default function Messenger(props) {
                         </ul>
                     </div>
                     <div className="m-3">
-                        <i className="far fa-paper-plane fa-2x"></i>
+                        <form onSubmit={submitForm}>
+                            <div className="form-row">
+                                <div className="col-11">
+                                    <input
+                                        className="form-control w-80"
+                                        type="text" value={message}
+                                        onChange={(evt) => {setMessage(evt.target.value);}}
+                                    />
+                                </div>
+                                <div className="col-1">
+                                    <button type="submit" className="btn"><i className="far fa-paper-plane fa-2x"></i></button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
